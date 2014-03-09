@@ -47,8 +47,8 @@ public class OtherSimpleTest {
 
                 // .artifact("GROUPID:ARTIFACTID:TYPE:VERSION")
                 .addAsLibraries(resolver
-//                        .artifact("org.springframework:spring-core:3.0.7.RELEASE")
-//                        .artifact("org.springframework:spring-context:3.0.7.RELEASE")
+//                        .artifact("org.springframework:spring-core:3.2.8.RELEASE")
+//                        .artifact("org.springframework:spring-context:3.2.8.RELEASE")
 
 //                        .artifact("postgresql:postgresql:9.1-901.jdbc4")
 
