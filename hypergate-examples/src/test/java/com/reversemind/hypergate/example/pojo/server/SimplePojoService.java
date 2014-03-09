@@ -1,8 +1,8 @@
-package com.reversemind.glia.test.pojo.server;
+package com.reversemind.hypergate.example.pojo.server;
 
-import com.reversemind.glia.test.pojo.shared.ISimplePojo;
-import com.reversemind.glia.test.pojo.shared.PAddressNode;
-import com.reversemind.glia.test.pojo.shared.SimpleException;
+import com.reversemind.hypergate.example.pojo.shared.ISimplePojo;
+import com.reversemind.hypergate.example.pojo.shared.PAddressNode;
+import com.reversemind.hypergate.example.pojo.shared.SimpleException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,9 +26,9 @@ import java.util.List;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class SimplePojo implements ISimplePojo, Serializable {
+public class SimplePojoService implements ISimplePojo, Serializable {
 
-    private final static Logger LOG = LoggerFactory.getLogger(SimplePojo.class);
+    private final static Logger LOG = LoggerFactory.getLogger(SimplePojoService.class);
 
     @Override
     public List<PAddressNode> searchAddress(String query) {

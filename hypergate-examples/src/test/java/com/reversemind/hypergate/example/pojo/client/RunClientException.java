@@ -1,10 +1,10 @@
-package com.reversemind.glia.test.pojo.client;
+package com.reversemind.hypergate.example.pojo.client;
 
 import com.reversemind.hypergate.client.HyperGateClient;
 import com.reversemind.hypergate.proxy.ProxyFactory;
-import com.reversemind.glia.test.pojo.shared.ISimplePojo;
-import com.reversemind.glia.test.pojo.shared.Settings;
-import com.reversemind.glia.test.pojo.shared.SimpleException;
+import com.reversemind.hypergate.example.pojo.shared.ISimplePojo;
+import com.reversemind.hypergate.example.pojo.shared.Settings;
+import com.reversemind.hypergate.example.pojo.shared.SimpleException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

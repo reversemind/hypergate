@@ -1,4 +1,4 @@
-package com.reversemind.glia.test.pojo.shared;
+package com.reversemind.hypergate.example.pojo.shared;
 
 /**
  *
@@ -16,7 +16,14 @@ package com.reversemind.glia.test.pojo.shared;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class Settings {
-    public static final int SERVER_PORT = 7012;
-    public static final String SERVER_HOST = "localhost";
+public class SimpleException extends Exception {
+
+    public SimpleException(String message) {
+        super(message);
+    }
+
+    public SimpleException(String msg, Throwable cause) {
+        super(msg, cause);
+    }
+
 }

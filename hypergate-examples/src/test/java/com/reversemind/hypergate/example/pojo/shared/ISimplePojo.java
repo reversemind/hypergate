@@ -1,4 +1,4 @@
-package com.reversemind.glia.test.pojo.shared;
+package com.reversemind.hypergate.example.pojo.shared;
 
 import java.io.Serializable;
 import java.util.List;

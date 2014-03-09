@@ -3,7 +3,7 @@ package com.reversemind.glia.test.serialization;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.serializers.DefaultSerializers;
 import com.reversemind.hypergate.serialization.KryoSerializer;
-import com.reversemind.glia.test.pojo.shared.PAddressNode;
+import com.reversemind.hypergate.example.pojo.shared.PAddressNode;
 import org.junit.Test;
 
 import java.io.FileOutputStream;

@@ -1,10 +1,10 @@
-package com.reversemind.glia.test.pojo.server;
+package com.reversemind.hypergate.example.pojo.server;
 
 import com.reversemind.hypergate.server.PayloadProcessor;
 import com.reversemind.hypergate.server.ServerFactory;
 import com.reversemind.hypergate.server.IHyperGateServer;
-import com.reversemind.glia.test.pojo.shared.ISimplePojo;
-import com.reversemind.glia.test.pojo.shared.Settings;
+import com.reversemind.hypergate.example.pojo.shared.ISimplePojo;
+import com.reversemind.hypergate.example.pojo.shared.Settings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +33,7 @@ public class RunServer implements Serializable {
     public static void main(String... args) {
 
         PayloadProcessor payloadProcessor = new PayloadProcessor();
-        payloadProcessor.registerPOJO(ISimplePojo.class, SimplePojo.class);
+        payloadProcessor.registerPOJO(ISimplePojo.class, SimplePojoService.class);
 
         IHyperGateServer server = ServerFactory.builder()
                 .setPayloadWorker(payloadProcessor)

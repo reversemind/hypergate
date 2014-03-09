@@ -2,8 +2,8 @@ package com.reversemind.glia.test.spring;
 
 import com.reversemind.hypergate.client.HyperGateClient;
 import com.reversemind.hypergate.proxy.ProxyFactory;
-import com.reversemind.glia.test.pojo.shared.ISimplePojo;
-import com.reversemind.glia.test.pojo.shared.PAddressNode;
+import com.reversemind.hypergate.example.pojo.shared.ISimplePojo;
+import com.reversemind.hypergate.example.pojo.shared.PAddressNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
