@@ -38,7 +38,6 @@ public final class ServerMetadata implements Serializable {
     @JsonProperty("metrics")
     private Metrics metrics;
 
-
     @JsonCreator
     public ServerMetadata(
             @JsonProperty("setName") String name,

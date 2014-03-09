@@ -1,5 +1,6 @@
 package com.reversemind.hypergate.client;
 
+import com.reversemind.hypergate.servicediscovery.IServerSelectorStrategy;
 import com.reversemind.hypergate.servicediscovery.ServiceDiscoverer;
 import com.reversemind.hypergate.servicediscovery.serializer.ServerMetadata;
 import org.apache.commons.lang3.StringUtils;

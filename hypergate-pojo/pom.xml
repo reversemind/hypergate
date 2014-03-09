@@ -11,4 +11,12 @@
 
     <artifactId>hypergate-pojo</artifactId>
 
+    <dependencies>
+        <!--HyperGate CORE-->
+        <dependency>
+            <groupId>com.reversemind</groupId>
+            <artifactId>hypergate-core</artifactId>
+            <version>${hypergate.version}</version>
+        </dependency>
+    </dependencies>
 </project>

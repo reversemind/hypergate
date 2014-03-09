@@ -1,4 +1,4 @@
-package com.reversemind.hypergate.client;
+package com.reversemind.hypergate.servicediscovery;
 
 import com.reversemind.hypergate.servicediscovery.serializer.ServerMetadata;
 

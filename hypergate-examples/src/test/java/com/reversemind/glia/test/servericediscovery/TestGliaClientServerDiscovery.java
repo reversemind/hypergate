@@ -1,7 +1,7 @@
 package com.reversemind.glia.test.servericediscovery;
 
 import com.reversemind.hypergate.client.HyperGateClientServerDiscovery;
-import com.reversemind.hypergate.client.ServerSelectorSimpleStrategy;
+import com.reversemind.hypergate.servicediscovery.ServerSelectorSimpleStrategy;
 import org.junit.Ignore;
 import org.junit.Test;
 

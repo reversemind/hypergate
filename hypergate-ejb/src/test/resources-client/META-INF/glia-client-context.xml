@@ -9,7 +9,7 @@
 
     <context:property-placeholder location="META-INF/glia-client.properties"/>
 
-    <bean id="selectorStrategy" class="com.reversemind.hypergate.client.ServerSelectorSimpleStrategy" />
+    <bean id="selectorStrategy" class="com.reversemind.hypergate.servicediscovery.ServerSelectorSimpleStrategy" />
 
     <!--using Zookeeper for connection -->
     <bean id="gliaClientServerDiscovery" class="com.reversemind.hypergate.client.HyperGateClientServerDiscovery" scope="prototype">

@@ -66,6 +66,81 @@
             <version>${hypergate.version}</version>
         </dependency>
 
+        <!--JNDI LOOKUP JBOSS-->
+        <dependency>
+            <groupId>org.jboss.spec.javax.ejb</groupId>
+            <artifactId>jboss-ejb-api_3.1_spec</artifactId>
+            <version>1.0.2.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.as</groupId>
+            <artifactId>jboss-as-naming</artifactId>
+            <version>7.1.1.Final</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.spec.javax.transaction</groupId>
+            <artifactId>jboss-transaction-api_1.1_spec</artifactId>
+            <version>1.0.0.Final</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging</artifactId>
+            <version>3.1.2.GA</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss</groupId>
+            <artifactId>jboss-ejb-client</artifactId>
+            <version>1.0.9.Final</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Remote EJB accesses can be secured -->
+        <dependency>
+            <groupId>org.jboss.sasl</groupId>
+            <artifactId>jboss-sasl</artifactId>
+            <version>1.0.3.Final</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- data serialization for invoking remote EJBs -->
+        <dependency>
+            <groupId>org.jboss.marshalling</groupId>
+            <artifactId>jboss-marshalling-river</artifactId>
+            <version>1.3.9.GA</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.remoting3</groupId>
+            <artifactId>jboss-remoting</artifactId>
+            <scope>runtime</scope>
+            <version>3.2.14.GA</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.ejb3</groupId>
+            <artifactId>jboss-ejb3-ext-api</artifactId>
+            <version>2.0.0-beta-3</version>
+        </dependency>
+
+        <!--<dependency>-->
+        <!--<groupId>org.jboss.xnio</groupId>-->
+        <!--<artifactId>xnio-api</artifactId>-->
+        <!--<version>3.1.0.Beta8</version>-->
+        <!--<scope>runtime</scope>-->
+        <!--</dependency>-->
+
+        <dependency>
+            <groupId>org.jboss.xnio</groupId>
+            <artifactId>xnio-nio</artifactId>
+            <version>3.1.0.Beta8</version>
+            <scope>runtime</scope>
+        </dependency>
 
         <!--ARQUILLIAN-->
         <dependency>
@@ -73,7 +148,6 @@
             <artifactId>arquillian-junit-container</artifactId>
             <scope>test</scope>
         </dependency>
-
 
         <!--JBOSS XNIO-->
         <dependency>
@@ -89,7 +163,6 @@
             <version>3.1.0.Beta8</version>
             <scope>runtime</scope>
         </dependency>
-
 
         <dependency>
             <groupId>junit</groupId>

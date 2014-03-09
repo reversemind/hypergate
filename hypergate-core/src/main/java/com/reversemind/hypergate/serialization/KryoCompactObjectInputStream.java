@@ -35,8 +35,7 @@ public class KryoCompactObjectInputStream extends ObjectInputStream {
     protected void readStreamHeader() throws IOException {
         int version = readByte() & 0xFF;
         if (version != STREAM_VERSION) {
-            throw new StreamCorruptedException(
-                    "Unsupported version: " + version);
+            throw new StreamCorruptedException("Unsupported version: " + version);
         }
     }
 
