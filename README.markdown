@@ -23,15 +23,15 @@ groupId: com.reversemind
 
 artifactId: hypergate-core
 
-version: 1.9.2-SNAPSHOT
+version: 0.5.0-SNAPSHOT
 
 <dependency>
   <groupId>com.reversemind</groupId>
   <artifactId>hypergate-core</artifactId>
-  <version>1.9.2-SNAPSHOT</version>
+  <version>0.5.0-SNAPSHOT</version>
 </dependency>
 
-Stable is  1.9.2-SNAPSHOT - version
+Stable is  0.5.0-SNAPSHOT - version
 
 
 #### Getting started

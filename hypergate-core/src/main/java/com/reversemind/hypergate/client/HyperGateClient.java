@@ -451,7 +451,7 @@ public class HyperGateClient implements IHyperGateClient, Serializable {
         long countGoAway = 0;
         final long stepGoAway = 100; //ms
 
-        LOG.warn("Warming up 1.9.2-SNAPSHOT ...");
+        LOG.warn("Warming up 0.5.0-SNAPSHOT ...");
         while (goAway == false | countGoAway < (SERVER_CONNECTION_TIMEOUT / stepGoAway)) {
 
             Thread.sleep(stepGoAway);
