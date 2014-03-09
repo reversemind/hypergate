@@ -36,8 +36,8 @@ public class ProxyFactoryPool {
     public Object newProxyInstance(ClientPool clientPool, Class interfaceClass) {
         // TODO make map for classLoader - key is a interfaceClass.name
         ClassLoader classLoader = interfaceClass.getClassLoader();
-        LOG.debug("GLIA PROXY FACTORY clientPool" + clientPool);
-        LOG.debug("GLIA PROXY FACTORY classLoader:" + classLoader);
+        LOG.debug("PROXY FACTORY clientPool" + clientPool);
+        LOG.debug("PROXY FACTORY classLoader:" + classLoader);
         return Proxy.newProxyInstance(classLoader, new Class[]{interfaceClass}, new ProxyHandlerPool(clientPool, interfaceClass));
     }
 

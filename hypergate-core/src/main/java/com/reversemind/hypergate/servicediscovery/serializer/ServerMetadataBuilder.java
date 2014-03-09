@@ -5,7 +5,7 @@ import com.reversemind.hypergate.server.IHyperGateServer;
 import java.io.Serializable;
 
 /**
- * Copyright (c) 2013 Eugene Kalinin
+ * Copyright (c) 2013-2014 Eugene Kalinin
  * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,17 +21,16 @@ import java.io.Serializable;
  */
 public class ServerMetadataBuilder implements Serializable {
 
-    public ServerMetadata build(IHyperGateServer gliaServer) {
-        if (gliaServer == null) {
+    public ServerMetadata build(IHyperGateServer server) {
+        if (server == null) {
             return null;
         }
         return new ServerMetadata(
-                gliaServer.getName(),
-                gliaServer.getInstanceName(),
-                gliaServer.getHost(),
-                gliaServer.getPort(),
-                gliaServer.getMetrics()
+                server.getName(),
+                server.getInstanceName(),
+                server.getHost(),
+                server.getPort(),
+                server.getMetrics()
         );
     }
-
 }

@@ -302,7 +302,7 @@ public class HyperGateClient implements IHyperGateClient, Serializable {
     public void start() throws Exception {
 
         if (this.running) {
-            throw new InstantiationException("Glia client is running");
+            throw new InstantiationException("HyperGate client is running");
         }
 
         // Configure the client.

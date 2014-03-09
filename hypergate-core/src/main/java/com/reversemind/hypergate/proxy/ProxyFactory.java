@@ -37,9 +37,8 @@ public class ProxyFactory implements Serializable {
     public Object newProxyInstance(IHyperGateClient client, Class interfaceClass) {
         // make map for classLoader - key is a interfaceClass.name
         ClassLoader classLoader = interfaceClass.getClassLoader();
-        LOG.debug("GLIA PROXY FACTORY gliaClient:" + client);
-        LOG.debug("GLIA PROXY FACTORY classLoader:" + classLoader);
+        LOG.debug("PROXY FACTORY HyperGateClient:" + client);
+        LOG.debug("PROXY FACTORY classLoader:" + classLoader);
         return Proxy.newProxyInstance(classLoader, new Class[]{interfaceClass}, new ProxyHandler(client, interfaceClass));
     }
-
 }

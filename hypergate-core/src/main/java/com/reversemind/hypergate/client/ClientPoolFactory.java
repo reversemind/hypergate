@@ -37,7 +37,7 @@ public class ClientPoolFactory extends BasePoolableObjectFactory<IHyperGateClien
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext(this.contextXML);
         IHyperGateClient client = applicationContext.getBean(this.beanName, this.clientClazz);
         if (client == null) {
-            throw new RuntimeException("Could not create gliaClient for beanName:" + beanName + " and Class:" + this.clientClazz + " and contextName:" + this.contextXML);
+            throw new RuntimeException("Could not create client for beanName:" + beanName + " and Class:" + this.clientClazz + " and contextName:" + this.contextXML);
         }
         client.start();
         return client;

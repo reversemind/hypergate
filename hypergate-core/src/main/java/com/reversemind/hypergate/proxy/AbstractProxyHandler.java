@@ -33,29 +33,30 @@ public abstract class AbstractProxyHandler implements InvocationHandler {
         return new Payload();
     }
 
-    public abstract IHyperGateClient getGliaClient() throws Exception;
+    public abstract IHyperGateClient getClient() throws Exception;
 
     public abstract Class getInterfaceClass();
 
     public abstract void returnClient() throws Exception;
 
-    public abstract void returnClient(IHyperGateClient gliaClient) throws Exception;
+    public abstract void returnClient(IHyperGateClient hyperGateClient) throws Exception;
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 
-        IHyperGateClient localGliaClient = null;
-        synchronized (this.getGliaClient()) {
-            localGliaClient = this.getGliaClient();
+        IHyperGateClient _hyperGateClient = null;
+
+        synchronized (this.getClient()) {
+            _hyperGateClient = this.getClient();
         }
 
-        if (localGliaClient == null) {
-            LOG.debug(" ^^^^^ gliaClient is NULL !!!" + Thread.currentThread().getName());
+        if (_hyperGateClient == null) {
+            LOG.debug(" _hyperGateClient is NULL - " + Thread.currentThread().getName());
             this.returnClient();
             throw new RuntimeException("Client is null");
         }
 
-        synchronized (localGliaClient) {
+        synchronized (_hyperGateClient) {
             LOG.debug("\n\n\n" + "!!!!!!!!!!!!!!!!\n" + "Invoke REMOTE METHOD\n\n\n");
 
             LOG.debug("Method:" + method.getName());
@@ -77,33 +78,32 @@ public abstract class AbstractProxyHandler implements InvocationHandler {
             payload.setArguments(args);
             payload.setInterfaceClass(this.getInterfaceClass());
 
-            LOG.debug(" =GLIA= CREATED ON CLIENT a PAYLOAD:" + payload);
-            LOG.debug(" =GLIA= gliaClient:" + localGliaClient);
-            if (localGliaClient != null) {
-                LOG.warn(" =GLIA= is running gliaClient:" + this.getGliaClient().isRunning());
+            LOG.debug(" Payload created on client:" + payload);
+            LOG.debug(" hyperGateClient:" + _hyperGateClient);
+            if (_hyperGateClient != null) {
+                LOG.warn(" HyeprGate is running hyperGateClient:" + this.getClient().isRunning());
             }
-//            assert this.getGliaClient() != null;
 
             // TODO need to refactor this catcher
             try {
-                localGliaClient.send(payload);
+                _hyperGateClient.send(payload);
             } catch (IOException ex) {
-                LOG.error(" =GLIA= gliaClient.send(payload);", ex);
-                LOG.error("=GLIA= gliaClient going to restart a client and send again data");
-                localGliaClient.restart();
+                LOG.error("hyperGateClient.send(payload);", ex);
+                LOG.error("HyperGateClient going to restart a client and send again data");
+                _hyperGateClient.restart();
 
                 try {
-                    localGliaClient.send(payload);
+                    _hyperGateClient.send(payload);
                 } catch (IOException ex2) {
                     LOG.error("After second send - exception", ex2);
-                    this.returnClient(localGliaClient);
-                    throw new ProxySendException("=GLIA= Could not to send data into server - let's reconnect");
+                    this.returnClient(_hyperGateClient);
+                    throw new ProxySendException("Could not to send data into server - let's reconnect");
                 }
             }
 
             long bT = System.currentTimeMillis();
-            Payload fromServer = localGliaClient.getPayload();
-            this.returnClient(localGliaClient);
+            Payload fromServer = _hyperGateClient.getPayload();
+            this.returnClient(_hyperGateClient);
             if (fromServer.getThrowable() != null) {
                 // TODO What if impossible to load a specific Class
                 if (fromServer.getThrowable().getCause() == null) {
@@ -125,7 +125,7 @@ public abstract class AbstractProxyHandler implements InvocationHandler {
 
         } //synchronized
 
-        this.returnClient(localGliaClient);
+        this.returnClient(_hyperGateClient);
 
         return null;
     }

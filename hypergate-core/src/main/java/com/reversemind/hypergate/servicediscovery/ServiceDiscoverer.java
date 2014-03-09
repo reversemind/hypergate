@@ -21,7 +21,7 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * Copyright (c) 2013 Eugene Kalinin
+ * Copyright (c) 2013-2014 Eugene Kalinin
  * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -135,7 +135,7 @@ public class ServiceDiscoverer implements Serializable, Closeable {
         ServiceDiscoverer discoverer = new ServiceDiscoverer(ZOOKEEPER_CONNECTION_STRING, BASE_PATH);
 
         ServerMetadata serverMetadata = new ServerMetadata(
-                "GLIA_SERVER",
+                "HGATE_SERVER",
                 "INSTANCE 001",
                 "localhost",
                 7000,
@@ -145,7 +145,7 @@ public class ServiceDiscoverer implements Serializable, Closeable {
         discoverer.advertise(serverMetadata, BASE_PATH);
 
         discoverer.advertise(new ServerMetadata(
-                "GLIA_SERVER",
+                "HGATE_SERVER",
                 "INSTANCE 002",
                 "localhost",
                 7001,
@@ -154,7 +154,7 @@ public class ServiceDiscoverer implements Serializable, Closeable {
 
         Thread.sleep(1000);
 
-        List<ServerMetadata> metadataList = discoverer.discover("GLIA_SERVER");
+        List<ServerMetadata> metadataList = discoverer.discover("HGATE_SERVER");
 
         discoverer.close();
     }

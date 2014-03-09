@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.InvocationHandler;
 
 /**
- * Copyright (c) 2013 Eugene Kalinin
+ * Copyright (c) 2013-2014 Eugene Kalinin
  * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ public class ProxyHandlerPool extends AbstractProxyHandler implements Invocation
 
     private ClientPool clientPool;
     private Class interfaceClass;
-    private IHyperGateClient gliaClient = null;
+    private IHyperGateClient client = null;
 
     public ProxyHandlerPool(ClientPool clientPool, Class interfaceClass) {
         this.clientPool = clientPool;
@@ -37,22 +37,22 @@ public class ProxyHandlerPool extends AbstractProxyHandler implements Invocation
     }
 
     @Override
-    public IHyperGateClient getGliaClient() throws Exception {
-        if (this.gliaClient == null) {
+    public IHyperGateClient getClient() throws Exception {
+        if (this.client == null) {
             try {
                 synchronized (this.clientPool) {
-                    this.gliaClient = this.clientPool.borrowObject();
+                    this.client = this.clientPool.borrowObject();
                 }
             } catch (Exception ex) {
-                LOG.error("Could not get a gliaClient from Pool #1 - try again", ex);
+                LOG.error("Could not get a hyperGateClient from Pool #1 - try again", ex);
 
                 try {
                     Thread.sleep(300);
                     synchronized (this.clientPool) {
-                        this.gliaClient = this.clientPool.borrowObject();
+                        this.client = this.clientPool.borrowObject();
                     }
                 } catch (Exception ex2) {
-                    LOG.error("Could not get a gliaClient from Pool #2 - Try to reload pool", ex2);
+                    LOG.error("Could not get a hyperGateClient from Pool #2 - Try to reload pool", ex2);
 
                     try {
                         ClientPoolFactory clientPoolFactory = this.clientPool.getClientPoolFactory();
@@ -62,18 +62,16 @@ public class ProxyHandlerPool extends AbstractProxyHandler implements Invocation
                         this.clientPool = new ClientPool(clientPoolFactory);
 
                         synchronized (this.clientPool) {
-                            this.gliaClient = this.clientPool.borrowObject();
+                            this.client = this.clientPool.borrowObject();
                         }
                     } catch (Exception ex3) {
-                        LOG.error("Could not get a glia client after reloaded pool #3", ex3);
+                        LOG.error("Could not get a client after reloaded pool #3", ex3);
                     }
-
                 }
-
             }
         }
         LOG.warn("Pool METRICS:" + this.clientPool.printPoolMetrics());
-        return this.gliaClient;
+        return this.client;
     }
 
     @Override
@@ -83,28 +81,28 @@ public class ProxyHandlerPool extends AbstractProxyHandler implements Invocation
 
     @Override
     public void returnClient() throws Exception {
-        if (this.gliaClient != null) {
-            synchronized (this.gliaClient) {
+        if (this.client != null) {
+            synchronized (this.client) {
                 try {
-                    this.clientPool.returnObject(this.gliaClient);
+                    this.clientPool.returnObject(this.client);
                 } catch (Exception ex) {
-                    LOG.error("EXCEPTION COULD NOT RETURN gliaClient into Pool", ex);
+                    LOG.error("Could not return HyperGateClient into Pool", ex);
                 }
-                this.gliaClient = null;
+                this.client = null;
             }
         }
     }
 
     @Override
-    public void returnClient(IHyperGateClient gliaClient) throws Exception {
-        if (gliaClient != null) {
-            synchronized (gliaClient) {
+    public void returnClient(IHyperGateClient hyperGateClient) throws Exception {
+        if (hyperGateClient != null) {
+            synchronized (hyperGateClient) {
                 try {
-                    this.clientPool.returnObject(gliaClient);
+                    this.clientPool.returnObject(hyperGateClient);
                 } catch (Exception ex) {
-                    LOG.error("EXCEPTION COULD NOT RETURN gliaClient into Pool #2", ex);
+                    LOG.error("Could not return HyperGateClient into Pool #2", ex);
                 }
-                gliaClient = null;
+                hyperGateClient = null;
             }
         }
     }

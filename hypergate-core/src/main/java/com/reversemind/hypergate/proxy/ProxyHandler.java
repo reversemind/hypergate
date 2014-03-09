@@ -21,17 +21,17 @@ import java.lang.reflect.InvocationHandler;
  */
 public class ProxyHandler extends AbstractProxyHandler implements InvocationHandler {
 
-    private IHyperGateClient gliaClient;
+    private IHyperGateClient client;
     private Class interfaceClass;
 
-    public ProxyHandler(IHyperGateClient gliaClient, Class interfaceClass) {
-        this.gliaClient = gliaClient;
+    public ProxyHandler(IHyperGateClient client, Class interfaceClass) {
+        this.client = client;
         this.interfaceClass = interfaceClass;
     }
 
     @Override
-    public IHyperGateClient getGliaClient() throws Exception {
-        return this.gliaClient;
+    public IHyperGateClient getClient() throws Exception {
+        return this.client;
     }
 
     @Override
@@ -44,6 +44,6 @@ public class ProxyHandler extends AbstractProxyHandler implements InvocationHand
     }
 
     @Override
-    public void returnClient(IHyperGateClient gliaClient) throws Exception {
+    public void returnClient(IHyperGateClient hyperGateClient) throws Exception {
     }
 }
