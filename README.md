@@ -1,7 +1,7 @@
-HyperGate
+HyperGate - is a nervous system of your cluster
 ===
 
-###HyperGate - is a nervous system of your cluster
+###HyperGate
 
 * HyperGate is distributed system for cluster node communication.
 * HyperGate is simple, compact, fast, scalable, highly available, supports POJO and EJB model.
