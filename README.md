@@ -19,20 +19,15 @@ HyperGate using [Netty](http://netty.io/), [Kryo](https://code.google.com/p/kryo
 
 Right now only in local TTK Nexus
 
-groupId: com.reversemind
-
-artifactId: hypergate-core
-
-version: 0.5.0-SNAPSHOT
-
+```xml
 <dependency>
   <groupId>com.reversemind</groupId>
   <artifactId>hypergate-core</artifactId>
   <version>0.5.0-SNAPSHOT</version>
 </dependency>
+```
 
 Stable is  0.5.0-SNAPSHOT - version
-
 
 #### Getting started
 
