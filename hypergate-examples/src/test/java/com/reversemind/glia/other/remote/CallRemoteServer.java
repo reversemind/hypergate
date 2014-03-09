@@ -2,8 +2,8 @@ package com.reversemind.glia.other.remote;
 
 import cluster.AddressSearchResult;
 import cluster.IAddressSearch;
-import com.reversemind.glia.client.GliaClient;
-import com.reversemind.glia.proxy.ProxyFactory;
+import com.reversemind.hypergate.client.HyperGateClient;
+import com.reversemind.hypergate.proxy.ProxyFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +37,7 @@ public class CallRemoteServer implements Serializable {
         int serverPort = 7000;
         String serverHost = "localhost";
 
-        GliaClient client = new GliaClient(serverHost, serverPort);
+        HyperGateClient client = new HyperGateClient(serverHost, serverPort);
         client.start();
 
         IAddressSearch addressSearch = (IAddressSearch) ProxyFactory.getInstance().newProxyInstance(client, IAddressSearch.class);

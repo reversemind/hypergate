@@ -1,7 +1,7 @@
 package com.reversemind.glia.test.servericediscovery;
 
-import com.reversemind.glia.client.GliaClientServerDiscovery;
-import com.reversemind.glia.client.ServerSelectorSimpleStrategy;
+import com.reversemind.hypergate.client.HyperGateClientServerDiscovery;
+import com.reversemind.hypergate.client.ServerSelectorSimpleStrategy;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -34,7 +34,7 @@ public class TestGliaClientServerDiscovery implements Serializable {
         final String SERVICE_NAME = "ADDRESS";
 
         final long clientTimeOut = 30000;
-        GliaClientServerDiscovery client = new GliaClientServerDiscovery(ZOOKEEPER_CONNECTION, SERVICE_BASE_PATH, SERVICE_NAME, clientTimeOut, new ServerSelectorSimpleStrategy());
+        HyperGateClientServerDiscovery client = new HyperGateClientServerDiscovery(ZOOKEEPER_CONNECTION, SERVICE_BASE_PATH, SERVICE_NAME, clientTimeOut, new ServerSelectorSimpleStrategy());
 
         client.start();
 

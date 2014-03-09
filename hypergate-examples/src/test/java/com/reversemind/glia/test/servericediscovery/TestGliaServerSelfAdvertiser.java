@@ -1,9 +1,9 @@
 package com.reversemind.glia.test.servericediscovery;
 
-import com.reversemind.glia.server.GliaPayloadProcessor;
-import com.reversemind.glia.server.GliaServerFactory;
-import com.reversemind.glia.server.IGliaPayloadProcessor;
-import com.reversemind.glia.server.IGliaServer;
+import com.reversemind.hypergate.server.IHyperGateServer;
+import com.reversemind.hypergate.server.IPayloadProcessor;
+import com.reversemind.hypergate.server.PayloadProcessor;
+import com.reversemind.hypergate.server.ServerFactory;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -35,9 +35,9 @@ public class TestGliaServerSelfAdvertiser implements Serializable {
         final String SERVICE_BASE_PATH = "/baloo/services";
         final String SERVICE_NAME = "GLIA.ADDRESS";
 
-        IGliaPayloadProcessor gliaPayloadProcessor = new GliaPayloadProcessor();
+        IPayloadProcessor gliaPayloadProcessor = new PayloadProcessor();
 
-        IGliaServer server01 = GliaServerFactory.builder()
+        IHyperGateServer server01 = ServerFactory.builder()
                 .setPayloadWorker(gliaPayloadProcessor)
                 .setName(SERVICE_NAME)
                 .setInstanceName("INSTANCE.001")
@@ -47,7 +47,7 @@ public class TestGliaServerSelfAdvertiser implements Serializable {
                 .setKeepClientAlive(false)
                 .build();
 
-        IGliaServer server02 = GliaServerFactory.builder()
+        IHyperGateServer server02 = ServerFactory.builder()
                 .setPayloadWorker(gliaPayloadProcessor)
                 .setName(SERVICE_NAME)
                 .setInstanceName("INSTANCE.002")

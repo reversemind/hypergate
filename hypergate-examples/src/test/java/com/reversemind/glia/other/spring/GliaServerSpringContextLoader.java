@@ -1,9 +1,9 @@
 package com.reversemind.glia.other.spring;
 
-import com.reversemind.glia.GliaPayload;
-import com.reversemind.glia.server.GliaServerFactory;
-import com.reversemind.glia.server.IGliaPayloadProcessor;
-import com.reversemind.glia.server.IGliaServer;
+import com.reversemind.hypergate.Payload;
+import com.reversemind.hypergate.server.ServerFactory;
+import com.reversemind.hypergate.server.IPayloadProcessor;
+import com.reversemind.hypergate.server.IHyperGateServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -36,7 +36,7 @@ public class GliaServerSpringContextLoader implements Serializable {
 
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("META-INF/glia-server-context.xml");
 
-        GliaServerFactory.Builder builderAdvertiser = applicationContext.getBean("serverBuilderAdvertiser", GliaServerFactory.Builder.class);
+        ServerFactory.Builder builderAdvertiser = applicationContext.getBean("serverBuilderAdvertiser", ServerFactory.Builder.class);
 
         LOG.debug("--------------------------------------------------------");
         LOG.debug("Builder properties:");
@@ -51,7 +51,7 @@ public class GliaServerSpringContextLoader implements Serializable {
         LOG.debug("Zookeeper base path:" + builderAdvertiser.getServiceBasePath());
 
 
-        IGliaServer server = builderAdvertiser.build();
+        IHyperGateServer server = builderAdvertiser.build();
 
         LOG.debug("\n\n");
         LOG.debug("--------------------------------------------------------");
@@ -70,14 +70,14 @@ public class GliaServerSpringContextLoader implements Serializable {
         server.shutdown();
 
 
-        GliaServerFactory.Builder builderSimple = (GliaServerFactory.Builder) applicationContext.getBean("serverBuilderSimple");
+        ServerFactory.Builder builderSimple = (ServerFactory.Builder) applicationContext.getBean("serverBuilderSimple");
         LOG.debug("" + builderSimple.port());
 
-        IGliaServer serverSimple = builderSimple
+        IHyperGateServer serverSimple = builderSimple
                 .setAutoSelectPort(true)
                 .setName("N A M E")
                 .setPort(8000)
-                .setPayloadWorker(new IGliaPayloadProcessor() {
+                .setPayloadWorker(new IPayloadProcessor() {
                     @Override
                     public Map<Class, Class> getPojoMap() {
                         return null;
@@ -96,7 +96,7 @@ public class GliaServerSpringContextLoader implements Serializable {
                     }
 
                     @Override
-                    public GliaPayload process(Object gliaPayloadObject) {
+                    public Payload process(Object gliaPayloadObject) {
                         return null;
                     }
                 }).build();

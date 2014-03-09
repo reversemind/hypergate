@@ -1,12 +1,8 @@
 package com.reversemind.glia.test.serialization;
 
 import com.esotericsoftware.kryo.Kryo;
-import com.esotericsoftware.kryo.serializers.DefaultArraySerializers;
 import com.esotericsoftware.kryo.serializers.DefaultSerializers;
-import com.reversemind.glia.GliaPayload;
-import com.reversemind.glia.GliaPayloadStatus;
-import com.reversemind.glia.serialization.KryoSerializer;
-import com.reversemind.glia.serialization.KryoSettings;
+import com.reversemind.hypergate.serialization.KryoSerializer;
 import com.reversemind.glia.test.pojo.shared.PAddressNode;
 import org.junit.Test;
 
@@ -58,8 +54,8 @@ public class TestKryoSerializer {
         kryo.register(ArrayList.class,kryo.getSerializer(List.class));
         kryo.register(PAddressNode.class);
 //        kryo.register(Throwable.class);
-//        kryo.register(GliaPayloadStatus.class);
-//        kryo.register(GliaPayload.class);
+//        kryo.register(PayloadStatus.class);
+//        kryo.register(Payload.class);
 
 
 

@@ -1,7 +1,7 @@
 package com.reversemind.glia.test.pojo.client;
 
-import com.reversemind.glia.client.GliaClient;
-import com.reversemind.glia.proxy.ProxyFactory;
+import com.reversemind.hypergate.client.HyperGateClient;
+import com.reversemind.hypergate.proxy.ProxyFactory;
 import com.reversemind.glia.test.pojo.shared.ISimplePojo;
 import com.reversemind.glia.test.pojo.shared.Settings;
 import com.reversemind.glia.test.pojo.shared.SimpleException;
@@ -31,7 +31,7 @@ public class RunClientException {
     public static void main(String... args) throws Exception {
         LOG.info("Run EXCEPTION client");
 
-        GliaClient client = new GliaClient(Settings.SERVER_HOST, Settings.SERVER_PORT);
+        HyperGateClient client = new HyperGateClient(Settings.SERVER_HOST, Settings.SERVER_PORT);
         client.start();
 
         ISimplePojo simplePojoProxy = (ISimplePojo) ProxyFactory.getInstance().newProxyInstance(client, ISimplePojo.class);

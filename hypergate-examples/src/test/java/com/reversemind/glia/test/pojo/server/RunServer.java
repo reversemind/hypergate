@@ -1,8 +1,8 @@
 package com.reversemind.glia.test.pojo.server;
 
-import com.reversemind.glia.server.GliaPayloadProcessor;
-import com.reversemind.glia.server.GliaServerFactory;
-import com.reversemind.glia.server.IGliaServer;
+import com.reversemind.hypergate.server.PayloadProcessor;
+import com.reversemind.hypergate.server.ServerFactory;
+import com.reversemind.hypergate.server.IHyperGateServer;
 import com.reversemind.glia.test.pojo.shared.ISimplePojo;
 import com.reversemind.glia.test.pojo.shared.Settings;
 import org.slf4j.Logger;
@@ -32,11 +32,11 @@ public class RunServer implements Serializable {
 
     public static void main(String... args) {
 
-        GliaPayloadProcessor gliaPayloadProcessor = new GliaPayloadProcessor();
-        gliaPayloadProcessor.registerPOJO(ISimplePojo.class, SimplePojo.class);
+        PayloadProcessor payloadProcessor = new PayloadProcessor();
+        payloadProcessor.registerPOJO(ISimplePojo.class, SimplePojo.class);
 
-        IGliaServer server = GliaServerFactory.builder()
-                .setPayloadWorker(gliaPayloadProcessor)
+        IHyperGateServer server = ServerFactory.builder()
+                .setPayloadWorker(payloadProcessor)
                 .setPort(Settings.SERVER_PORT)
                 .setAutoSelectPort(false)
                 .setKeepClientAlive(false)

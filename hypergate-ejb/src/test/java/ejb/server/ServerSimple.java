@@ -1,6 +1,6 @@
 package ejb.server;
 
-import com.reversemind.glia.integration.ejb.server.ServerEJBAdvertiser;
+import com.reversemind.hypergate.integration.ejb.server.ServerEJBAdvertiser;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;

@@ -1,8 +1,5 @@
 package com.test.simple.pool;
 
-import com.reversemind.glia.client.GliaClientServerDiscovery;
-import com.reversemind.glia.client.IGliaClient;
-import com.test.pool.ClientFactory;
 import org.apache.commons.pool.impl.GenericObjectPool;
 import org.junit.Test;
 import org.slf4j.Logger;

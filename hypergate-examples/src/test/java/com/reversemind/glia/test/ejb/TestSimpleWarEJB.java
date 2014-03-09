@@ -40,7 +40,7 @@ public class TestSimpleWarEJB {
     private final static Logger LOG = Logger.getLogger(TestSimpleWarEJB.class);
 
 //    @Inject
-//    GliaClient gliaClient;
+//    HyperGateClient gliaClient;
 
     @Inject
     ISimpleEJB simpleEJB;
@@ -74,9 +74,9 @@ public class TestSimpleWarEJB {
 
                         .resolveAsFiles())
 
-//                .addPackages(true, com.reversemind.glia.simple.GliaClient.class.getPackage())
+//                .addPackages(true, com.reversemind.glia.simple.HyperGateClient.class.getPackage())
 //                .addPackages(true, StartZookeeper.class.getPackage())
-//                .addPackages(true, GliaClient.class.getPackage())
+//                .addPackages(true, HyperGateClient.class.getPackage())
                 .addPackages(true, SimpleEJB.class.getPackage())
 
 //                .addAsResource("META-INF/glia-interface-map.xml", "META-INF/glia-interface-map.xml")

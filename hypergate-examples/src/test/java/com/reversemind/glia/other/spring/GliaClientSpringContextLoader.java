@@ -1,6 +1,6 @@
 package com.reversemind.glia.other.spring;
 
-import com.reversemind.glia.client.GliaClientServerDiscovery;
+import com.reversemind.hypergate.client.HyperGateClientServerDiscovery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -31,7 +31,7 @@ public class GliaClientSpringContextLoader implements Serializable {
     public static void main(String... args) throws Exception {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("META-INF/glia-client-context.xml");
 
-        GliaClientServerDiscovery client = applicationContext.getBean("clientServerDiscovery", GliaClientServerDiscovery.class);
+        HyperGateClientServerDiscovery client = applicationContext.getBean("clientServerDiscovery", HyperGateClientServerDiscovery.class);
 
         client.start();
 

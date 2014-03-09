@@ -1,10 +1,10 @@
 package com.test.test;
 
-import com.reversemind.glia.client.ClientPool;
-import com.reversemind.glia.client.ClientPoolFactory;
-import com.reversemind.glia.client.GliaClientServerDiscovery;
-import com.reversemind.glia.client.IGliaClient;
-import com.reversemind.glia.proxy.ProxyFactory;
+import com.reversemind.hypergate.client.ClientPool;
+import com.reversemind.hypergate.client.ClientPoolFactory;
+import com.reversemind.hypergate.client.HyperGateClientServerDiscovery;
+import com.reversemind.hypergate.client.IHyperGateClient;
+import com.reversemind.hypergate.proxy.ProxyFactory;
 import com.test.pool.ClientFactory;
 import ejb.client.ClientSimple;
 import ejb.server.ServerSimple;
@@ -119,11 +119,11 @@ public class ClientServerTest {
 
     @Test
     public void testClientPoolFactory() throws Exception {
-        ClientPoolFactory clientPoolFactory = new ClientPoolFactory("META-INF/glia-client-context.xml", "gliaClientServerDiscovery", GliaClientServerDiscovery.class);
+        ClientPoolFactory clientPoolFactory = new ClientPoolFactory("META-INF/glia-client-context.xml", "gliaClientServerDiscovery", HyperGateClientServerDiscovery.class);
         ClientPool clientPool = new ClientPool(clientPoolFactory);
 
         LOG.debug(clientPool.printPoolMetrics());
-        IGliaClient gliaClient = clientPool.borrowObject();
+        IHyperGateClient gliaClient = clientPool.borrowObject();
 
         LOG.debug(clientPool.printPoolMetrics());
     }
@@ -138,8 +138,8 @@ public class ClientServerTest {
 
     @Test
     public void testClientPool() throws Exception {
-        ClientFactory clientFactory = new ClientFactory("META-INF/glia-client-context.xml", "gliaClientServerDiscovery", GliaClientServerDiscovery.class);
-        GenericObjectPool<IGliaClient> pool = new GenericObjectPool<IGliaClient>(clientFactory, 5);
+        ClientFactory clientFactory = new ClientFactory("META-INF/glia-client-context.xml", "gliaClientServerDiscovery", HyperGateClientServerDiscovery.class);
+        GenericObjectPool<IHyperGateClient> pool = new GenericObjectPool<IHyperGateClient>(clientFactory, 5);
 
         LOG.debug("pool.getMaxActive():" + pool.getMaxActive());
         LOG.debug("pool.getMaxIdle():" + pool.getMaxIdle());
@@ -148,9 +148,9 @@ public class ClientServerTest {
 
         Thread.sleep(20000);
 
-        IGliaClient gliaClient = pool.borrowObject();
+        IHyperGateClient gliaClient = pool.borrowObject();
 
-        LOG.debug("IGliaClient gliaClient - " + gliaClient);
+        LOG.debug("IHyperGateClient gliaClient - " + gliaClient);
         ProxyFactory proxyFactory = ProxyFactory.getInstance();
 
         LOG.debug("pool.getMaxActive():" + pool.getMaxActive());

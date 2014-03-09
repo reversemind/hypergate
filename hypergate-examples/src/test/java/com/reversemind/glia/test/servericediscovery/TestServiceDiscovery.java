@@ -1,12 +1,12 @@
 package com.reversemind.glia.test.servericediscovery;
 
-import com.reversemind.glia.server.GliaPayloadProcessor;
-import com.reversemind.glia.server.GliaServerFactory;
-import com.reversemind.glia.server.IGliaPayloadProcessor;
-import com.reversemind.glia.server.IGliaServer;
-import com.reversemind.glia.servicediscovery.ServiceDiscoverer;
-import com.reversemind.glia.servicediscovery.serializer.ServerMetadata;
-import com.reversemind.glia.servicediscovery.serializer.ServerMetadataBuilder;
+import com.reversemind.hypergate.server.IHyperGateServer;
+import com.reversemind.hypergate.server.IPayloadProcessor;
+import com.reversemind.hypergate.server.PayloadProcessor;
+import com.reversemind.hypergate.server.ServerFactory;
+import com.reversemind.hypergate.servicediscovery.ServiceDiscoverer;
+import com.reversemind.hypergate.servicediscovery.serializer.ServerMetadata;
+import com.reversemind.hypergate.servicediscovery.serializer.ServerMetadataBuilder;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -42,11 +42,11 @@ public class TestServiceDiscovery implements Serializable {
 
         ServiceDiscoverer discoverer = new ServiceDiscoverer(ZOOKEEPER_CONNECTION_STRING, BASE_PATH);
 
-        //IGliaServer serverOne = new GliaServer(SERVICE_NAME, null, false);
+        //IHyperGateServer serverOne = new HyperGateServer(SERVICE_NAME, null, false);
 
-        IGliaPayloadProcessor gliaPayloadProcessor = new GliaPayloadProcessor();
+        IPayloadProcessor gliaPayloadProcessor = new PayloadProcessor();
 
-        IGliaServer serverOne = GliaServerFactory.builder()
+        IHyperGateServer serverOne = ServerFactory.builder()
                 .setPayloadWorker(gliaPayloadProcessor)
                 .setName(SERVICE_NAME)
                 .setZookeeperHosts(ZOOKEEPER_CONNECTION_STRING)
@@ -55,7 +55,7 @@ public class TestServiceDiscovery implements Serializable {
                 .setKeepClientAlive(false)
                 .build();
 
-        IGliaServer serverTwo = GliaServerFactory.builder()
+        IHyperGateServer serverTwo = ServerFactory.builder()
                 .setPayloadWorker(gliaPayloadProcessor)
                 .setName(SERVICE_NAME)
                 .setZookeeperHosts(ZOOKEEPER_CONNECTION_STRING)

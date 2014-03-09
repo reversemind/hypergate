@@ -1,7 +1,7 @@
 package test;
 
-import com.reversemind.glia.server.GliaServerFactory;
-import com.reversemind.glia.server.IGliaServer;
+import com.reversemind.hypergate.server.ServerFactory;
+import com.reversemind.hypergate.server.IHyperGateServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -32,10 +32,10 @@ public class go implements Serializable {
     public static void main(String... args) {
         System.setProperty("curator-log-events", "true");
 
-        IGliaServer server;
+        IHyperGateServer server;
 
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("META-INF/glia-server-context.xml");
-        GliaServerFactory.Builder builderAdvertiser = applicationContext.getBean("serverBuilder", GliaServerFactory.Builder.class);
+        ServerFactory.Builder builderAdvertiser = applicationContext.getBean("serverBuilder", ServerFactory.Builder.class);
 
         LOG.debug("--------------------------------------------------------");
         LOG.debug("Builder properties:");

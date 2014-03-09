@@ -1,7 +1,7 @@
 package com.reversemind.glia.test.spring;
 
-import com.reversemind.glia.server.GliaServer;
-import com.reversemind.glia.server.IGliaPayloadProcessor;
+import com.reversemind.hypergate.server.HyperGateServer;
+import com.reversemind.hypergate.server.IPayloadProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -34,7 +34,7 @@ public class RunServerFromSpringContext implements Serializable {
     public static void main(String... args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("META-INF/glia-server-context.xml");
 
-        IGliaPayloadProcessor payloadProcessor = (IGliaPayloadProcessor) context.getBean("serverPayloadProcessor");
+        IPayloadProcessor payloadProcessor = (IPayloadProcessor) context.getBean("serverPayloadProcessor");
 
         Map<Class, Class> map = payloadProcessor.getPojoMap();
         Set<Class> set = map.keySet();
@@ -42,7 +42,7 @@ public class RunServerFromSpringContext implements Serializable {
             LOG.debug(clazz.getCanonicalName() + "|" + map.get(clazz).getCanonicalName());
         }
 
-        GliaServer server = (GliaServer) context.getBean("gliaServer");
+        HyperGateServer server = (HyperGateServer) context.getBean("gliaServer");
         if (server != null) {
             LOG.debug("!!!!");
         }

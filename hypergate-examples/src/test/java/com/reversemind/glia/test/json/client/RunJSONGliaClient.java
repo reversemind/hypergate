@@ -1,7 +1,7 @@
 package com.reversemind.glia.test.json.client;
 
-import com.reversemind.glia.client.GliaClient;
-import com.reversemind.glia.proxy.ProxyFactory;
+import com.reversemind.hypergate.client.HyperGateClient;
+import com.reversemind.hypergate.proxy.ProxyFactory;
 import com.reversemind.glia.test.json.Settings;
 import com.reversemind.glia.test.json.shared.IDoSomething;
 import com.reversemind.glia.test.json.shared.JSONBuilder;
@@ -34,7 +34,7 @@ public class RunJSONGliaClient {
     public static void main(String... args) throws Exception {
 
         //
-        GliaClient gliaClient = new GliaClient(Settings.SERVER_HOST, Settings.SERVER_PORT);
+        HyperGateClient gliaClient = new HyperGateClient(Settings.SERVER_HOST, Settings.SERVER_PORT);
         gliaClient.start();
 
         // create proxy for remote service

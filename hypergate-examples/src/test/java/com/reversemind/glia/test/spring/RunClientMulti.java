@@ -1,7 +1,7 @@
 package com.reversemind.glia.test.spring;
 
-import com.reversemind.glia.client.GliaClient;
-import com.reversemind.glia.proxy.ProxyFactory;
+import com.reversemind.hypergate.client.HyperGateClient;
+import com.reversemind.hypergate.proxy.ProxyFactory;
 import com.reversemind.glia.test.pojo.shared.ISimplePojo;
 import com.reversemind.glia.test.pojo.shared.PAddressNode;
 import org.slf4j.Logger;
@@ -30,7 +30,7 @@ public class RunClientMulti implements Serializable {
 
     private static final Logger LOG = LoggerFactory.getLogger(RunClientMulti.class);
 
-    static GliaClient client;
+    static HyperGateClient client;
 
     public static void main(String... args) throws Exception {
         LOG.debug("Run client");
@@ -38,7 +38,7 @@ public class RunClientMulti implements Serializable {
         int serverPort = 7000;
         String serverHost = "localhost";
 
-        client = new GliaClient(serverHost, serverPort);
+        client = new HyperGateClient(serverHost, serverPort);
         client.start();
 
         Thread[] threadArray = new Thread[10];

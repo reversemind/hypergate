@@ -14,7 +14,7 @@
 
     <import resource="glia-interface-map.xml" />
 
-    <bean id="serverPayloadProcessor" class="com.reversemind.glia.server.GliaPayloadProcessor">
+    <bean id="serverPayloadProcessor" class="com.reversemind.hypergate.server.PayloadProcessor">
         <property name="pojoMap" ref="pojoMap"/>
         <property name="ejbMap" ref="ejbMap"/>
         <property name="jndiEnvironment">
@@ -38,13 +38,13 @@
         </property>
     </bean>
 
-    <!--Builder for simple GliaServer-->
-    <bean id="serverBuilderSimple" class="com.reversemind.glia.server.GliaServerFactory.Builder" >
+    <!--Builder for simple HyperGateServer-->
+    <bean id="serverBuilderSimple" class="com.reversemind.hypergate.server.ServerFactory.Builder" >
         <property name="port" value="12534"/>
     </bean>
 
     <!--Builder for advertiser server-->
-    <bean id="serverBuilderAdvertiser" class="com.reversemind.glia.server.GliaServerFactory.Builder" >
+    <bean id="serverBuilderAdvertiser" class="com.reversemind.hypergate.server.ServerFactory.Builder" >
         <property name="payloadWorker" ref="serverPayloadProcessor" />
 
         <property name="name" value="${glia.server.advertiser.name}" />
@@ -62,7 +62,7 @@
     </bean>
 
     <!--Builder for Simple server-->
-    <bean id="serverBuilder" class="com.reversemind.glia.server.GliaServerFactory.Builder" >
+    <bean id="serverBuilder" class="com.reversemind.hypergate.server.ServerFactory.Builder" >
         <property name="payloadWorker" ref="serverPayloadProcessor" />
 
         <property name="name" value="${glia.server.simple.name}" />

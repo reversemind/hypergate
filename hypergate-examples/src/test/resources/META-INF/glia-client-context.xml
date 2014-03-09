@@ -13,10 +13,10 @@
     <context:property-placeholder location="META-INF/glia-client.properties"/>
 
 
-    <bean id="selectorStrategy" class="com.reversemind.glia.client.ServerSelectorSimpleStrategy" />
+    <bean id="selectorStrategy" class="com.reversemind.hypergate.client.ServerSelectorSimpleStrategy" />
 
     <!--using Zookeeper for connection -->
-    <bean id="gliaClientServerDiscovery" class="com.reversemind.glia.client.GliaClientServerDiscovery" >
+    <bean id="gliaClientServerDiscovery" class="com.reversemind.hypergate.client.HyperGateClientServerDiscovery" >
         <constructor-arg index="0" value="${glia.client.zookeeper.connection}" />
         <constructor-arg index="1" value="${glia.client.zookeeper.base.path}" />
         <constructor-arg index="2" value="${glia.client.service.name}" />
@@ -25,7 +25,7 @@
     </bean>
 
     <!--direct connection -->
-    <bean id="gliaClient" class="com.reversemind.glia.client.GliaClient" >
+    <bean id="gliaClient" class="com.reversemind.hypergate.client.HyperGateClient" >
         <constructor-arg index="0" value="${glia.client.service.host}" />
         <constructor-arg index="1" value="${glia.client.service.port}" />
     </bean>

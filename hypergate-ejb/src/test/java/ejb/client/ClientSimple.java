@@ -1,8 +1,7 @@
 package ejb.client;
 
-import com.reversemind.glia.integration.ejb.client.ClientEJBDiscovery;
+import com.reversemind.hypergate.integration.ejb.client.ClientEJBDiscovery;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.*;
 import java.io.Serializable;
 

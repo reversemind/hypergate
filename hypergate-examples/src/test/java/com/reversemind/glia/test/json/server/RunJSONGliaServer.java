@@ -1,9 +1,9 @@
 package com.reversemind.glia.test.json.server;
 
-import com.reversemind.glia.server.GliaPayloadProcessor;
-import com.reversemind.glia.server.GliaServerFactory;
-import com.reversemind.glia.server.IGliaPayloadProcessor;
-import com.reversemind.glia.server.IGliaServer;
+import com.reversemind.hypergate.server.IHyperGateServer;
+import com.reversemind.hypergate.server.IPayloadProcessor;
+import com.reversemind.hypergate.server.PayloadProcessor;
+import com.reversemind.hypergate.server.ServerFactory;
 import com.reversemind.glia.test.json.Settings;
 import com.reversemind.glia.test.json.shared.IDoSomething;
 import org.slf4j.Logger;
@@ -31,10 +31,10 @@ public class RunJSONGliaServer {
 
     public static void main(String... args) throws InterruptedException {
 
-        IGliaPayloadProcessor gliaPayloadProcessor = new GliaPayloadProcessor();
+        IPayloadProcessor gliaPayloadProcessor = new PayloadProcessor();
         gliaPayloadProcessor.registerPOJO(IDoSomething.class, ServerPojo.class);
 
-        IGliaServer gliaServer = GliaServerFactory.builder()
+        IHyperGateServer gliaServer = ServerFactory.builder()
                 .setPayloadWorker(gliaPayloadProcessor)
                 .setName("GLIA_JSON_SERVER")
                 .setPort(Settings.SERVER_PORT)
