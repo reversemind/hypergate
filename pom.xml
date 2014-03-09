@@ -2,21 +2,21 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.reversemind</groupId>
-    <artifactId>glia</artifactId>
+    <artifactId>hypergate</artifactId>
     <packaging>pom</packaging>
     <version>1.9.2-SNAPSHOT</version>
 
     <modules>
-        <module>glia-examples</module>
-        <module>glia-core</module>
-        <module>glia-ejb</module>
-        <module>glia-pojo</module>
+        <module>hypergate-examples</module>
+        <module>hypergate-core</module>
+        <module>hypergate-ejb</module>
+        <module>hypergate-pojo</module>
     </modules>
-    <name>glia</name>
+    <name>hypergate</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <glia.version>1.9.2-SNAPSHOT</glia.version>
+        <hypergate.version>1.9.2-SNAPSHOT</hypergate.version>
     </properties>
 
     <distributionManagement>

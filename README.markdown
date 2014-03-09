@@ -1,16 +1,15 @@
-# Glia - is a nervous system of you cluster
+# HyperGate - is a nervous system of you cluster
 
-* Glia is distributed system for cluster node communication.
-* Glia is simple, compact, fast, scalable, highly available, supports POJO and EJB model.
-* Glia could be run as a standalone console application or inside any container (Servlet, EJB, Spring & etc.)
-* Glia could be utilized by any JVM based language (Groovy, Scala, Clojure, JRuby, Jython & etc.)
+* HyperGate is distributed system for cluster node communication.
+* HyperGate is simple, compact, fast, scalable, highly available, supports POJO and EJB model.
+* HyperGate could be run as a standalone console application or inside any container (Servlet, EJB, Spring & etc.)
+* HyperGate could be utilized by any JVM based language (Groovy, Scala, Clojure, JRuby, Jython & etc.)
 
 
 Wiki definition of the word glia.
-
 Glia (Greek γλία, γλοία "glue"; pronounced in English as either /ˈɡliːə/ or /ˈɡlaɪə/), are non-neuronal cells that maintain homeostasis, form myelin, and provide support and protection for neurons in the brain, and for neurons in other parts of the nervous system such as in the autonomic nervous system
 
-Glia using [Netty](http://netty.io/), [Kryo](https://code.google.com/p/kryo/), [Curator](https://github.com/Netflix/curator), [Zookeeper](http://zookeeper.apache.org/)
+HyperGate using [Netty](http://netty.io/), [Kryo](https://code.google.com/p/kryo/), [Curator](https://github.com/Netflix/curator), [Zookeeper](http://zookeeper.apache.org/)
 
 
 #### Artifacts
@@ -19,13 +18,13 @@ Right now only in local TTK Nexus
 
 groupId: com.reversemind
 
-artifactId: glia-core
+artifactId: hypergate-core
 
 version: 1.9.2-SNAPSHOT
 
 <dependency>
   <groupId>com.reversemind</groupId>
-  <artifactId>glia-core</artifactId>
+  <artifactId>hypergate-core</artifactId>
   <version>1.9.2-SNAPSHOT</version>
 </dependency>
 
@@ -39,7 +38,7 @@ Stable is  1.9.2-SNAPSHOT - version
 Documentation and tutorials on the [Glia Wiki](https://github.com/dendrite/viscosity/wiki/Glia-Wiki)
 
 #### Logging
- Glia uses [SLF4J](http://www.slf4j.org/) for logging. SLF4J is a facade over logging that allows you to plug in any (or no) logging framework.
+ HyperGate uses [SLF4J](http://www.slf4j.org/) for logging. SLF4J is a facade over logging that allows you to plug in any (or no) logging framework.
 
 #### License
 
