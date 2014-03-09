@@ -1,4 +1,7 @@
-# HyperGate - is a nervous system of you cluster
+HyperGate - is a nervous system of your cluster
+===
+
+###HyperGate
 
 * HyperGate is distributed system for cluster node communication.
 * HyperGate is simple, compact, fast, scalable, highly available, supports POJO and EJB model.
@@ -148,6 +151,7 @@ https://community.jboss.org/wiki/JBPM-530FinalManualDeploymentGuideForBeginner#a
 
 a. Remove pojo and jpa modules
 Pojo extension
+```xml
 <extension module="org.jboss.as.osgi"/>
 <!-- Remove this line extension module="org.jboss.as.pojo"/-->
 <extension module="org.jboss.as.remoting"/>
@@ -155,10 +159,10 @@ And pojo domain
 <subsystem xmlns="urn:jboss:domain:naming:1.0" />
 <!--subsystem xmlns="urn:jboss:domain:pojo:1.0" /-->
 <subsystem xmlns="urn:jboss:domain:osgi:1.0" activation="lazy">
+```
 
 
-
-
+```sh
 Look through - FutureTask
 
 http://stackoverflow.com/questions/1247390/java-native-process-timeout/1249984#1249984
@@ -166,35 +170,35 @@ http://stackoverflow.com/questions/1247390/java-native-process-timeout/1249984#1
 http://stackoverflow.com/questions/1234429/best-ways-to-handle-maximum-execution-time-for-threads-in-java
 
 for jump start = http://habrahabr.ru/post/116363/
-
+```
 
 
 
 
 --------
-
+```xml
 Extension
 <extension module="org.jboss.as.pojo"/>
 
 And pojo domain
 <subsystem xmlns="urn:jboss:domain:pojo:1.0"/>
-
+```
 
 
 
 
 ---------
-
+```sh
 12:00:20,521 INFO  [stdout] (MSC service thread 1-6) 306 [MSC service thread 1-6] DEBUG org.apache.zookeeper.ClientCnxn  - zookeeper.disableAutoWatchReset is false
 12:00:20,557 INFO  [stdout] (MSC service thread 1-6-SendThread(localhost:2181)) 339 [MSC service thread 1-6-SendThread(localhost:2181)] DEBUG org.apache.zookeeper.client.ZooKeeperSaslClient  - JAAS loginContext is: Client
 12:00:20,569 INFO  [stdout] (MSC service thread 1-6-SendThread(localhost:2181)) 354 [MSC service thread 1-6-SendThread(localhost:2181)] WARN org.apache.zookeeper.client.ZooKeeperSaslClient  - Could not login: the client is being asked for a password, but the Zookeeper client code does not currently support obtaining a password from the user. Make sure that the client is configured to use a ticket cache (using the JAAS configuration setting 'useTicketCache=true)' and restart the client. If you still get this message after that, the TGT in the ticket cache has expired and must be manually refreshed. To do so, first determine if you are using a password or a keytab. If the former, run kinit in a Unix shell in the environment of the user who is running this Zookeeper client using the command 'kinit <princ>' (where <princ> is the name of the client's Kerberos principal). If the latter, do 'kinit -k -t <keytab> <princ>' (where <princ> is the name of the Kerberos principal, and <keytab> is the location of the keytab file). After manually refreshing your cache, restart this client. If you continue to see this message after manually refreshing your cache, ensure that your KDC host's clock is in sync with this host's clock.
-
+```sh
 
 
 ------
 
 
-
+```sh
 13:33:39,968 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-5) JBAS015877: Stopped deployment address-ejb-1.0-SNAPSHOT.jar in 743ms
 13:33:39,985 INFO  [org.jboss.as.server.deployment] (MSC service thread 1-6) JBAS015877: Stopped deployment address-web-1.0-SNAPSHOT.war in 760ms
 13:33:40,000 ERROR [stderr] (Timer-1) java.lang.IllegalStateException: instance must be started before calling this method
@@ -223,3 +227,4 @@ And pojo domain
 13:33:40,006 ERROR [stderr] (Timer-1)   at org.jboss.modules.ConcurrentClassLoader.performLoadClass(ConcurrentClassLoader.java:398)
 13:33:40,006 ERROR [stderr] (Timer-1)   at org.jboss.modules.ConcurrentClassLoader.loadClass(ConcurrentClassLoader.java:120)
 13:33:40,007 ERROR [stderr] (Timer-1)   ... 6 more
+```
