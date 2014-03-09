@@ -1,0 +1,64 @@
+
+http://www.datastax.com/docs/1.2/install/recommended_settings
+
+Recommended settings for production installations¶
+Back to Table of Contents
+All Documents List
+The following recommendations are for production environments. You may need to adjust them accordingly for your implementation.
+
+User resource limits¶
+
+Cassandra requires greater user resource limits than the default settings. Add the following entries to your /etc/security/limits.conf file:
+
+* soft nofile 32768
+* hard nofile 32768
+root soft nofile 32768
+root hard nofile 32768
+* soft memlock unlimited
+* hard memlock unlimited
+root soft memlock unlimited
+root hard memlock unlimited
+* soft as unlimited
+* hard as unlimited
+root soft as unlimited
+root hard as unlimited
+In addition, you may need to be run the following command:
+
+sysctl -w vm.max_map_count=131072
+The command enables more mapping. It is not in the limits.conf file.
+
+On CentOS, RHEL, OEL Sysems, change the system limits from 1024 to 10240 in /etc/security/limits.d/90-nproc.conf and then start a new shell for these changes to take effect.
+
+*  soft  nproc  10240
+For more information, see Insufficient user resource limits errors.
+
+Disable swap¶
+
+Disable swap entirely. This prevents the Java Virtual Machine (JVM) from responding poorly because it is buried in swap and ensures that the OS OutOfMemory (OOM) killer does not kill Cassandra.
+
+sudo swapoff --all
+For more information, see Nodes seem to freeze after some period of time.
+
+Synchronize clocks¶
+
+The clocks on all nodes should be synchronized. You can use NTP (Network Time Protocol) or other methods.
+
+This is required because columns are only overwritten if the timestamp in the new version of the column is more recent than the existing column.
+
+Optimum blockdev --setra settings for RAID¶
+
+Typically, a setra of 512 is recommended, especially on Amazon EC2 RAID0 devices.
+
+Check to ensure setra is not set to 65536:
+
+sudo blockdev --report /dev/<device>
+To set setra:
+
+sudo blockdev --setra 512 /dev/<device>
+Java Virtual Machine¶
+
+The latest 64-bit version of Java 6 is recommended, not the OpenJDK. At a minimum, use JRE 1.6.0_32. Java 7 is not recommended. See Installing the JRE and JNA.
+
+Java Native Access¶
+
+Java Native Access (JNA) is required for production installations.

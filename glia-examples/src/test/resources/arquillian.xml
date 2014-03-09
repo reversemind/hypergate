@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<arquillian xmlns="http://jboss.org/schema/arquillian"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="
+        http://jboss.org/schema/arquillian
+        http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
+
+    <!--DOC-->
+    <!--EXTRA features-->
+    <defaultProtocol type="Servlet 3.0" />
+
+    <container qualifier="jbossas-managed" default="true">
+        <configuration>
+
+            <!--It's a correct relative path to maven's uploadable JBoss -->
+            <!--<property name="jbossHome">address-test/target/jboss-as-7.1.1.Final</property>-->
+
+            <!--I think it's a better practice just use a preconfigures JBoss-->
+            <!--<property name="jbossHome">/jbossas7_test</property>-->
+            <property name="jbossHome">/usr/jboss/test_jbossas7</property>
+            <property name="outputToConsole">true</property>
+
+            <property name="javaVmArguments">-Xmx512m -Xmx2048m -XX:MaxPermSize=128m -Xverify:none -XX:+UseFastAccessorMethods</property>
+
+            <property name="managementAddress">127.0.0.1</property>
+            <property name="managementPort">29999</property>
+            <property name="username">admin</property>
+            <property name="password">admin123</property>
+        </configuration>
+    </container>
+
+    <!--<extension qualifier="persistence">-->
+        <!--&lt;!&ndash;java:/datasource/arquillian - this is added dynamically look jbossas-ds.xml&ndash;&gt;-->
+        <!--<property name="defaultDataSource">java:/datasource/arquillian</property>-->
+        <!--&lt;!&ndash;<property name="userTransactionJndi">java:jboss/UserTransaction</property>&ndash;&gt;-->
+        <!--&lt;!&ndash;<property name="alwaysExcludeFromDataSetsComparision">id</property>&ndash;&gt;-->
+    <!--</extension>-->
+
+    <!--<extension qualifier="persistence-dbunit">-->
+        <!--<property name="datatypeFactory">org.dbunit.ext.postgresql.PostgresqlDataTypeFactory</property>-->
+        <!--&lt;!&ndash;<property name="excludeTablesFromCleanup">hibernate_sequence</property>&ndash;&gt;-->
+    <!--</extension>-->
+
+</arquillian>

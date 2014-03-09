@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util-3.0.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <util:map id="pojoMap" map-class="java.util.HashMap" key-type="java.lang.Class" value-type="java.lang.Class">
+        <entry key="com.reversemind.glia.test.pojo.shared.ISimplePojo" value="com.reversemind.glia.test.pojo.server.SimplePojo"/>
+    </util:map>
+
+    <util:map id="ejbMap" map-class="java.util.HashMap" key-type="java.lang.Class" value-type="java.lang.String">
+        <!--LOCAL EJB CALL-->
+        <!--<entry key="cluster.IAddressSearch" value="java:global/address/address-ejb-1.0-SNAPSHOT/AddressSearch!cluster.IAddressSearch"/>-->
+        <!--REMOTE CALL FROM STANDALONE CONSOLE CLIENT-->
+        <!--<entry key="cluster.IAddressSearch" value="ejb:app/address-ejb-1.0-SNAPSHOT/AddressSearch!cluster.IAddressSearch"/>-->
+    </util:map>
+
+
+    <!--Examples of JNDI names from Jboss AS 7.1.1-->
+
+    <!--java:global/address/address-ejb-1.0-SNAPSHOT/AddressSearch!cluster.IAddressSearch-->
+    <!--java:app/address-ejb-1.0-SNAPSHOT/AddressSearch!cluster.IAddressSearch-->
+    <!--java:module/AddressSearch!cluster.IAddressSearch-->
+    <!--java:global/address/address-ejb-1.0-SNAPSHOT/AddressSearch-->
+    <!--java:app/address-ejb-1.0-SNAPSHOT/AddressSearch-->
+    <!--java:module/AddressSearch-->
+
+</beans>
