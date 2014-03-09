@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
 import java.lang.reflect.Proxy;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Copyright (c) 2013 Eugene Kalinin
@@ -25,9 +27,12 @@ import java.lang.reflect.Proxy;
 public class ProxyFactory implements Serializable {
 
     private final static Logger LOG = LoggerFactory.getLogger(ProxyFactory.class);
+
     private static final ProxyFactory proxyFactory = new ProxyFactory();
+    private Map<Class, ClassLoader> classLoaderMap;
 
     private ProxyFactory() {
+        this.classLoaderMap = new HashMap<Class, ClassLoader>(1);
     }
 
     public static ProxyFactory getInstance() {
@@ -35,10 +40,18 @@ public class ProxyFactory implements Serializable {
     }
 
     public Object newProxyInstance(IHyperGateClient client, Class interfaceClass) {
-        // make map for classLoader - key is a interfaceClass.name
-        ClassLoader classLoader = interfaceClass.getClassLoader();
+
+        ClassLoader classLoader = this.classLoaderMap.get(interfaceClass);
+        if (classLoader == null) {
+            classLoader = interfaceClass.getClassLoader();
+            synchronized (this.classLoaderMap) {
+                this.classLoaderMap.put(interfaceClass, classLoader);
+            }
+        }
+
         LOG.debug("PROXY FACTORY HyperGateClient:" + client);
         LOG.debug("PROXY FACTORY classLoader:" + classLoader);
+
         return Proxy.newProxyInstance(classLoader, new Class[]{interfaceClass}, new ProxyHandler(client, interfaceClass));
     }
 }
