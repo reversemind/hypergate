@@ -29,6 +29,7 @@ import java.util.*;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+// TODO split it into two impl for EJB & POJO
 public class PayloadProcessor implements IPayloadProcessor, Serializable {
 
     private final static Logger LOG = LoggerFactory.getLogger(PayloadProcessor.class);

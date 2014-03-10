@@ -56,7 +56,7 @@ public abstract class HyperGateServer implements IHyperGateServer, Serializable 
     private boolean keepClientAlive = false;
 
     private Payload payload;
-    private IPayloadProcessor gliaPayloadWorker;
+    private IPayloadProcessor payloadProcessor;
 
     private final Kryo kryo = new KryoSettings().getKryo();
     private KryoDeserializer kryoDeserializer;
@@ -81,7 +81,7 @@ public abstract class HyperGateServer implements IHyperGateServer, Serializable 
         if (builder.getPayloadWorker() == null) {
             throw new RuntimeException("Assign a setPayloadWorker to server!");
         }
-        this.gliaPayloadWorker = builder.getPayloadWorker();
+        this.payloadProcessor = builder.getPayloadWorker();
 
         // drop connection from client or not
         LOG.warn(" =GLIA= set value for KeepClientAlive from builder:" + builder.isKeepClientAlive());
@@ -215,8 +215,8 @@ public abstract class HyperGateServer implements IHyperGateServer, Serializable 
                         Executors.newCachedThreadPool(),
                         Executors.newCachedThreadPool()));
 
-        //this.handler = new ServerHandler(gliaPayloadWorker, metrics, keepClientAlive);
-        this.handler = new ServerHandler(gliaPayloadWorker, metrics, keepClientAlive, this.kryoDeserializer);
+        //this.handler = new ServerHandler(payloadProcessor, metrics, keepClientAlive);
+        this.handler = new ServerHandler(payloadProcessor, metrics, keepClientAlive, this.kryoDeserializer);
 
         // Set up the pipeline factory
         // TODO add Kryo serializer

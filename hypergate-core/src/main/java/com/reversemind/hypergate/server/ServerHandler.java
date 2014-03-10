@@ -26,19 +26,19 @@ public class ServerHandler extends SimpleChannelUpstreamHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(ServerHandler.class.getName());
 
-    private IPayloadProcessor gliaPayloadWorker;
+    private IPayloadProcessor payloadProcessor;
     private boolean dropClientConnection = false;
     private Metrics metrics;
     private KryoDeserializer kryoDeserializer;
 
-    public ServerHandler(IPayloadProcessor gliaPayloadWorker, Metrics metrics, boolean dropClientConnection) {
-        this.gliaPayloadWorker = gliaPayloadWorker;
+    public ServerHandler(IPayloadProcessor payloadProcessor, Metrics metrics, boolean dropClientConnection) {
+        this.payloadProcessor = payloadProcessor;
         this.dropClientConnection = dropClientConnection;
         this.metrics = metrics;
     }
 
-    public ServerHandler(IPayloadProcessor gliaPayloadWorker, Metrics metrics, boolean dropClientConnection, KryoDeserializer kryoDeserializer) {
-        this.gliaPayloadWorker = gliaPayloadWorker;
+    public ServerHandler(IPayloadProcessor payloadProcessor, Metrics metrics, boolean dropClientConnection, KryoDeserializer kryoDeserializer) {
+        this.payloadProcessor = payloadProcessor;
         this.dropClientConnection = dropClientConnection;
         this.metrics = metrics;
         this.kryoDeserializer = kryoDeserializer;
@@ -60,7 +60,7 @@ public class ServerHandler extends SimpleChannelUpstreamHandler {
 
         Object object = null;
         try {
-            object = this.gliaPayloadWorker.process(this.kryoDeserializer.deserialize((byte[]) messageEvent.getMessage()));
+            object = this.payloadProcessor.process(this.kryoDeserializer.deserialize((byte[]) messageEvent.getMessage()));
         } catch (IOException e) {
             LOG.error("KryoDeserializer needs for array", e);
         }
