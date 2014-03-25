@@ -94,7 +94,7 @@ public abstract class AbstractClientEJB implements IClientEJB, Serializable {
         if (clientPool == null) {
             this.clientFullReconnect();
             if (clientPool == null) {
-                throw new Exception("Glia client is not running");
+                throw new Exception("HyperGate client is not running");
             }
         }
 

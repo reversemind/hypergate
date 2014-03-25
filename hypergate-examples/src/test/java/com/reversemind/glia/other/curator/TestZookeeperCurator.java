@@ -77,7 +77,7 @@ public class TestZookeeperCurator {
         //String path = "/zookeeper/testNode_EPH_" + System.currentTimeMillis();
         //String path = "/testNode_EPH_" + System.currentTimeMillis();
 
-        String path = "/baloo/server/address/GLIA_SERVER_";
+        String path = "/baloo/server/address/HYPERGATE_SERVER_";
         String value = "simple data";
 
         client.create().withMode(CreateMode.EPHEMERAL).forPath(path, value.getBytes());
@@ -124,7 +124,7 @@ public class TestZookeeperCurator {
         CuratorFramework client = CuratorFrameworkFactory.newClient(connectionString, new ExponentialBackoffRetry(500, 3));
         client.start();
 
-        String path = "/baloo/application/address/server/GLIA_SERVER";
+        String path = "/baloo/application/address/server/HYPERGATE_SERVER";
         //String path = "/baloo";
         client.create().forPath(path);
 
@@ -141,7 +141,7 @@ public class TestZookeeperCurator {
     @Test
     public void testCreateHierarchyPath() throws Exception {
 
-        String hierarchyPath = "/baloo/application/address/server/GLIA_SERVER/NODE2";
+        String hierarchyPath = "/baloo/application/address/server/HYPERGATE_SERVER/NODE2";
 
         String connectionString = "localhost:2181";
         CuratorFramework client = CuratorFrameworkFactory.newClient(connectionString, new ExponentialBackoffRetry(500, 3));
@@ -171,7 +171,7 @@ public class TestZookeeperCurator {
 
         curatorFramework.start();
 
-        String hierarchyPath = "/baloo/application/address/server/GLIA_SERVER/NODE2";
+        String hierarchyPath = "/baloo/application/address/server/HYPERGATE_SERVER/NODE2";
         LOG.debug("" + curatorFramework.checkExists().forPath(hierarchyPath));
 
 

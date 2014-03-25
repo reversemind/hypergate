@@ -26,9 +26,9 @@ import java.util.Set;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class RunJSONGliaClient {
+public class RunJSONClient {
 
-    private static final Logger LOG = LoggerFactory.getLogger(RunJSONGliaClient.class);
+    private static final Logger LOG = LoggerFactory.getLogger(RunJSONClient.class);
 
     public static void main(String... args) throws Exception {
 

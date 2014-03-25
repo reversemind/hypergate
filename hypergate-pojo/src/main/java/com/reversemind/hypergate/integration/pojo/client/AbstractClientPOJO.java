@@ -51,7 +51,7 @@ public abstract class AbstractClientPOJO implements IClient, Serializable {
     }
 
     /**
-     * Default value is "META-INF/glia-client-context.xml"
+     * Default value is "META-INF/hypergate-client-context.xml"
      *
      * @return
      */
@@ -95,7 +95,7 @@ public abstract class AbstractClientPOJO implements IClient, Serializable {
         if (clientPool == null) {
             this.clientFullReconnect();
             if (clientPool == null) {
-                throw new Exception("Glia client is not running");
+                throw new Exception("HyperGate client is not running");
             }
         }
 
