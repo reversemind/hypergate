@@ -181,7 +181,7 @@ public class ServerFactory implements Serializable {
          * @return
          */
         public Builder setKeepClientAlive(boolean keepClientAlive) {
-            LOG.debug(" =GLIA= goint to set keep client alive:" + keepClientAlive);
+            LOG.debug(" =HyperGate= goint to set keep client alive:" + keepClientAlive);
             this.keepClientAlive = keepClientAlive;
             return this;
         }

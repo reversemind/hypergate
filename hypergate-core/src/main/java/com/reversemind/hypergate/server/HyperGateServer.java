@@ -86,7 +86,7 @@ public abstract class HyperGateServer implements IHyperGateServer, Serializable 
         this.payloadProcessor = builder.getPayloadWorker();
 
         // drop connection from client or not
-        LOG.warn(" =GLIA= set value for KeepClientAlive from builder:" + builder.isKeepClientAlive());
+        LOG.warn(" =HyperGate= set value for KeepClientAlive from builder:" + builder.isKeepClientAlive());
         this.keepClientAlive = builder.isKeepClientAlive();
 
         this.name = StringUtils.isEmpty(builder.getName()) ? UUID.randomUUID().toString() : builder.getName();

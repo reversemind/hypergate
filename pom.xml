@@ -18,7 +18,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <hypergate.version>0.5.0-SNAPSHOT</hypergate.version>
         <spring.version>3.2.8.RELEASE</spring.version>
-        <netflix.curator.version>2.4.0</netflix.curator.version>
+        <netflix.curator.version>2.4.1</netflix.curator.version>
     </properties>
 
     <distributionManagement>

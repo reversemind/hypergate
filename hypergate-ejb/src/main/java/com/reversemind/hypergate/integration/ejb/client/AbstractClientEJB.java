@@ -116,7 +116,7 @@ public abstract class AbstractClientEJB implements IClientEJB, Serializable {
             object = (T) this.proxyFactoryPool.newProxyInstance(this.clientPool, interfaceClass);
 
         } catch (Throwable th) {
-            // com.reversemind.hypergate.proxy.ProxySendException: =GLIA= Could not to send data into server: - let's reconnect
+            // com.reversemind.hypergate.proxy.ProxySendException: =HyperGate= Could not to send data into server: - let's reconnect
             Throwable throwableLocal = th.getCause();
 
             LOG.warn("some troubles with sending data to the server let's reconnect");
