@@ -2,9 +2,8 @@ package com.reversemind.hypergate.example.json.client;
 
 import com.reversemind.hypergate.client.HyperGateClient;
 import com.reversemind.hypergate.proxy.ProxyFactory;
-import com.reversemind.hypergate.example.json.Settings;
-import com.reversemind.hypergate.example.json.shared.IDoSomething;
-import com.reversemind.hypergate.example.json.shared.JSONBuilder;
+import com.reversemind.hypergate.example.json.shared.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,7 +33,7 @@ public class RunJSONGliaClient {
     public static void main(String... args) throws Exception {
 
         //
-        HyperGateClient hyperGateClient = new HyperGateClient(Settings.SERVER_HOST, Settings.SERVER_PORT);
+        HyperGateClient hyperGateClient = new HyperGateClient(Params.SERVER_HOST, Params.SERVER_PORT);
         hyperGateClient.start();
 
         // create proxy for remote service
@@ -60,8 +59,8 @@ public class RunJSONGliaClient {
         Map<String, Object> serverResponseMap = JSONBuilder.build(jsonString);
 
         // get status from response
-        String serverResponseStatus = (String) serverResponseMap.get(Settings.SEARCH_STATUS);
-        if (serverResponseStatus.equals(Settings.SEARCH_STATUS_OK)) {
+        String serverResponseStatus = (String) serverResponseMap.get(Params.SEARCH_STATUS);
+        if (serverResponseStatus.equals(Params.SEARCH_STATUS_OK)) {
             LOG.debug("Yep!");
 
             Set<String> keys = serverResponseMap.keySet();

@@ -4,8 +4,8 @@ import com.reversemind.hypergate.server.IHyperGateServer;
 import com.reversemind.hypergate.server.IPayloadProcessor;
 import com.reversemind.hypergate.server.PayloadProcessor;
 import com.reversemind.hypergate.server.ServerFactory;
-import com.reversemind.hypergate.example.json.JSONSettings;
-import com.reversemind.hypergate.example.json.shared.IDoSomething;
+import com.reversemind.hypergate.example.json.shared.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +37,7 @@ public class RunJSONHyperGateServer {
         IHyperGateServer hyperGateServer = ServerFactory.builder()
                 .setPayloadWorker(payloadProcessor)
                 .setName("HYPERGATE_JSON_SERVER")
-                .setPort(JSONSettings.SERVER_PORT)
+                .setPort(Params.SERVER_PORT)
                 .setKeepClientAlive(true)
                 .setAutoSelectPort(false)
                 .build();

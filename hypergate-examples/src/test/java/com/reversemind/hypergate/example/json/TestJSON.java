@@ -37,8 +37,6 @@ public class TestJSON {
      *
      * @throws IOException
      */
-
-    @Ignore
     @Test
     public void testJSON() throws IOException {
 
@@ -59,7 +57,6 @@ public class TestJSON {
 
         String jsonString = mapper.writeValueAsString(addressMap);
         LOG.debug("" + jsonString);
-
 
         // Read JSON string back
         ObjectMapper mapperBack = new ObjectMapper();

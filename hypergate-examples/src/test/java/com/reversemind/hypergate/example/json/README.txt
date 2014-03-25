@@ -1,4 +1,7 @@
 
+// TODO need make root file to run whole test
+
+
 Example for communication application using JSON and POJO
 
 Change settings in Settings.java - server number port an so on...
