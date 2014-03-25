@@ -11,6 +11,8 @@ import org.jboss.netty.channel.Channels;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 import org.jboss.netty.handler.codec.serialization.ClassResolvers;
+import org.jboss.netty.handler.codec.serialization.ObjectDecoder;
+import org.jboss.netty.handler.codec.serialization.ObjectEncoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,8 +60,8 @@ public abstract class HyperGateServer implements IHyperGateServer, Serializable 
     private Payload payload;
     private IPayloadProcessor payloadProcessor;
 
-    private final Kryo kryo = new KryoSettings().getKryo();
-    private KryoDeserializer kryoDeserializer;
+//    private final Kryo kryo = new KryoSettings().getKryo();
+//    private KryoDeserializer kryoDeserializer;
 
     /**
      * @param builder
@@ -95,7 +97,8 @@ public abstract class HyperGateServer implements IHyperGateServer, Serializable 
 
         this.metrics = new Metrics();
 
-        this.kryoDeserializer = new KryoDeserializer(this.kryo);
+        // TODO #6 KryoSerializer
+//        this.kryoDeserializer = new KryoDeserializer(this.kryo);
     }
 
     private String getIpAddress() {
@@ -215,17 +218,20 @@ public abstract class HyperGateServer implements IHyperGateServer, Serializable 
                         Executors.newCachedThreadPool(),
                         Executors.newCachedThreadPool()));
 
-        //this.handler = new ServerHandler(payloadProcessor, metrics, keepClientAlive);
-        this.handler = new ServerHandler(payloadProcessor, metrics, keepClientAlive, this.kryoDeserializer);
+        this.handler = new ServerHandler(payloadProcessor, metrics, keepClientAlive);
+        // TODO #6 KryoSerializer
+//        this.handler = new ServerHandler(payloadProcessor, metrics, keepClientAlive, this.kryoDeserializer);
 
         // Set up the pipeline factory
         // TODO add Kryo serializer
         this.serverBootstrap.setPipelineFactory(new ChannelPipelineFactory() {
             public ChannelPipeline getPipeline() throws Exception {
                 return Channels.pipeline(
-                        new KryoObjectEncoder(),
-                        new KryoObjectDecoder(
-                                ClassResolvers.cacheDisabled(getClass().getClassLoader())),
+//                        new KryoObjectEncoder(),
+//                        new KryoObjectDecoder(ClassResolvers.cacheDisabled(getClass().getClassLoader())),
+                        // TODO #6
+                        new ObjectEncoder(),
+                        new ObjectDecoder(ClassResolvers.cacheDisabled(getClass().getClassLoader())),
                         handler);
             }
         });

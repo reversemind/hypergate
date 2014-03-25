@@ -12,6 +12,8 @@ import org.jboss.netty.bootstrap.ClientBootstrap;
 import org.jboss.netty.channel.*;
 import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
 import org.jboss.netty.handler.codec.serialization.ClassResolvers;
+import org.jboss.netty.handler.codec.serialization.ObjectDecoder;
+import org.jboss.netty.handler.codec.serialization.ObjectEncoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,13 +62,13 @@ public class HyperGateClient implements IHyperGateClient, Serializable {
     private boolean occupied = false;
 
 
-    private final Kryo kryo = new KryoSettings().getKryo();
-    private KryoSerializer kryoSerializer;
+//    private final Kryo kryo = new KryoSettings().getKryo();
+//    private KryoSerializer kryoSerializer;
 
     protected HyperGateClient() {
         this.port = 7000;
         this.host = "localhost";
-        this.kryoSerializer = new KryoSerializer(kryo);
+//        this.kryoSerializer = new KryoSerializer(kryo);
     }
 
     public HyperGateClient(String host, int port) {
@@ -75,7 +77,7 @@ public class HyperGateClient implements IHyperGateClient, Serializable {
         this.payload = null;
         this.executor = this.getExecutor();
         LOG.warn("\n\n HyperGateClient started \n for server:" + host + ":" + port + "\n\n");
-        this.kryoSerializer = new KryoSerializer(kryo);
+//        this.kryoSerializer = new KryoSerializer(kryo);
     }
 
     public HyperGateClient(String host, int port, long timeout) {
@@ -91,7 +93,7 @@ public class HyperGateClient implements IHyperGateClient, Serializable {
 
         this.executor = this.getExecutor();
         LOG.warn("\n\n HyperGateClient started \n for server:" + host + ":" + port + "\n\n");
-        this.kryoSerializer = new KryoSerializer(kryo);
+//        this.kryoSerializer = new KryoSerializer(kryo);
     }
 
     /**
@@ -206,10 +208,11 @@ public class HyperGateClient implements IHyperGateClient, Serializable {
 
                 // client is occupied
                 this.occupied = true;
-                if(this.kryoSerializer != null){
-                    this.channel.write(this.kryoSerializer.serialize(payloadSend));
-                }
-//                this.channel.write(payloadSend);
+//                if(this.kryoSerializer != null){
+//                    this.channel.write(this.kryoSerializer.serialize(payloadSend));
+//                }
+                // TODO make it #6
+                this.channel.write(payloadSend);
 
                 this.shutDownExecutor();
                 this.executor = this.getExecutor();
@@ -318,8 +321,11 @@ public class HyperGateClient implements IHyperGateClient, Serializable {
         ChannelPipelineFactory channelPipelineFactory = new ChannelPipelineFactory() {
             public ChannelPipeline getPipeline() throws Exception {
                 return Channels.pipeline(
-                        new KryoObjectEncoder(),
-                        new KryoObjectDecoder(ClassResolvers.cacheDisabled(getClass().getClassLoader()))
+//                        new KryoObjectEncoder(),
+//                        new KryoObjectDecoder(ClassResolvers.cacheDisabled(getClass().getClassLoader()))
+                        // TODO #6
+                        new ObjectEncoder(),
+                        new ObjectDecoder(ClassResolvers.cacheDisabled(getClass().getClassLoader()))
                         ,
                         new SimpleChannelUpstreamHandler() {
 

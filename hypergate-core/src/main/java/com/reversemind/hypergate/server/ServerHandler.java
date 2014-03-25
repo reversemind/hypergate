@@ -29,7 +29,8 @@ public class ServerHandler extends SimpleChannelUpstreamHandler {
     private IPayloadProcessor payloadProcessor;
     private boolean dropClientConnection = false;
     private Metrics metrics;
-    private KryoDeserializer kryoDeserializer;
+    // TODO #6 KryoSerializer
+//    private KryoDeserializer kryoDeserializer;
 
     public ServerHandler(IPayloadProcessor payloadProcessor, Metrics metrics, boolean dropClientConnection) {
         this.payloadProcessor = payloadProcessor;
@@ -37,12 +38,13 @@ public class ServerHandler extends SimpleChannelUpstreamHandler {
         this.metrics = metrics;
     }
 
-    public ServerHandler(IPayloadProcessor payloadProcessor, Metrics metrics, boolean dropClientConnection, KryoDeserializer kryoDeserializer) {
-        this.payloadProcessor = payloadProcessor;
-        this.dropClientConnection = dropClientConnection;
-        this.metrics = metrics;
-        this.kryoDeserializer = kryoDeserializer;
-    }
+    // TODO #6 KryoSerializer
+//    public ServerHandler(IPayloadProcessor payloadProcessor, Metrics metrics, boolean dropClientConnection, KryoDeserializer kryoDeserializer) {
+//        this.payloadProcessor = payloadProcessor;
+//        this.dropClientConnection = dropClientConnection;
+//        this.metrics = metrics;
+//        this.kryoDeserializer = kryoDeserializer;
+//    }
 
     @Override
     public void handleUpstream(ChannelHandlerContext ctx, ChannelEvent e) throws Exception {
@@ -58,12 +60,16 @@ public class ServerHandler extends SimpleChannelUpstreamHandler {
         // TODO what about delay + very long messages???
         long beginTime = System.currentTimeMillis();
 
-        Object object = null;
-        try {
-            object = this.payloadProcessor.process(this.kryoDeserializer.deserialize((byte[]) messageEvent.getMessage()));
-        } catch (IOException e) {
-            LOG.error("KryoDeserializer needs for array", e);
-        }
+        // TODO #6 KryoSerializer
+//        Object object = null;
+//        try {
+//            object = this.payloadProcessor.process(this.kryoDeserializer.deserialize((byte[]) messageEvent.getMessage()));
+//        } catch (IOException e) {
+//            LOG.error("KryoDeserializer needs for array", e);
+//        }
+
+        Object object = this.payloadProcessor.process(messageEvent.getMessage());
+
         if (this.metrics != null) {
             this.metrics.addRequest((System.currentTimeMillis() - beginTime));
         }
