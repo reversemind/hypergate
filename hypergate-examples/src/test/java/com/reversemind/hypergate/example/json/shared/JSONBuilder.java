@@ -1,6 +1,5 @@
 package com.reversemind.hypergate.example.json.shared;
 
-import com.reversemind.hypergate.example.json.Settings;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
@@ -34,7 +33,7 @@ public class JSONBuilder {
      */
     public static String buildJSONQuery(String addressObject) throws IOException {
         Map<String, Object> map = new HashMap<String, Object>();
-        map.put(Settings.ADDRESS_SEARCH, addressObject);
+        map.put(Params.ADDRESS_SEARCH, addressObject);
         return build(map);
     }
 

@@ -1,8 +1,6 @@
 package com.reversemind.hypergate.example.json.server;
 
-import com.reversemind.hypergate.example.json.Settings;
-import com.reversemind.hypergate.example.json.shared.IDoSomething;
-import com.reversemind.hypergate.example.json.shared.JSONBuilder;
+import com.reversemind.hypergate.example.json.shared.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,12 +51,12 @@ public class ServerPojo implements IDoSomething {
             LOG.debug("JSON string is:" + jsonString);
             Map<String, Object> queryMap = JSONBuilder.build(jsonString);
 
-            LOG.debug("Going to search for address:" + queryMap.get(Settings.ADDRESS_SEARCH));
+            LOG.debug("Going to search for address:" + queryMap.get(Params.ADDRESS_SEARCH));
 
             Map<String, Object> responseMap = ADDRESS_MAP;
-            responseMap.put("#id4", queryMap.get(Settings.ADDRESS_SEARCH));
+            responseMap.put("#id4", queryMap.get(Params.ADDRESS_SEARCH));
 
-            responseMap.put(Settings.SEARCH_STATUS, Settings.SEARCH_STATUS_OK);
+            responseMap.put(Params.SEARCH_STATUS, Params.SEARCH_STATUS_OK);
 
             return JSONBuilder.build(responseMap);
         } catch (IOException e) {
@@ -66,7 +64,7 @@ public class ServerPojo implements IDoSomething {
         }
 
         // get back an Error
-        return "{" + Settings.SEARCH_STATUS + ":" + Settings.SEARCH_STATUS_ERROR + "}";
+        return "{" + Params.SEARCH_STATUS + ":" + Params.SEARCH_STATUS_ERROR + "}";
     }
 
     @Override

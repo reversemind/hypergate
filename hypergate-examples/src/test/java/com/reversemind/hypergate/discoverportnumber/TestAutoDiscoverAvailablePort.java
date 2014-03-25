@@ -1,6 +1,5 @@
-package com.reversemind.glia.other.discoverport;
+package com.reversemind.hypergate.discoverportnumber;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +27,6 @@ public class TestAutoDiscoverAvailablePort {
 
     private static final Logger LOG = LoggerFactory.getLogger(TestAutoDiscoverAvailablePort.class);
 
-    @Ignore
     @Test
     public void testFindFreePort() {
         try {
@@ -41,7 +39,7 @@ public class TestAutoDiscoverAvailablePort {
             LOG.debug("serverSocket.isBound():" + serverSocket.isBound());
 
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.error("Could not get any port:", e);
         }
 
     }
