@@ -34,7 +34,7 @@ public class GliaServerSpringContextLoader implements Serializable {
 
     public static void main(String... args) throws InterruptedException {
 
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("META-INF/glia-server-context.xml");
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("META-INF/hypergate-server-context.xml");
 
         ServerFactory.Builder builderAdvertiser = applicationContext.getBean("serverBuilderAdvertiser", ServerFactory.Builder.class);
 
@@ -96,7 +96,7 @@ public class GliaServerSpringContextLoader implements Serializable {
                     }
 
                     @Override
-                    public Payload process(Object gliaPayloadObject) {
+                    public Payload process(Object payloadObject) {
                         return null;
                     }
                 }).build();

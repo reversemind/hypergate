@@ -32,7 +32,7 @@ public class RunServerFromSpringContext implements Serializable {
     private static final Logger LOG = LoggerFactory.getLogger(RunServerFromSpringContext.class);
 
     public static void main(String... args) {
-        ApplicationContext context = new ClassPathXmlApplicationContext("META-INF/glia-server-context.xml");
+        ApplicationContext context = new ClassPathXmlApplicationContext("META-INF/hypergate-server-context.xml");
 
         IPayloadProcessor payloadProcessor = (IPayloadProcessor) context.getBean("serverPayloadProcessor");
 

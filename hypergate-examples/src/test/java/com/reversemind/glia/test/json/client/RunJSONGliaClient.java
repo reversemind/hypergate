@@ -34,11 +34,11 @@ public class RunJSONGliaClient {
     public static void main(String... args) throws Exception {
 
         //
-        HyperGateClient gliaClient = new HyperGateClient(Settings.SERVER_HOST, Settings.SERVER_PORT);
-        gliaClient.start();
+        HyperGateClient hyperGateClient = new HyperGateClient(Settings.SERVER_HOST, Settings.SERVER_PORT);
+        hyperGateClient.start();
 
         // create proxy for remote service
-        IDoSomething doSomething = (IDoSomething) ProxyFactory.getInstance().newProxyInstance(gliaClient, IDoSomething.class);
+        IDoSomething doSomething = (IDoSomething) ProxyFactory.getInstance().newProxyInstance(hyperGateClient, IDoSomething.class);
 
         // call remote server
         String jsonString = doSomething.doExtraThing(JSONBuilder.buildJSONQuery("Chicago"));
@@ -71,6 +71,6 @@ public class RunJSONGliaClient {
         }
 
         //Thread.sleep(3000);
-        gliaClient.shutdown();
+        hyperGateClient.shutdown();
     }
 }

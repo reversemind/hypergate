@@ -119,19 +119,19 @@ public class PayloadProcessor implements IPayloadProcessor, Serializable {
     }
 
     @Override
-    public Payload process(Object gliaPayloadObject) {
+    public Payload process(Object payloadObject) {
 
-        if (gliaPayloadObject == null) {
+        if (payloadObject == null) {
             LOG.info("ERROR: " + PayloadStatus.ERROR_CLIENT_PAYLOAD);
             return PayloadBuilder.buildErrorPayload(PayloadStatus.ERROR_CLIENT_PAYLOAD);
         }
 
-        if (!(gliaPayloadObject instanceof Payload)) {
+        if (!(payloadObject instanceof Payload)) {
             LOG.info("ERROR: " + PayloadStatus.ERROR_CLIENT_PAYLOAD);
             return PayloadBuilder.buildErrorPayload(PayloadStatus.ERROR_CLIENT_PAYLOAD);
         }
 
-        Payload payload = ((Payload) gliaPayloadObject);
+        Payload payload = ((Payload) payloadObject);
 
 
         LOG.debug("Get from client:" + payload);

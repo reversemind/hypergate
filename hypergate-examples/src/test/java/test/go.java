@@ -34,7 +34,7 @@ public class go implements Serializable {
 
         IHyperGateServer server;
 
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("META-INF/glia-server-context.xml");
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("META-INF/hypergate-server-context.xml");
         ServerFactory.Builder builderAdvertiser = applicationContext.getBean("serverBuilder", ServerFactory.Builder.class);
 
         LOG.debug("--------------------------------------------------------");

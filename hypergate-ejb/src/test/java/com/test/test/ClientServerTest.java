@@ -80,8 +80,8 @@ public class ClientServerTest {
 
                         .artifact("commons-pool:commons-pool:1.6")
 
-                        .artifact("org.springframework:spring-core:3.0.7.RELEASE")
-                        .artifact("org.springframework:spring-context:3.0.7.RELEASE")
+                        .artifact("org.springframework:spring-core:3.2.8.RELEASE")
+                        .artifact("org.springframework:spring-context:3.2.8.RELEASE")
 
                         .artifact("postgresql:postgresql:9.1-901.jdbc4")
 
@@ -89,7 +89,8 @@ public class ClientServerTest {
 
                         .artifact("log4j:log4j:1.2.16")
 
-                        .artifact("com.reversemind:glia-core:0.5.0-SNAPSHOT")
+                        .artifact("com.reversemind:hypergate-core:0.5.0-SNAPSHOT")
+                        .artifact("com.reversemind:hypergate-ejb:0.5.0-SNAPSHOT")
 
                         .artifact("net.sf.dozer:dozer:5.4.0")
                         .artifact("com.google.code.gson:gson:2.2.4")
@@ -104,12 +105,12 @@ public class ClientServerTest {
                 .addPackages(true, ClientSimple.class.getPackage())
                 .addPackages(true, ClientFactory.class.getPackage())
 
-                .addAsResource("META-INF/glia-interface-map.xml", "META-INF/glia-interface-map.xml")
-                .addAsResource("META-INF/glia-server-context.xml", "META-INF/glia-server-context.xml")
-                .addAsResource("META-INF/glia-server.properties", "META-INF/glia-server.properties")
+                .addAsResource("META-INF/hypergate-interface-map.xml", "META-INF/hypergate-interface-map.xml")
+                .addAsResource("META-INF/hypergate-server-context.xml", "META-INF/hypergate-server-context.xml")
+                .addAsResource("META-INF/hypergate-server.properties", "META-INF/hypergate-server.properties")
 
-                .addAsResource("META-INF/glia-client-context.xml", "META-INF/glia-client-context.xml")
-                .addAsResource("META-INF/glia-client.properties", "META-INF/glia-client.properties")
+                .addAsResource("META-INF/hypergate-client-context.xml", "META-INF/hypergate-client-context.xml")
+                .addAsResource("META-INF/hypergate-client.properties", "META-INF/hypergate-client.properties")
 
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 
@@ -119,18 +120,18 @@ public class ClientServerTest {
 
     @Test
     public void testClientPoolFactory() throws Exception {
-        ClientPoolFactory clientPoolFactory = new ClientPoolFactory("META-INF/glia-client-context.xml", "gliaClientServerDiscovery", HyperGateClientServerDiscovery.class);
+        ClientPoolFactory clientPoolFactory = new ClientPoolFactory("META-INF/hypergate-client-context.xml", "clientServerDiscovery", HyperGateClientServerDiscovery.class);
         ClientPool clientPool = new ClientPool(clientPoolFactory);
 
         LOG.debug(clientPool.printPoolMetrics());
-        IHyperGateClient gliaClient = clientPool.borrowObject();
+        IHyperGateClient hyperGateClient = clientPool.borrowObject();
 
         LOG.debug(clientPool.printPoolMetrics());
     }
 
     @Test
     public void testPoolSize() {
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("META-INF/glia-client-context.xml");
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("META-INF/hypergate-client-context.xml");
         int poolSize = applicationContext.getBean("poolSize", java.lang.Integer.class);
         LOG.debug("Pool size:" + poolSize);
     }
@@ -138,7 +139,7 @@ public class ClientServerTest {
 
     @Test
     public void testClientPool() throws Exception {
-        ClientFactory clientFactory = new ClientFactory("META-INF/glia-client-context.xml", "gliaClientServerDiscovery", HyperGateClientServerDiscovery.class);
+        ClientFactory clientFactory = new ClientFactory("META-INF/hypergate-client-context.xml", "clientServerDiscovery", HyperGateClientServerDiscovery.class);
         GenericObjectPool<IHyperGateClient> pool = new GenericObjectPool<IHyperGateClient>(clientFactory, 5);
 
         LOG.debug("pool.getMaxActive():" + pool.getMaxActive());
@@ -148,9 +149,9 @@ public class ClientServerTest {
 
         Thread.sleep(20000);
 
-        IHyperGateClient gliaClient = pool.borrowObject();
+        IHyperGateClient hyperGateClient = pool.borrowObject();
 
-        LOG.debug("IHyperGateClient gliaClient - " + gliaClient);
+        LOG.debug("IHyperGateClient hyperGateClient - " + hyperGateClient);
         ProxyFactory proxyFactory = ProxyFactory.getInstance();
 
         LOG.debug("pool.getMaxActive():" + pool.getMaxActive());
@@ -158,10 +159,10 @@ public class ClientServerTest {
         LOG.debug("pool.getNumActive():" + pool.getNumActive());
         LOG.debug("pool.getNumIdle():" + pool.getNumIdle());
 
-        IServiceSimple proxyService = (IServiceSimple) proxyFactory.newProxyInstance(gliaClient, IServiceSimple.class);
+        IServiceSimple proxyService = (IServiceSimple) proxyFactory.newProxyInstance(hyperGateClient, IServiceSimple.class);
         LOG.debug("proxyService: " + proxyService.functionNumber1("1", "2"));
 
-        pool.returnObject(gliaClient);
+        pool.returnObject(hyperGateClient);
 
         LOG.debug("pool.getMaxActive():" + pool.getMaxActive());
         LOG.debug("pool.getMaxIdle():" + pool.getMaxIdle());

@@ -33,11 +33,11 @@ import java.io.Serializable;
 @Stateless
 public class ClientEJBDiscovery extends AbstractClientEJB implements IClientEJB, Serializable {
 
-    public String getGliaClientBeanName() {
-        return "gliaClientServerDiscovery";
+    public String getClientBeanName() {
+        return "clientServerDiscovery";
     }
 
-    public Class getGliaClientBeanClass() {
+    public Class getClientBeanClass() {
         return HyperGateClientServerDiscovery.class;
     }
 }

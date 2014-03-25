@@ -25,32 +25,32 @@ import org.slf4j.LoggerFactory;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class RunJSONGliaServer {
+public class RunJSONHyperGateServer {
 
-    private static final Logger LOG = LoggerFactory.getLogger(RunJSONGliaServer.class);
+    private static final Logger LOG = LoggerFactory.getLogger(RunJSONHyperGateServer.class);
 
     public static void main(String... args) throws InterruptedException {
 
-        IPayloadProcessor gliaPayloadProcessor = new PayloadProcessor();
-        gliaPayloadProcessor.registerPOJO(IDoSomething.class, ServerPojo.class);
+        IPayloadProcessor payloadProcessor = new PayloadProcessor();
+        payloadProcessor.registerPOJO(IDoSomething.class, ServerPojo.class);
 
-        IHyperGateServer gliaServer = ServerFactory.builder()
-                .setPayloadWorker(gliaPayloadProcessor)
-                .setName("GLIA_JSON_SERVER")
+        IHyperGateServer hyperGateServer = ServerFactory.builder()
+                .setPayloadWorker(payloadProcessor)
+                .setName("HYPERGATE_JSON_SERVER")
                 .setPort(Settings.SERVER_PORT)
                 .setKeepClientAlive(true)
                 .setAutoSelectPort(false)
                 .build();
 
-        gliaServer.start();
+        hyperGateServer.start();
 
         int count = 0;
         // just wait for a minute 5 sec * 120 = 10 minutes
         while (count++ < 120) {
             Thread.sleep(5000);
-            LOG.debug("" + gliaServer.getMetrics());
+            LOG.debug("" + hyperGateServer.getMetrics());
         }
 
-        gliaServer.shutdown();
+        hyperGateServer.shutdown();
     }
 }

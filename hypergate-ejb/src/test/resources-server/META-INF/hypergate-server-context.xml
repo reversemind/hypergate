@@ -2,17 +2,14 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-       http://www.springframework.org/schema/util
-       http://www.springframework.org/schema/util/spring-util-3.0.xsd
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-    <context:property-placeholder location="META-INF/glia-server.properties"/>
+    <context:property-placeholder location="META-INF/hypergate-server.properties"/>
 
-    <import resource="glia-interface-map.xml" />
+    <import resource="hypergate-interface-map.xml" />
 
     <bean id="serverPayloadProcessor" class="com.reversemind.hypergate.server.PayloadProcessor">
         <property name="pojoMap" ref="pojoMap"/>
@@ -22,18 +19,10 @@
                 <prop key="java.naming.provider.url">remote://localhost:4447</prop>
                 <prop key="java.naming.factory.url.pkgs">org.jboss.ejb.client.naming</prop>
                 <prop key="java.naming.factory.initial">org.jboss.naming.remote.client.InitialContextFactory</prop>
-
                 <prop key="jboss.naming.client.ejb.context">true</prop>
-
                 <prop key="remote.connections">default</prop>
-
                 <prop key="remote.connectionprovider.create.options.org.xnio.Options.SSL_ENABLED">false</prop>
                 <prop key="remote.connection.default.connect.options.org.xnio.Options.SASL_POLICY_NOANONYMOUS">false</prop>
-
-                <!--<prop key="java.naming.security.principal">kalinin</prop>-->
-                <!--<prop key="java.naming.security.credentials">Rtls1q2w4e</prop>-->
-                <!--<prop key="remote.connection.default.host">localhost</prop>-->
-                <!--<prop key="remote.connection.default.setPort">4447</prop>-->
             </props>
         </property>
     </bean>
@@ -44,31 +33,31 @@
     </bean>
 
     <!--Builder for advertiser server-->
-    <bean id="serverBuilderAdvertiser" class="com.reversemind.hypergate.server.ServerFactory.Builder" >
+    <bean id="serverBuilderAdvertiser" class="com.reversemind.hypergate.server.ServerFactory.Builder" scope="prototype">
         <property name="payloadWorker" ref="serverPayloadProcessor" />
 
-        <property name="name" value="${glia.server.advertiser.name}" />
-        <property name="autoSelectPort" value="${glia.server.advertiser.autoselect.port}" />
-        <property name="port" value="${glia.server.advertiser.port}" />
-        <property name="keepClientAlive" value="${glia.server.advertiser.keep.client.alive}" />
+        <property name="name" value="${hypergate.server.advertiser.name}" />
+        <property name="autoSelectPort" value="${hypergate.server.advertiser.autoselect.port}" />
+        <property name="port" value="${hypergate.server.advertiser.port}" />
+        <property name="keepClientAlive" value="${hypergate.server.advertiser.keep.client.alive}" />
 
         <property name="type" value="ZOOKEEPER_ADVERTISER" />
 
-        <property name="serviceBasePath" value="${glia.server.advertiser.zookeeper.base.path}" />
-        <property name="zookeeperHosts" value="${glia.server.advertiser.zookeeper.connection}" />
+        <property name="serviceBasePath" value="${hypergate.server.advertiser.zookeeper.base.path}" />
+        <property name="zookeeperHosts" value="${hypergate.server.advertiser.zookeeper.connection}" />
 
-        <property name="useMetrics" value="${glia.server.advertiser.use.metrics}" />
-        <property name="periodPublishMetrics" value="${glia.server.advertiser.delay.metrics.publish}"/>
+        <property name="useMetrics" value="${hypergate.server.advertiser.use.metrics}" />
+        <property name="periodPublishMetrics" value="${hypergate.server.advertiser.delay.metrics.publish}"/>
     </bean>
 
     <!--Builder for Simple server-->
     <bean id="serverBuilder" class="com.reversemind.hypergate.server.ServerFactory.Builder" >
         <property name="payloadWorker" ref="serverPayloadProcessor" />
 
-        <property name="name" value="${glia.server.simple.name}" />
-        <property name="autoSelectPort" value="${glia.server.simple.autoselect.port}" />
-        <property name="port" value="${glia.server.simple.port}" />
-        <property name="keepClientAlive" value="${glia.server.simple.keep.client.alive}" />
+        <property name="name" value="${hypergate.server.simple.name}" />
+        <property name="autoSelectPort" value="${hypergate.server.simple.autoselect.port}" />
+        <property name="port" value="${hypergate.server.simple.port}" />
+        <property name="keepClientAlive" value="${hypergate.server.simple.keep.client.alive}" />
 
         <property name="type" value="SIMPLE" />
     </bean>

@@ -86,6 +86,6 @@ public class ServerEJB implements Serializable {
     }
 
     public String getContextXML() {
-        return "META-INF/glia-server-context.xml";
+        return "META-INF/hypergate-server-context.xml";
     }
 }

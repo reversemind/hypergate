@@ -33,8 +33,8 @@ public interface IPayloadProcessor extends Serializable {
     /**
      * Should be thread safe
      *
-     * @param gliaPayloadObject
+     * @param payloadObject
      * @return
      */
-    public Payload process(Object gliaPayloadObject);
+    public Payload process(Object payloadObject);
 }

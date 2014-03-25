@@ -40,7 +40,7 @@ public class TestSimpleWarEJB {
     private final static Logger LOG = Logger.getLogger(TestSimpleWarEJB.class);
 
 //    @Inject
-//    HyperGateClient gliaClient;
+//    HyperGateClient hyperGateClient;
 
     @Inject
     ISimpleEJB simpleEJB;
@@ -74,17 +74,14 @@ public class TestSimpleWarEJB {
 
                         .resolveAsFiles())
 
-//                .addPackages(true, com.reversemind.glia.simple.HyperGateClient.class.getPackage())
-//                .addPackages(true, StartZookeeper.class.getPackage())
-//                .addPackages(true, HyperGateClient.class.getPackage())
                 .addPackages(true, SimpleEJB.class.getPackage())
 
-//                .addAsResource("META-INF/glia-interface-map.xml", "META-INF/glia-interface-map.xml")
-//                .addAsResource("META-INF/glia-server-context.xml", "META-INF/glia-server-context.xml")
-//                .addAsResource("META-INF/glia-server.properties", "META-INF/glia-server.properties")
+//                .addAsResource("META-INF/hypergate-interface-map.xml", "META-INF/hypergate-interface-map.xml")
+//                .addAsResource("META-INF/hypergate-server-context.xml", "META-INF/hypergate-server-context.xml")
+//                .addAsResource("META-INF/hypergate-server.properties", "META-INF/hypergate-server.properties")
 //
-//                .addAsResource("META-INF/glia-client-context.xml", "META-INF/glia-client-context.xml")
-//                .addAsResource("META-INF/glia-client.properties", "META-INF/glia-client.properties")
+//                .addAsResource("META-INF/hypergate-client-context.xml", "META-INF/hypergate-client-context.xml")
+//                .addAsResource("META-INF/hypergate-client.properties", "META-INF/hypergate-client.properties")
 
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 
@@ -96,21 +93,12 @@ public class TestSimpleWarEJB {
     @Test
     public void testSomething() throws InterruptedException {
 
-//        gliaClient
         StartZookeeper.start();
 
         Thread.sleep(10000);
 
         StartZookeeper.stop();
 
-    }
-
-    //    @Ignore
-    @Test
-    public void testSimple() throws Exception {
-//        LOG.info(":Simple test");
-//
-//        ISimpleEJB simpleEJB = gliaClient.getProxy(ISimpleEJB.class);
     }
 
     @Test

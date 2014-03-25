@@ -81,7 +81,8 @@ public class MultipleRequestsForServerTest {
 
                         .artifact("log4j:log4j:1.2.16")
 
-                        .artifact("com.reversemind:glia-core:0.5.0-SNAPSHOT")
+                        .artifact("com.reversemind:hypergate-core:0.5.0-SNAPSHOT")
+                        .artifact("com.reversemind:hypergate-ejb:0.5.0-SNAPSHOT")
 
                         .artifact("net.sf.dozer:dozer:5.4.0")
                         .artifact("com.google.code.gson:gson:2.2.4")
@@ -96,12 +97,12 @@ public class MultipleRequestsForServerTest {
                 .addPackages(true, ClientSimple.class.getPackage())
                 .addPackages(true, ClientFactory.class.getPackage())
 
-                .addAsResource("META-INF/glia-interface-map.xml", "META-INF/glia-interface-map.xml")
-                .addAsResource("META-INF/glia-server-context.xml", "META-INF/glia-server-context.xml")
-                .addAsResource("META-INF/glia-server.properties", "META-INF/glia-server.properties")
+                .addAsResource("META-INF/hypergate-interface-map.xml", "META-INF/hypergate-interface-map.xml")
+                .addAsResource("META-INF/hypergate-server-context.xml", "META-INF/hypergate-server-context.xml")
+                .addAsResource("META-INF/hypergate-server.properties", "META-INF/hypergate-server.properties")
 
-                .addAsResource("META-INF/glia-client-context.xml", "META-INF/glia-client-context.xml")
-                .addAsResource("META-INF/glia-client.properties", "META-INF/glia-client.properties")
+                .addAsResource("META-INF/hypergate-client-context.xml", "META-INF/hypergate-client-context.xml")
+                .addAsResource("META-INF/hypergate-client.properties", "META-INF/hypergate-client.properties")
 
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 

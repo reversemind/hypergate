@@ -71,7 +71,7 @@ public class ServerFactoryTest {
                     }
 
                     @Override
-                    public Payload process(Object gliaPayloadObject) {
+                    public Payload process(Object payloadObject) {
                         return null;
                     }
                 }).build();
@@ -108,7 +108,7 @@ public class ServerFactoryTest {
                     }
 
                     @Override
-                    public Payload process(Object gliaPayloadObject) {
+                    public Payload process(Object payloadObject) {
                         return null;
                     }
                 }).build();
@@ -146,7 +146,7 @@ public class ServerFactoryTest {
                     }
 
                     @Override
-                    public Payload process(Object gliaPayloadObject) {
+                    public Payload process(Object payloadObject) {
                         return null;
                     }
                 })
@@ -166,10 +166,10 @@ public class ServerFactoryTest {
     @Test
     public void testSetNames() {
 
-        final String NAME = "GLIA_SERVER_NAME";
-        final String NAME_INSTANCE = "GLIA_SERVER_INSTANCE_NAME";
+        final String NAME = "HYPERGATE_SERVER_NAME";
+        final String NAME_INSTANCE = "HYPERGATE_SERVER_INSTANCE_NAME";
 
-        IHyperGateServer gliaServer = ServerFactory.builder()
+        IHyperGateServer hyperGateServer = ServerFactory.builder()
                 .setPayloadWorker(new IPayloadProcessor() {
                     @Override
                     public Map<Class, Class> getPojoMap() {
@@ -189,7 +189,7 @@ public class ServerFactoryTest {
                     }
 
                     @Override
-                    public Payload process(Object gliaPayloadObject) {
+                    public Payload process(Object payloadObject) {
                         return null;
                     }
                 })
@@ -198,13 +198,13 @@ public class ServerFactoryTest {
                 .setInstanceName(NAME_INSTANCE)
                 .build();
 
-        assertEquals(NAME, gliaServer.getName());
-        assertEquals(NAME_INSTANCE, gliaServer.getInstanceName());
+        assertEquals(NAME, hyperGateServer.getName());
+        assertEquals(NAME_INSTANCE, hyperGateServer.getInstanceName());
 
-        if (gliaServer != null) {
-            gliaServer.shutdown();
+        if (hyperGateServer != null) {
+            hyperGateServer.shutdown();
         }
-        assertNotNull(gliaServer);
+        assertNotNull(hyperGateServer);
     }
 
     /**

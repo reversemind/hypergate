@@ -29,7 +29,7 @@ public class GliaClientSpringContextLoader implements Serializable {
     private static final Logger LOG = LoggerFactory.getLogger(GliaClientSpringContextLoader.class);
 
     public static void main(String... args) throws Exception {
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("META-INF/glia-client-context.xml");
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("META-INF/hypergate-client-context.xml");
 
         HyperGateClientServerDiscovery client = applicationContext.getBean("clientServerDiscovery", HyperGateClientServerDiscovery.class);
 

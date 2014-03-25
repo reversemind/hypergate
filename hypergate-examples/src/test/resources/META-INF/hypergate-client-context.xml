@@ -10,28 +10,28 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-    <context:property-placeholder location="META-INF/glia-client.properties"/>
+    <context:property-placeholder location="META-INF/hypergate-client.properties"/>
 
 
     <bean id="selectorStrategy" class="com.reversemind.hypergate.servicediscovery.ServerSelectorSimpleStrategy" />
 
     <!--using Zookeeper for connection -->
-    <bean id="gliaClientServerDiscovery" class="com.reversemind.hypergate.client.HyperGateClientServerDiscovery" >
-        <constructor-arg index="0" value="${glia.client.zookeeper.connection}" />
-        <constructor-arg index="1" value="${glia.client.zookeeper.base.path}" />
-        <constructor-arg index="2" value="${glia.client.service.name}" />
-        <constructor-arg index="3" value="${glia.client.timeout}" />
+    <bean id="hyperGateClientServerDiscovery" class="com.reversemind.hypergate.client.HyperGateClientServerDiscovery" >
+        <constructor-arg index="0" value="${hypergate.client.zookeeper.connection}" />
+        <constructor-arg index="1" value="${hypergate.client.zookeeper.base.path}" />
+        <constructor-arg index="2" value="${hypergate.client.service.name}" />
+        <constructor-arg index="3" value="${hypergate.client.timeout}" />
         <constructor-arg index="4" ref="selectorStrategy" />
     </bean>
 
     <!--direct connection -->
-    <bean id="gliaClient" class="com.reversemind.hypergate.client.HyperGateClient" >
-        <constructor-arg index="0" value="${glia.client.service.host}" />
-        <constructor-arg index="1" value="${glia.client.service.port}" />
+    <bean id="hyperGateClient" class="com.reversemind.hypergate.client.HyperGateClient" >
+        <constructor-arg index="0" value="${hypergate.client.service.host}" />
+        <constructor-arg index="1" value="${hypergate.client.service.port}" />
     </bean>
 
     <bean id="poolSize" class="java.lang.Integer">
-        <constructor-arg index="0" value="${glia.client.pool.size}" />
+        <constructor-arg index="0" value="${hypergate.client.pool.size}" />
     </bean>
 
 </beans>

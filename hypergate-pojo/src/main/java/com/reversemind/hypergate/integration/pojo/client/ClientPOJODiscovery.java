@@ -21,11 +21,11 @@ import java.io.Serializable;
  */
 public class ClientPOJODiscovery extends AbstractClientPOJO implements IClient, Serializable {
 
-    public String getGliaClientBeanName() {
-        return "gliaClientServerDiscovery";
+    public String getClientBeanName() {
+        return "hyperGateClientServerDiscovery";
     }
 
-    public Class getGliaClientBeanClass() {
+    public Class getClientBeanClass() {
         return HyperGateClientServerDiscovery.class;
     }
 }

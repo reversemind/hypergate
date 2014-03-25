@@ -45,18 +45,18 @@ public abstract class AbstractClientEJB implements IClientEJB, Serializable {
         // if need to destroy pool
     }
 
-    public abstract String getGliaClientBeanName();
+    public abstract String getClientBeanName();
 
-    public abstract Class getGliaClientBeanClass();
+    public abstract Class getClientBeanClass();
 
     /**
-     * Default value is "META-INF/glia-client-context.xml"
+     * Default value is "META-INF/hypergate-client-context.xml"
      *
      * @return
      */
     @Override
     public String getContextXML() {
-        return "META-INF/glia-client-context.xml";
+        return "META-INF/hypergate-client-context.xml";
     }
 
     private void initPool() {
@@ -64,7 +64,7 @@ public abstract class AbstractClientEJB implements IClientEJB, Serializable {
             ApplicationContext applicationContext = new ClassPathXmlApplicationContext(this.getContextXML());
             int poolSize = applicationContext.getBean("poolSize", java.lang.Integer.class);
             LOG.info("Pool start size:" + poolSize);
-            ClientPoolFactory clientPoolFactory = new ClientPoolFactory(this.getContextXML(), this.getGliaClientBeanName(), this.getGliaClientBeanClass());
+            ClientPoolFactory clientPoolFactory = new ClientPoolFactory(this.getContextXML(), this.getClientBeanName(), this.getClientBeanClass());
             clientPool = new ClientPool(clientPoolFactory, poolSize);
             LOG.info("Client pool RUN !!!");
         }

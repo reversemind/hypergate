@@ -33,12 +33,12 @@ public class TestGliaServerSelfAdvertiser implements Serializable {
 
         final String ZOOKEEPER_CONNECTION = "localhost:2181";
         final String SERVICE_BASE_PATH = "/baloo/services";
-        final String SERVICE_NAME = "GLIA.ADDRESS";
+        final String SERVICE_NAME = "HYPERGATE.ADDRESS";
 
-        IPayloadProcessor gliaPayloadProcessor = new PayloadProcessor();
+        IPayloadProcessor payloadProcessor = new PayloadProcessor();
 
         IHyperGateServer server01 = ServerFactory.builder()
-                .setPayloadWorker(gliaPayloadProcessor)
+                .setPayloadWorker(payloadProcessor)
                 .setName(SERVICE_NAME)
                 .setInstanceName("INSTANCE.001")
                 .setZookeeperHosts(ZOOKEEPER_CONNECTION)
@@ -48,7 +48,7 @@ public class TestGliaServerSelfAdvertiser implements Serializable {
                 .build();
 
         IHyperGateServer server02 = ServerFactory.builder()
-                .setPayloadWorker(gliaPayloadProcessor)
+                .setPayloadWorker(payloadProcessor)
                 .setName(SERVICE_NAME)
                 .setInstanceName("INSTANCE.002")
                 .setZookeeperHosts(ZOOKEEPER_CONNECTION)

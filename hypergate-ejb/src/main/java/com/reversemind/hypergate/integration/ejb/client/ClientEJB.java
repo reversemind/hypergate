@@ -36,29 +36,29 @@ import java.io.Serializable;
 public class ClientEJB extends AbstractClientEJB implements IClientEJB, Serializable {
 
     /**
-     * Name look at glia-client-context.xml
+     * Name look at hypergate-client-context.xml
      * <p/>
-     * <bean id="gliaClientServerDiscovery" class="com.reversemind.hypergate.client.HyperGateClientServerDiscovery" scope="prototype">
-     * <constructor-arg index="0" value="${glia.client.zookeeper.connection}" />
-     * <constructor-arg index="1" value="${glia.client.zookeeper.base.path}" />
-     * <constructor-arg index="2" value="${glia.client.service.name}" />
-     * <constructor-arg index="3" value="${glia.client.timeout}" />
+     * <bean id="hyperGateClientServerDiscovery" class="com.reversemind.hypergate.client.HyperGateClientServerDiscovery" scope="prototype">
+     * <constructor-arg index="0" value="${hypergate.client.zookeeper.connection}" />
+     * <constructor-arg index="1" value="${hypergate.client.zookeeper.base.path}" />
+     * <constructor-arg index="2" value="${hypergate.client.service.name}" />
+     * <constructor-arg index="3" value="${hypergate.client.timeout}" />
      * <constructor-arg index="4" ref="selectorStrategy" />
      * </bean>
      * <p/>
      * <p/>
-     * <bean id="gliaClient" class="com.reversemind.hypergate.client.HyperGateClient" scope="prototype">
-     * <constructor-arg index="0" value="${glia.client.service.host}" />
-     * <constructor-arg index="1" value="${glia.client.service.port}" />
+     * <bean id="hyperGateClient" class="com.reversemind.hypergate.client.HyperGateClient" scope="prototype">
+     * <constructor-arg index="0" value="${hypergate.client.service.host}" />
+     * <constructor-arg index="1" value="${hypergate.client.service.port}" />
      * </bean>
      *
      * @return
      */
-    public String getGliaClientBeanName() {
-        return "gliaClient";
+    public String getClientBeanName() {
+        return "hyperGateClient";
     }
 
-    public Class getGliaClientBeanClass() {
+    public Class getClientBeanClass() {
         return HyperGateClient.class;
     }
 

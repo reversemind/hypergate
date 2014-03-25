@@ -87,8 +87,8 @@ public class ServerFactory implements Serializable {
             }
         }
 
-        public Builder setPayloadWorker(IPayloadProcessor gliaPayloadWorker) {
-            this.payloadWorker = gliaPayloadWorker;
+        public Builder setPayloadWorker(IPayloadProcessor payloadWorker) {
+            this.payloadWorker = payloadWorker;
             return this;
         }
 

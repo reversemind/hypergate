@@ -19,9 +19,9 @@ import java.io.Serializable;
  */
 public interface IClient extends Serializable {
 
-    public String getGliaClientBeanName();
+    public String getClientBeanName();
 
-    public Class getGliaClientBeanClass();
+    public Class getClientBeanClass();
 
     public <T> Object getProxy(Class<T> interfaceClass) throws Exception;
 

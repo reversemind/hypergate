@@ -44,10 +44,10 @@ public class TestServiceDiscovery implements Serializable {
 
         //IHyperGateServer serverOne = new HyperGateServer(SERVICE_NAME, null, false);
 
-        IPayloadProcessor gliaPayloadProcessor = new PayloadProcessor();
+        IPayloadProcessor payloadProcessor = new PayloadProcessor();
 
         IHyperGateServer serverOne = ServerFactory.builder()
-                .setPayloadWorker(gliaPayloadProcessor)
+                .setPayloadWorker(payloadProcessor)
                 .setName(SERVICE_NAME)
                 .setZookeeperHosts(ZOOKEEPER_CONNECTION_STRING)
                 .setServiceBasePath(BASE_PATH)
@@ -56,7 +56,7 @@ public class TestServiceDiscovery implements Serializable {
                 .build();
 
         IHyperGateServer serverTwo = ServerFactory.builder()
-                .setPayloadWorker(gliaPayloadProcessor)
+                .setPayloadWorker(payloadProcessor)
                 .setName(SERVICE_NAME)
                 .setZookeeperHosts(ZOOKEEPER_CONNECTION_STRING)
                 .setServiceBasePath(BASE_PATH)
