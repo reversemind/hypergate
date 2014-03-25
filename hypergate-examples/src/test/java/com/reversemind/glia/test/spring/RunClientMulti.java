@@ -62,7 +62,7 @@ public class RunClientMulti implements Serializable {
                         try {
                             Thread.sleep(2);
                         } catch (InterruptedException e) {
-                            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                            e.printStackTrace();  //To change body of catch statement use File | JSONSettings | File Templates.
                         }
                     }
 

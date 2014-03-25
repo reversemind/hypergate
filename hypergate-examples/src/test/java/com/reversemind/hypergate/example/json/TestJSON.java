@@ -1,4 +1,4 @@
-package com.reversemind.glia.test.json;
+package com.reversemind.hypergate.example.json;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;

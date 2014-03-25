@@ -62,7 +62,7 @@
     </bean>
 
     <!--Builder for Simple server-->
-    <bean id="serverBuilder" class="com.reversemind.hypergate.server.ServerFactory.Builder" >
+    <bean id="simpleHyperGateServerBuilder" class="com.reversemind.hypergate.server.ServerFactory.Builder" >
         <property name="payloadWorker" ref="serverPayloadProcessor" />
 
         <property name="name" value="${hypergate.server.simple.name}" />

@@ -60,7 +60,7 @@ public class RunClient {
 
 //        LOG.info("Run Client");
 //
-//        HyperGateClient client = new HyperGateClient(Settings.SERVER_HOST, Settings.SERVER_PORT);
+//        HyperGateClient client = new HyperGateClient(JSONSettings.SERVER_HOST, JSONSettings.SERVER_PORT);
 //        client.start();
 //
 //        ISimplePojo simplePojoProxy = (ISimplePojo) ProxyFactory.getInstance().newProxyInstance(client, ISimplePojo.class);

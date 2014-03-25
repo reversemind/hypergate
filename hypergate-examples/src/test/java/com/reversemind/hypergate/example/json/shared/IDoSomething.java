@@ -1,4 +1,4 @@
-package com.reversemind.glia.test.json;
+package com.reversemind.hypergate.example.json.shared;
 
 /**
  *
@@ -16,12 +16,8 @@ package com.reversemind.glia.test.json;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class Settings {
-    public static final String SERVER_HOST = "localhost";
-    public static final int SERVER_PORT = 52142;
+public interface IDoSomething {
+    public String doExtraThing(String jsonString);
 
-    public static final String ADDRESS_SEARCH = "addressSearch";
-    public static final String SEARCH_STATUS_OK = "OK";
-    public static final String SEARCH_STATUS_ERROR = "ERROR";
-    public static final String SEARCH_STATUS = "status";
+    public String doExtraThing(String jsonString, String otherParameter);
 }

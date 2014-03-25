@@ -1,15 +1,19 @@
-package com.reversemind.glia.test.spring;
+package com.reversemind.hypergate.example.spring;
 
-import com.reversemind.hypergate.server.HyperGateServer;
+import com.reversemind.hypergate.server.IHyperGateServer;
 import com.reversemind.hypergate.server.IPayloadProcessor;
+import com.reversemind.hypergate.server.ServerFactory;
+import junit.framework.Assert;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.io.Serializable;
 import java.util.Map;
 import java.util.Set;
+
+import static junit.framework.Assert.*;
 
 /**
  *
@@ -26,12 +30,17 @@ import java.util.Set;
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ * Create HyperGateServer from Spring Context
+ *
  */
-public class RunServerFromSpringContext implements Serializable {
+public class TestBuildServerFromSpringContext {
 
-    private static final Logger LOG = LoggerFactory.getLogger(RunServerFromSpringContext.class);
+    private static final Logger LOG = LoggerFactory.getLogger(TestBuildServerFromSpringContext.class);
 
-    public static void main(String... args) {
+    @Test
+    public void testSpringContext() throws InterruptedException {
+
         ApplicationContext context = new ClassPathXmlApplicationContext("META-INF/hypergate-server-context.xml");
 
         IPayloadProcessor payloadProcessor = (IPayloadProcessor) context.getBean("serverPayloadProcessor");
@@ -42,12 +51,20 @@ public class RunServerFromSpringContext implements Serializable {
             LOG.debug(clazz.getCanonicalName() + "|" + map.get(clazz).getCanonicalName());
         }
 
-        HyperGateServer server = (HyperGateServer) context.getBean("gliaServer");
-        if (server != null) {
-            LOG.debug("!!!!");
-        }
+        ServerFactory.Builder serverBuilder = (ServerFactory.Builder) context.getBean("simpleHyperGateServerBuilder");
 
-        server.start();
+        assertNotNull(serverBuilder);
+        LOG.info("serverBuilder: " + serverBuilder);
+
+
+        IHyperGateServer hyperGateServer = serverBuilder.build();
+        assertNotNull(hyperGateServer);
+
+        hyperGateServer.start();
+        Thread.sleep(1000);
+        hyperGateServer.shutdown();
+
+        assertTrue(!hyperGateServer.isRunning());
     }
 
 }

@@ -1,8 +1,8 @@
-package com.reversemind.glia.test.json.server;
+package com.reversemind.hypergate.example.json.server;
 
-import com.reversemind.glia.test.json.Settings;
-import com.reversemind.glia.test.json.shared.IDoSomething;
-import com.reversemind.glia.test.json.shared.JSONBuilder;
+import com.reversemind.hypergate.example.json.Settings;
+import com.reversemind.hypergate.example.json.shared.IDoSomething;
+import com.reversemind.hypergate.example.json.shared.JSONBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

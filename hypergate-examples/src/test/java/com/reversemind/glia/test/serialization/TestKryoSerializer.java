@@ -36,10 +36,6 @@ public class TestKryoSerializer {
             list.add(new PAddressNode("" + i, " city - " + i + "_" + i));
         }
 
-
-
-
-
         Class[] classes = {PAddressNode.class, Integer.class};
 
         final Kryo kryo = new Kryo();
