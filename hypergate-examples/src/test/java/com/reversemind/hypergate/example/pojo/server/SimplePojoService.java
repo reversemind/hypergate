@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  *
- * Copyright (c) 2013 Eugene Kalinin
+ * Copyright (c) 2013-2014 Eugene Kalinin
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,7 +39,7 @@ public class SimplePojoService implements ISimplePojo, Serializable {
         }
 
         List<PAddressNode> list = new ArrayList<PAddressNode>();
-        for (int i = 0; i < 100000; i++) {
+        for (int i = 0; i < 50; i++) {
 //        for (int i = 0; i < 1; i++) {
             list.add(new PAddressNode("" + i, " city - " + query + "_" + i));
         }
@@ -51,7 +51,14 @@ public class SimplePojoService implements ISimplePojo, Serializable {
         LOG.info("LIST QUERY:" + query);
         LOG.info("Correctly detected method");
 
-        return new ArrayList<PAddressNode>();
+
+        List<PAddressNode> list = new ArrayList<PAddressNode>();
+        for (int i = 0; i < 50; i++) {
+//        for (int i = 0; i < 1; i++) {
+            list.add(new PAddressNode("" + i, " city - " + query + "_" + i));
+        }
+
+        return list;
     }
 
     @Override
