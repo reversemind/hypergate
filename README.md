@@ -54,7 +54,12 @@ The use and distribution terms for this software are covered by the Apache Licen
  See the License for the specific language governing permissions and
  limitations under the License.
 
+
+
+
 #### TODO
+
+* Serializer selector - issue #4 and #6
 
 * What about methods with collections types
 

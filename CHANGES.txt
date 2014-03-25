@@ -1,3 +1,9 @@
+migrated to new name - HyperGate
+
+0.5.0-SNAPSHOT
+
+------
+
 1.8.9 - Added Kryo Serializer as experiment
 
 1.8.7 - Some troubles with serialized size of object just increase size
