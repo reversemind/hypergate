@@ -1,8 +1,7 @@
-package com.reversemind.glia.test.serialization;
+package com.reversemind.hypergate.serialization;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.serializers.DefaultSerializers;
-import com.reversemind.hypergate.serialization.KryoSerializer;
 import com.reversemind.hypergate.example.pojo.shared.PAddressNode;
 import org.junit.Test;
 
@@ -12,15 +11,14 @@ import java.io.ObjectOutputStream;
 import java.util.*;
 
 /**
- *
  * Copyright (c) 2013-2014 Eugene Kalinin
- *
+ * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -28,6 +26,7 @@ import java.util.*;
  * limitations under the License.
  */
 public class TestKryoSerializer {
+
     @Test
     public void testCompare() throws IOException {
         List<PAddressNode> list = new ArrayList<PAddressNode>();
@@ -47,18 +46,17 @@ public class TestKryoSerializer {
 //        kryo.register(Map.class);
 //        kryo.register(HashMap.class);
 
-        kryo.register(ArrayList.class,kryo.getSerializer(List.class));
+        kryo.register(ArrayList.class, kryo.getSerializer(List.class));
         kryo.register(PAddressNode.class);
 //        kryo.register(Throwable.class);
 //        kryo.register(PayloadStatus.class);
 //        kryo.register(Payload.class);
 
 
-
         KryoSerializer kryoSerializer = new KryoSerializer(kryo);
         long bT = System.currentTimeMillis();
         byte[] bytes = kryoSerializer.serialize(list);
-        System.out.println("gogo -- " + bytes.length + " time:" + (System.currentTimeMillis()-bT));
+        System.out.println("gogo -- " + bytes.length + " time:" + (System.currentTimeMillis() - bT));
 
 
         FileOutputStream fos = new FileOutputStream("/serializer.java");
@@ -66,10 +64,9 @@ public class TestKryoSerializer {
 
         bT = System.currentTimeMillis();
         oos.writeObject(list);
-        System.out.println( "TIME - " + " time:" + (System.currentTimeMillis()-bT));
+        System.out.println("TIME - " + " time:" + (System.currentTimeMillis() - bT));
         oos.flush();
         oos.close();
-
 
 
         fos = new FileOutputStream("/serializer.kryo");
@@ -81,7 +78,5 @@ public class TestKryoSerializer {
 
         oos.flush();
         oos.close();
-
-
     }
 }

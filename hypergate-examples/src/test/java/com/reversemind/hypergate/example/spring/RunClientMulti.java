@@ -1,4 +1,4 @@
-package com.reversemind.glia.test.spring;
+package com.reversemind.hypergate.example.spring;
 
 import com.reversemind.hypergate.client.HyperGateClient;
 import com.reversemind.hypergate.proxy.ProxyFactory;
