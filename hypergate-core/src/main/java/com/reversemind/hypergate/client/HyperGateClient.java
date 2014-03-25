@@ -59,6 +59,7 @@ public class HyperGateClient implements IHyperGateClient, Serializable {
     private boolean running = false;
     private boolean occupied = false;
 
+
     private final Kryo kryo = new KryoSettings().getKryo();
     private KryoSerializer kryoSerializer;
 
