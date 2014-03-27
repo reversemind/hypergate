@@ -1,13 +1,11 @@
 package com.reversemind.hypergate.client;
 
-//import org.apache.commons.pool.BasePoolableObjectFactory;
-import org.apache.commons.pool2.BasePooledObjectFactory;
-import org.apache.commons.pool2.PooledObject;
-import org.apache.commons.pool2.impl.DefaultPooledObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.pool.BasePoolableObjectFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Copyright (c) 2013-2014 Eugene Kalinin
@@ -24,7 +22,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class ClientPoolFactory extends BasePooledObjectFactory<IHyperGateClient> {
+public class ClientPoolFactory extends BasePoolableObjectFactory<IHyperGateClient> {
 
     private final static Logger LOG = LoggerFactory.getLogger(ClientPoolFactory.class);
 
@@ -40,7 +38,7 @@ public class ClientPoolFactory extends BasePooledObjectFactory<IHyperGateClient>
     }
 
     @Override
-    public IHyperGateClient create() throws Exception {
+    public IHyperGateClient makeObject() throws Exception {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext(this.contextXML);
         IHyperGateClient client = applicationContext.getBean(this.beanName, this.clientClazz);
         if (client == null) {
@@ -50,31 +48,25 @@ public class ClientPoolFactory extends BasePooledObjectFactory<IHyperGateClient>
         return client;
     }
 
-    @Override
-    public PooledObject<IHyperGateClient> wrap(IHyperGateClient obj) {
-        DefaultPooledObject<IHyperGateClient> defaultPooledObject = new DefaultPooledObject<IHyperGateClient>(obj);
-        return defaultPooledObject;
-    }
-
-    @Override
-    public void destroyObject(PooledObject<IHyperGateClient> p) throws Exception  {
-        if(p != null){
-            IHyperGateClient hyperGateClient = p.getObject();
-            this.destroyObject(hyperGateClient);
-        }
-    }
-
     public void destroyObject(IHyperGateClient client) throws Exception {
         LOG.warn("Going to destroy client:" + client);
         if(client != null) {
-            int count = 10;
+            int count = 5;
             while (client.isOccupied() == true || count-- > 0) {
-                Thread.sleep(100);
+                Thread.sleep(70);
                 LOG.warn("Waiting for HyperGate:" + client.getName() + " times:" + count + " from 10");
             }
             client.shutdown();
             client = null;
         }
+    }
+
+    public void activateObject(IHyperGateClient client) throws Exception {
+
+    }
+
+    public void passivateObject(IHyperGateClient client) throws Exception {
+
     }
 
 }

@@ -59,16 +59,20 @@ public class ClientPoolTest {
 
         ClientPool clientPool = new ClientPool(clientPoolFactory,2);
 
+
+        IHyperGateClient hyperGateClient_ = null;
         int count = 2;
         for(int i=0; i<count; i++){
             IHyperGateClient hyperGateClient = clientPool.borrowObject();
             LOG.info("Borrowed client" + hyperGateClient.getName());
             LOG.info("Pool metrics:" + clientPool.printPoolMetrics());
+            hyperGateClient_ = hyperGateClient;
         }
-        clientPool.closeAll();
+
+//        clientPool.closeAll();
         clientPool.clear();
         clientPool.close();
-
+        clientPool.returnObject(hyperGateClient_);
         Thread.sleep(2000);
 
         System.out.println("DONE");

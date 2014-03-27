@@ -1,13 +1,9 @@
 package com.reversemind.hypergate.client;
 
-import org.apache.commons.pool2.impl.DefaultPooledObjectInfo;
-import org.apache.commons.pool2.impl.GenericObjectPool;
-import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
-
-import java.util.Set;
+import org.apache.commons.pool.impl.GenericObjectPool;
 
 /**
- * Copyright (c) 2013-2014 Eugene Kalinin
+ * Copyright (c) 2013 Eugene Kalinin
  * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,8 +22,6 @@ public class ClientPool extends GenericObjectPool<IHyperGateClient> {
     private static int START_POOL_SIZE = 10;
     private ClientPoolFactory clientPoolFactory;
 
-    GenericObjectPoolConfig genericObjectPoolConfig = new GenericObjectPoolConfig();
-
     /**
      * Default values 10 clients
      *
@@ -35,33 +29,13 @@ public class ClientPool extends GenericObjectPool<IHyperGateClient> {
      */
     public ClientPool(ClientPoolFactory clientPoolFactory) {
         // int maxActive, byte WHEN_EXHAUSTED_GROW, long maxWait
-        // super(clientPoolFactory, START_POOL_SIZE, GenericObjectPool.WHEN_EXHAUSTED_GROW, 30 * 1000);
-        super(clientPoolFactory);
-
-        GenericObjectPoolConfig genericObjectPoolConfig = new GenericObjectPoolConfig();
-        genericObjectPoolConfig.setJmxEnabled(true);
-        genericObjectPoolConfig.setJmxNameBase("HyperGatePool");
-        genericObjectPoolConfig.setJmxNamePrefix("HyperGatePoolPrefix");
-        genericObjectPoolConfig.setBlockWhenExhausted(false);
-
-        this.setConfig(genericObjectPoolConfig);
+        super(clientPoolFactory, START_POOL_SIZE, GenericObjectPool.WHEN_EXHAUSTED_GROW, 30 * 1000);
         this.clientPoolFactory = clientPoolFactory;
     }
 
     public ClientPool(ClientPoolFactory clientPoolFactory, int poolSize) {
         // int maxActive, byte WHEN_EXHAUSTED_GROW, long maxWait
-//        super(clientPoolFactory, poolSize, GenericObjectPool.WHEN_EXHAUSTED_GROW, 30 * 1000);
-//        GenericObjectPoolConfig objectPoolConfig = new GenericObjectPoolConfig().setMaxTotal(poolSize);
-        super(clientPoolFactory);
-
-        GenericObjectPoolConfig genericObjectPoolConfig = new GenericObjectPoolConfig();
-        genericObjectPoolConfig.setJmxEnabled(true);
-        genericObjectPoolConfig.setJmxNameBase("HyperGatePool");
-        genericObjectPoolConfig.setJmxNamePrefix("HyperGatePoolPrefix");
-        genericObjectPoolConfig.setBlockWhenExhausted(false);
-        genericObjectPoolConfig.setMaxTotal(poolSize);
-        this.setConfig(genericObjectPoolConfig);
-
+        super(clientPoolFactory, poolSize, GenericObjectPool.WHEN_EXHAUSTED_GROW, 30 * 1000);
         this.clientPoolFactory = clientPoolFactory;
         START_POOL_SIZE = poolSize;
     }
@@ -72,10 +46,9 @@ public class ClientPool extends GenericObjectPool<IHyperGateClient> {
 
     public String printPoolMetrics() {
         StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append("\n");
-        stringBuffer.append(" getMaxActive:").append(this.getMaxTotal()).append("\n");
+        stringBuffer.append(" getMaxActive:").append(this.getMaxActive()).append("\n");
         stringBuffer.append(" getMaxIdle:").append(this.getMaxIdle()).append("\n");
-        stringBuffer.append(" getMaxWait:").append(this.getMaxWaitMillis()).append("\n");
+        stringBuffer.append(" getMaxWait:").append(this.getMaxWait()).append("\n");
 
         stringBuffer.append(" getNumActive:").append(this.getNumActive()).append("\n");
         stringBuffer.append(" getNumIdle:").append(this.getNumIdle()).append("\n");
@@ -83,15 +56,6 @@ public class ClientPool extends GenericObjectPool<IHyperGateClient> {
         return stringBuffer.toString();
     }
 
-    public void closeAll(){
-        this.getBorrowedCount();
-        this.getCreatedCount();
-        Set<DefaultPooledObjectInfo> set = this.listAllObjects();
-        if(set != null && set.size() >0){
-            for(DefaultPooledObjectInfo pooledObjectInfo: set){
-                //pooledObjectInfo.
-                System.out.println(pooledObjectInfo.getLastBorrowTime());
-            }
-        }
+    public void clearAll(){
     }
 }
