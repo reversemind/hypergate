@@ -22,6 +22,8 @@ import java.io.Serializable;
  */
 public interface IHyperGateClient extends Serializable {
 
+    public String getName();
+
     public void start() throws Exception;
 
     public void shutdown();

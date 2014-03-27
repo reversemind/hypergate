@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.InetSocketAddress;
+import java.util.UUID;
 import java.util.concurrent.*;
 
 /**
@@ -61,6 +62,7 @@ public class HyperGateClient implements IHyperGateClient, Serializable {
     private boolean running = false;
     private boolean occupied = false;
 
+    private String name = "client-" + UUID.randomUUID().toString();
 
 //    private final Kryo kryo = new KryoSettings().getKryo();
 //    private KryoSerializer kryoSerializer;
@@ -69,6 +71,9 @@ public class HyperGateClient implements IHyperGateClient, Serializable {
         this.port = 7000;
         this.host = "localhost";
 //        this.kryoSerializer = new KryoSerializer(kryo);
+        this.name = this.generateName();
+
+        LOG.info("\n\n HyperGateClient name: " + this.name + "\n created for server:" + host + ":" + port + "\n\n");
     }
 
     public HyperGateClient(String host, int port) {
@@ -76,8 +81,11 @@ public class HyperGateClient implements IHyperGateClient, Serializable {
         this.port = port;
         this.payload = null;
         this.executor = this.getExecutor();
-        LOG.warn("\n\n HyperGateClient started \n for server:" + host + ":" + port + "\n\n");
+
+        this.name = this.generateName();
+        LOG.info("\n\n HyperGateClient name: " + this.name + "\n created for server:" + host + ":" + port + "\n\n");
 //        this.kryoSerializer = new KryoSerializer(kryo);
+
     }
 
     public HyperGateClient(String host, int port, long timeout) {
@@ -92,7 +100,9 @@ public class HyperGateClient implements IHyperGateClient, Serializable {
         }
 
         this.executor = this.getExecutor();
-        LOG.warn("\n\n HyperGateClient started \n for server:" + host + ":" + port + "\n\n");
+
+        this.name = this.generateName();
+        LOG.info("\n\n HyperGateClient name: " + this.name + "\n created for server:" + host + ":" + port + "\n\n");
 //        this.kryoSerializer = new KryoSerializer(kryo);
     }
 
@@ -156,8 +166,8 @@ public class HyperGateClient implements IHyperGateClient, Serializable {
             try {
                 this.setPayload(this.futureTask.get(this.futureTaskTimeOut, TimeUnit.MILLISECONDS));
             } catch (TimeoutException e) {
-                LOG.warn("TimeoutException futureTask == HERE", e);
-                _throwable = new TimeoutException("TimeoutException futureTask == HERE");
+                LOG.warn("TimeoutException futureTask == HERE client:" + this.getName(), e);
+                _throwable = new TimeoutException("TimeoutException futureTask == HERE client:" + this.getName());
                 this.futureTask.cancel(true);
             } catch (InterruptedException e) {
                 LOG.warn("InterruptedException futureTask == HERE", e);
@@ -179,6 +189,11 @@ public class HyperGateClient implements IHyperGateClient, Serializable {
         return PayloadBuilder.buildErrorPayload(PayloadStatus.ERROR_SERVER_TIMEOUT, _throwable);
     }
 
+    /**
+     * It means that client is sending a data via pipe
+     *
+     * @return
+     */
     @Override
     public boolean isOccupied() {
         return this.occupied;
@@ -251,6 +266,8 @@ public class HyperGateClient implements IHyperGateClient, Serializable {
 
         this.running = false;
         this.occupied = false;
+
+        LOG.info("Going to shutdown HyperGate client:" + this.getName());
     }
 
     @Override
@@ -260,7 +277,7 @@ public class HyperGateClient implements IHyperGateClient, Serializable {
         this.payload = null;
         this.setClientTimeOut(FUTURE_TASK_TIME_OUT);
         this.executor = this.getExecutor();
-        LOG.warn("\n\n HyperGateClient started \n for server:" + host + ":" + port + "\n\n");
+        LOG.warn("\n\n HyperGateClient " + this.getName() + " RE-started \n for server:" + host + ":" + port + "\n\n");
 
         this.start();
     }
@@ -276,7 +293,7 @@ public class HyperGateClient implements IHyperGateClient, Serializable {
 
         this.setClientTimeOut(clientTimeOut);
         this.executor = this.getExecutor();
-        LOG.warn("\n\n HyperGateClient RE-started \n for server:" + host + ":" + port + "\n\n");
+        LOG.warn("\n\n HyperGateClient " + this.getName() + " RE-started \n for server:" + host + ":" + port + "\n\n");
 
         this.start();
     }
@@ -295,6 +312,15 @@ public class HyperGateClient implements IHyperGateClient, Serializable {
         running = false;
     }
 
+    private String generateName(){
+        return "client-" + UUID.randomUUID().toString();
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
+    }
+
     /**
      * Start a HyperGateClient
      * <p/>
@@ -306,7 +332,7 @@ public class HyperGateClient implements IHyperGateClient, Serializable {
     public void start() throws Exception {
 
         if (this.running) {
-            throw new InstantiationException("HyperGate client is running");
+            throw new InstantiationException("HyperGate client " + this.getName() + "is running");
         }
 
         // Configure the client.
@@ -551,8 +577,7 @@ public class HyperGateClient implements IHyperGateClient, Serializable {
             try {
                 this.executor.shutdown();
             } catch (Exception ex) {
-                // TODO make it more accurate
-                ex.printStackTrace();
+                LOG.error("Going to shutdown client Executor " + this.getName(), ex);
             }
             this.executor = null;
         }

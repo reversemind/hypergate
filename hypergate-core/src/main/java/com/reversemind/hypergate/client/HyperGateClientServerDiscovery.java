@@ -76,7 +76,7 @@ public class HyperGateClientServerDiscovery extends HyperGateClient implements I
             try {
                 this.serviceDiscoverer.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                LOG.error("Shutting down HyperGate client server discovery - ", e);
             }
         }
     }

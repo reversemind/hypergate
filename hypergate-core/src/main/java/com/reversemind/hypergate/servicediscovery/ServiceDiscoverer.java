@@ -125,6 +125,7 @@ public class ServiceDiscoverer implements Serializable, Closeable {
             }
         }
         this.curatorFramework.close();
+        this.curatorFramework = null;
     }
 
     public static void main(String... args) throws Exception {

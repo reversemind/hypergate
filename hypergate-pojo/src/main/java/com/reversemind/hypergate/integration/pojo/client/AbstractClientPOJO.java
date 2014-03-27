@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import javax.annotation.PostConstruct;
 import java.io.Serializable;
 
 /**
@@ -26,7 +27,7 @@ import java.io.Serializable;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// TODO need to refactor it into one for EJB & POJO
+// TODO remove it in common part for EJB & POJO
 public abstract class AbstractClientPOJO implements IClient, Serializable {
 
     private final static Logger LOG = LoggerFactory.getLogger(AbstractClientPOJO.class);
@@ -42,6 +43,7 @@ public abstract class AbstractClientPOJO implements IClient, Serializable {
      * Need init during the start
      *
      */
+
     public void init() {
         this.localInit();
     }

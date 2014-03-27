@@ -1,6 +1,8 @@
 package com.reversemind.hypergate.client;
 
 import org.apache.commons.pool.BasePoolableObjectFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -20,6 +22,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * limitations under the License.
  */
 public class ClientPoolFactory extends BasePoolableObjectFactory<IHyperGateClient> {
+
+    private final static Logger LOG = LoggerFactory.getLogger(ClientPoolFactory.class);
 
     private String contextXML;
     private String beanName;
@@ -43,19 +47,26 @@ public class ClientPoolFactory extends BasePoolableObjectFactory<IHyperGateClien
         return client;
     }
 
-//    public void destroyObject(IHyperGateClient client) throws Exception {
-//        LOG.warn("Going to destroy client:" + client);
-//        if(client != null && client.isOccupied() == false){
-//            client.shutdown();
-//            client = null;
-//            LOG.warn("Client destroyed");
-//        }
-//    }
+    @Override
+    public void destroyObject(IHyperGateClient client) throws Exception {
+        LOG.warn("Going to destroy client:" + client);
+        if(client != null) {
+            int count = 10;
+            while (client.isOccupied() == true || count-- > 0) {
+                Thread.sleep(100);
+                LOG.warn("Waiting for HyperGate:" + client.getName() + " times:" + count + " from 10");
+            }
+            client.shutdown();
+            client = null;
+        }
+    }
 
+    @Override
     public void activateObject(IHyperGateClient client) throws Exception {
 
     }
 
+    @Override
     public void passivateObject(IHyperGateClient client) throws Exception {
 
     }

@@ -28,6 +28,7 @@ import java.io.Serializable;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+// TODO remove it in common part for EJB & POJO
 public abstract class AbstractClientEJB implements IClientEJB, Serializable {
 
     private final static Logger LOG = LoggerFactory.getLogger(AbstractClientEJB.class);
