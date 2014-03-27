@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+    <context:property-placeholder location="META-INF/hypergate-server.properties"/>
+
+    <import resource="hypergate-interface-map.xml" />
+
+    <bean id="serverPayloadProcessor" class="com.reversemind.hypergate.server.PayloadProcessor">
+        <property name="pojoMap" ref="pojoMap"/>
+        <property name="ejbMap" ref="ejbMap"/>
+        <property name="jndiEnvironment">
+            <props>
+                <prop key="java.naming.provider.url">remote://localhost:4447</prop>
+                <prop key="java.naming.factory.url.pkgs">org.jboss.ejb.client.naming</prop>
+                <prop key="java.naming.factory.initial">org.jboss.naming.remote.client.InitialContextFactory</prop>
+                <prop key="jboss.naming.client.ejb.context">true</prop>
+                <prop key="remote.connections">default</prop>
+                <prop key="remote.connectionprovider.create.options.org.xnio.Options.SSL_ENABLED">false</prop>
+                <prop key="remote.connection.default.connect.options.org.xnio.Options.SASL_POLICY_NOANONYMOUS">false</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!--Builder for simple HyperGateServer-->
+    <bean id="serverBuilderSimple" class="com.reversemind.hypergate.server.ServerFactory.Builder" >
+        <property name="port" value="12534"/>
+    </bean>
+
+    <!--Builder for advertiser server-->
+    <bean id="serverBuilderAdvertiser" class="com.reversemind.hypergate.server.ServerFactory.Builder" scope="prototype">
+        <property name="payloadWorker" ref="serverPayloadProcessor" />
+
+        <property name="name" value="${hypergate.server.advertiser.name}" />
+        <property name="autoSelectPort" value="${hypergate.server.advertiser.autoselect.port}" />
+        <property name="port" value="${hypergate.server.advertiser.port}" />
+        <property name="keepClientAlive" value="${hypergate.server.advertiser.keep.client.alive}" />
+
+        <property name="type" value="ZOOKEEPER_ADVERTISER" />
+
+        <property name="serviceBasePath" value="${hypergate.server.advertiser.zookeeper.base.path}" />
+        <property name="zookeeperHosts" value="${hypergate.server.advertiser.zookeeper.connection}" />
+
+        <property name="useMetrics" value="${hypergate.server.advertiser.use.metrics}" />
+        <property name="periodPublishMetrics" value="${hypergate.server.advertiser.delay.metrics.publish}"/>
+    </bean>
+
+    <!--See in hypergate-server.properties - # SIMPLE STATIC SERVER PARAMETERS-->
+    <!--Builder for Simple server-->
+    <bean id="serverBuilder" class="com.reversemind.hypergate.server.ServerFactory.Builder" >
+        <property name="payloadWorker" ref="serverPayloadProcessor" />
+
+        <property name="name" value="${hypergate.server.simple.name}" />
+        <property name="autoSelectPort" value="${hypergate.server.simple.autoselect.port}" />
+        <property name="port" value="${hypergate.server.simple.port}" />
+        <property name="keepClientAlive" value="${hypergate.server.simple.keep.client.alive}" />
+
+        <property name="type" value="SIMPLE" />
+    </bean>
+
+</beans>

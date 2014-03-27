@@ -69,7 +69,7 @@ public abstract class AbstractClientPOJO implements IClient, Serializable {
             LOG.info("Pool start size:" + poolSize);
             ClientPoolFactory clientPoolFactory = new ClientPoolFactory(this.getContextXML(), this.getClientBeanName(), this.getClientBeanClass());
             clientPool = new ClientPool(clientPoolFactory, poolSize);
-            LOG.info("Client pool RUN !!!");
+            LOG.info("Client pool now is RUNNING");
         }
         LOG.info("Client pool already initialized");
     }

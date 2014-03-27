@@ -2,6 +2,8 @@ package com.test.pool;
 
 import com.reversemind.hypergate.client.IHyperGateClient;
 import org.apache.commons.pool.BasePoolableObjectFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -21,7 +23,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class ClientFactory extends BasePoolableObjectFactory<IHyperGateClient> {
+public class TestClientFactory extends BasePoolableObjectFactory<IHyperGateClient> {
+
+    private final static Logger LOG = LoggerFactory.getLogger(TestClientFactory.class);
 
     private String contextXML;
     private String beanName;
@@ -33,7 +37,7 @@ public class ClientFactory extends BasePoolableObjectFactory<IHyperGateClient> {
      * @param clientClazz
      * @param beanName
      */
-    public ClientFactory(String contextXML, String beanName, Class<? extends IHyperGateClient> clientClazz) {
+    public TestClientFactory(String contextXML, String beanName, Class<? extends IHyperGateClient> clientClazz) {
         this.contextXML = contextXML;
         this.beanName = beanName;
         this.clientClazz = clientClazz;
@@ -47,8 +51,14 @@ public class ClientFactory extends BasePoolableObjectFactory<IHyperGateClient> {
         return client;
     }
 
-    public void destroyObject(IHyperGateClient client) throws Exception  {
-        if(client != null){
+    public void destroyObject(IHyperGateClient client) throws Exception {
+        LOG.warn("Going to destroy client:" + client);
+        if(client != null) {
+            int count = 10;
+            while (client.isOccupied() == true || count-- > 0) {
+                Thread.sleep(100);
+                LOG.warn("Waiting for HyperGate:" + client.getName() + " times:" + count + " from 10");
+            }
             client.shutdown();
             client = null;
         }

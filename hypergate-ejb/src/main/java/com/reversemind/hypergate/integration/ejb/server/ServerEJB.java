@@ -1,14 +1,9 @@
 package com.reversemind.hypergate.integration.ejb.server;
 
-import com.reversemind.hypergate.server.ServerFactory;
-import com.reversemind.hypergate.server.IHyperGateServer;
+import com.reversemind.hypergate.server.AbstractContainerHyperGateServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.ejb.Singleton;
 import java.io.Serializable;
 
@@ -28,64 +23,18 @@ import java.io.Serializable;
  * limitations under the License.
  */
 @Singleton
-public class ServerEJB implements Serializable {
+public class ServerEJB extends AbstractContainerHyperGateServer implements Serializable {
 
     private final static Logger LOG = LoggerFactory.getLogger(ServerEJB.class);
 
-    private IHyperGateServer server;
-
-    @PostConstruct
-    public void init() {
-
-        //https://issues.apache.org/jira/browse/ZOOKEEPER-1554
-        //System.setProperty("java.security.auth.login.config","/opt/zookeeper/conf/jaas.conf");
-//        System.setProperty("java.security.auth.login.config","/opt/zookeeper/conf");
-        System.setProperty("curator-log-events", "true");
-
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(this.getContextXML());
-        ServerFactory.Builder builderAdvertiser = applicationContext.getBean("serverBuilder", ServerFactory.Builder.class);
-
-        LOG.info("--------------------------------------------------------");
-        LOG.info("Builder properties:");
-        LOG.info("Name:" + builderAdvertiser.getName());
-        LOG.info("Instance Name:" + builderAdvertiser.getInstanceName());
-        LOG.info("port:" + builderAdvertiser.getPort());
-        LOG.info("isAutoSelectPort:" + builderAdvertiser.isAutoSelectPort());
-
-        LOG.info("Type:" + builderAdvertiser.getType());
-
-        LOG.info("Zookeeper connection string:" + builderAdvertiser.getZookeeperHosts());
-        LOG.info("Zookeeper base path:" + builderAdvertiser.getServiceBasePath());
-
-
-        this.server = builderAdvertiser.build();
-
-        LOG.info("\n\n");
-        LOG.info("--------------------------------------------------------");
-        LOG.info("After server initialization - properties");
-        LOG.info("\n");
-        LOG.info("Server properties:");
-        LOG.info("......");
-        LOG.info("Name:" + this.server.getName());
-        LOG.info("Instance Name:" + this.server.getInstanceName());
-        LOG.info("port:" + this.server.getPort());
-
-        this.server.start();
-
-        LOG.info("Server started");
-
+    @Override
+    public String getServerBuilderName() {
+        return SERVER_SIMPLE_BUILDER_NAME;
     }
 
-    @PreDestroy
-    public void destroy() {
-        if (this.server != null) {
-            //server SHUTDOWN
-            this.server.shutdown();
-            LOG.info("SERVER SHUTDOWN");
-        }
-    }
-
+    @Override
     public String getContextXML() {
-        return "META-INF/hypergate-server-context.xml";
+        return SERVER_DEFAULT_CONTEXT_NAME;
     }
+
 }

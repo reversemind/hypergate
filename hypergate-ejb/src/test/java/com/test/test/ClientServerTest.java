@@ -5,7 +5,7 @@ import com.reversemind.hypergate.client.ClientPoolFactory;
 import com.reversemind.hypergate.client.HyperGateClientServerDiscovery;
 import com.reversemind.hypergate.client.IHyperGateClient;
 import com.reversemind.hypergate.proxy.ProxyFactory;
-import com.test.pool.ClientFactory;
+import com.test.pool.TestClientFactory;
 import ejb.client.ClientSimple;
 import ejb.server.ServerSimple;
 import ejb.server.service.ServiceSimple;
@@ -103,7 +103,7 @@ public class ClientServerTest {
                 .addPackages(true, ServerSimple.class.getPackage())
                 .addPackages(true, RunZookeeper.class.getPackage())
                 .addPackages(true, ClientSimple.class.getPackage())
-                .addPackages(true, ClientFactory.class.getPackage())
+                .addPackages(true, TestClientFactory.class.getPackage())
 
                 .addAsResource("META-INF/hypergate-interface-map.xml", "META-INF/hypergate-interface-map.xml")
                 .addAsResource("META-INF/hypergate-server-context.xml", "META-INF/hypergate-server-context.xml")
@@ -139,8 +139,8 @@ public class ClientServerTest {
 
     @Test
     public void testClientPool() throws Exception {
-        ClientFactory clientFactory = new ClientFactory("META-INF/hypergate-client-context.xml", "clientServerDiscovery", HyperGateClientServerDiscovery.class);
-        GenericObjectPool<IHyperGateClient> pool = new GenericObjectPool<IHyperGateClient>(clientFactory, 5);
+        TestClientFactory testClientFactory = new TestClientFactory("META-INF/hypergate-client-context.xml", "clientServerDiscovery", HyperGateClientServerDiscovery.class);
+        GenericObjectPool<IHyperGateClient> pool = new GenericObjectPool<IHyperGateClient>(testClientFactory, 5);
 
         LOG.debug("pool.getMaxActive():" + pool.getMaxActive());
         LOG.debug("pool.getMaxIdle():" + pool.getMaxIdle());

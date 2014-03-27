@@ -23,8 +23,8 @@ import org.apache.commons.pool.impl.GenericObjectPool;
 public class TestObjectPool {
 
     public static void main(String... args) throws Exception {
-        ClientFactory clientFactory = new ClientFactory("META-INF/hypergate-client-context.xml","clientServerDiscovery", HyperGateClientServerDiscovery.class);
-        GenericObjectPool<IHyperGateClient> pool = new GenericObjectPool<IHyperGateClient>(clientFactory, 5);
+        TestClientFactory testClientFactory = new TestClientFactory("META-INF/hypergate-client-context.xml","clientServerDiscovery", HyperGateClientServerDiscovery.class);
+        GenericObjectPool<IHyperGateClient> pool = new GenericObjectPool<IHyperGateClient>(testClientFactory, 5);
 
         IHyperGateClient hyperGateClient = pool.borrowObject();
     }
