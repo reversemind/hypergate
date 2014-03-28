@@ -64,6 +64,7 @@ public class ClientPool extends GenericObjectPool2<IHyperGateClient> {
         genericObjectPoolConfig.setMinIdle(0);
         genericObjectPoolConfig.setTestOnBorrow(true);
         genericObjectPoolConfig.setMaxWaitMillis(500);
+
         this.setConfig(genericObjectPoolConfig);
 
         this.clientPoolFactory = clientPoolFactory;

@@ -57,6 +57,7 @@ public class ProxyHandlerPool extends AbstractProxyHandler implements Invocation
                     try {
                         synchronized (this.clientPool) {
                             ClientPoolFactory clientPoolFactory = this.clientPool.getClientPoolFactory();
+                            this.clientPool.forceClearClose();
                             this.clientPool.clear();
                             this.clientPool.close();
                             this.clientPool = null;

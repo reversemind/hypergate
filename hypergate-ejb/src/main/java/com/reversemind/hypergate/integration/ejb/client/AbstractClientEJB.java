@@ -80,6 +80,7 @@ public abstract class AbstractClientEJB implements IClientEJB, Serializable {
     protected void clientFullReconnect() throws Exception {
         long beginTime = System.currentTimeMillis();
 
+        clientPool.forceClearClose();
         clientPool.clear();
         clientPool.close();
         clientPool = null;

@@ -82,6 +82,7 @@ public abstract class AbstractClientPOJO implements IClient, Serializable {
     protected void clientFullReconnect() throws Exception {
         long beginTime = System.currentTimeMillis();
 
+        clientPool.forceClearClose();
         clientPool.clear();
         clientPool.close();
         clientPool = null;
