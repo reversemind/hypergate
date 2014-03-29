@@ -53,21 +53,6 @@ public class ProxyHandlerPool extends AbstractProxyHandler implements Invocation
                     }
                 } catch (Exception ex2) {
                     LOG.error("Could not get a hyperGateClient from Pool #2 - Try to reload pool", ex2);
-//
-//                    try {
-//                        synchronized (this.clientPool) {
-//                            ClientPoolFactory clientPoolFactory = this.clientPool.getClientPoolFactory();
-//                            this.clientPool.forceClearClose();
-//                            this.clientPool.clear();
-//                            this.clientPool.close();
-//                            this.clientPool = null;
-//                            this.clientPool = new ClientPool(clientPoolFactory);
-//                            Thread.sleep(70);
-//                            this.client = this.clientPool.borrowObject();
-//                        }
-//                    } catch (Exception ex3) {
-//                        LOG.error("Could not get a client after reloaded pool #3", ex3);
-//                    }
                 }
             }
         }

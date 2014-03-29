@@ -80,7 +80,7 @@ public class ClientPoolTest {
         ClientPoolFactory clientPoolFactory = new ClientPoolFactory(CLIENT_DEFAULT_CONTEXT_NAME, CLIENT_SIMPLE_BUILDER_NAME, CLASS_HYPERGATE_CLIENT);
         ClientPool clientPool = new ClientPool(clientPoolFactory,1000);
 
-        final int THREAD_SIZE = 200;
+        final int THREAD_SIZE = 100;
         ExecutorService executor = Executors.newFixedThreadPool(THREAD_SIZE);
 
         List<FutureTask<String>> list = new ArrayList<FutureTask<String>>();
