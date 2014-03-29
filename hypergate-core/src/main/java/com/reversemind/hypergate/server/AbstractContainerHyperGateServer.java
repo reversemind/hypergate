@@ -67,6 +67,7 @@ public abstract class AbstractContainerHyperGateServer implements Serializable {
         LOG.info("Instance Name:" + builder.getInstanceName());
         LOG.info("port:" + builder.getPort());
         LOG.info("isAutoSelectPort:" + builder.isAutoSelectPort());
+        LOG.info("Keep client alive:" + builder.isKeepClientAlive());
         LOG.info("Type:" + builder.getType());
 
         if(builder.getType().equals(ServerFactory.Builder.Type.ZOOKEEPER_ADVERTISER)){

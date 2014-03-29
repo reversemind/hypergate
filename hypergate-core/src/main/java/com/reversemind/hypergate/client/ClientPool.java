@@ -1,9 +1,9 @@
 package com.reversemind.hypergate.client;
 
-import org.apache.commons.pool2.impl.DefaultPooledObjectInfo;
-import org.apache.commons.pool2.impl.GenericObjectPool;
-import org.apache.commons.pool2.impl.GenericObjectPool2;
+import org.apache.commons.pool2.impl.GenericObjectPoolExt;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Set;
 
@@ -22,12 +22,39 @@ import java.util.Set;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class ClientPool extends GenericObjectPool2<IHyperGateClient> {
+public class ClientPool extends GenericObjectPoolExt<IHyperGateClient> {
 
-    private static int START_POOL_SIZE = 10;
+    private final static Logger LOG = LoggerFactory.getLogger(ClientPool.class);
+
+    private static int START_POOL_SIZE = 50;
     private ClientPoolFactory clientPoolFactory;
 
-    GenericObjectPoolConfig genericObjectPoolConfig = new GenericObjectPoolConfig();
+    static GenericObjectPoolConfig genericObjectPoolConfig = new GenericObjectPoolConfig();
+    {
+        genericObjectPoolConfig.setJmxEnabled(true);
+        genericObjectPoolConfig.setJmxNameBase("HyperGatePool");
+        genericObjectPoolConfig.setJmxNamePrefix("HyperGatePoolPrefix");
+        genericObjectPoolConfig.setBlockWhenExhausted(false);
+        genericObjectPoolConfig.setMinIdle(0);
+        genericObjectPoolConfig.setTestOnBorrow(true);
+        genericObjectPoolConfig.setMaxWaitMillis(500);
+        genericObjectPoolConfig.setMaxTotal(START_POOL_SIZE);
+    }
+
+    private static GenericObjectPoolConfig createConfig(int poolSize){
+        genericObjectPoolConfig = new GenericObjectPoolConfig();
+        genericObjectPoolConfig.setJmxEnabled(true);
+        genericObjectPoolConfig.setJmxNameBase("HyperGatePool");
+        genericObjectPoolConfig.setJmxNamePrefix("HyperGatePoolPrefix");
+        genericObjectPoolConfig.setBlockWhenExhausted(false);
+        genericObjectPoolConfig.setMinIdle(0);
+        genericObjectPoolConfig.setTestOnBorrow(true);
+        genericObjectPoolConfig.setMaxWaitMillis(500);
+        START_POOL_SIZE = poolSize;
+        genericObjectPoolConfig.setMaxTotal(START_POOL_SIZE);
+        genericObjectPoolConfig.setMaxIdle(START_POOL_SIZE);
+        return genericObjectPoolConfig;
+    }
 
     /**
      * Default values 10 clients
@@ -36,39 +63,17 @@ public class ClientPool extends GenericObjectPool2<IHyperGateClient> {
      */
     public ClientPool(ClientPoolFactory clientPoolFactory) {
         // int maxActive, byte WHEN_EXHAUSTED_GROW, long maxWait
-        // super(clientPoolFactory, START_POOL_SIZE, GenericObjectPool2.WHEN_EXHAUSTED_GROW, 30 * 1000);
-        super(clientPoolFactory);
-
-        GenericObjectPoolConfig genericObjectPoolConfig = new GenericObjectPoolConfig();
-        genericObjectPoolConfig.setJmxEnabled(true);
-        genericObjectPoolConfig.setJmxNameBase("HyperGatePool");
-        genericObjectPoolConfig.setJmxNamePrefix("HyperGatePoolPrefix");
-        genericObjectPoolConfig.setBlockWhenExhausted(false);
-
-        this.setConfig(genericObjectPoolConfig);
+        // super(clientPoolFactory, START_POOL_SIZE, GenericObjectPoolExt.WHEN_EXHAUSTED_GROW, 30 * 1000);
+        super(clientPoolFactory,genericObjectPoolConfig);
         this.clientPoolFactory = clientPoolFactory;
     }
 
     public ClientPool(ClientPoolFactory clientPoolFactory, int poolSize) {
         // int maxActive, byte WHEN_EXHAUSTED_GROW, long maxWait
-//        super(clientPoolFactory, poolSize, GenericObjectPool2.WHEN_EXHAUSTED_GROW, 30 * 1000);
+//        super(clientPoolFactory, poolSize, GenericObjectPoolExt.WHEN_EXHAUSTED_GROW, 30 * 1000);
 //        GenericObjectPoolConfig objectPoolConfig = new GenericObjectPoolConfig().setMaxTotal(poolSize);
-        super(clientPoolFactory);
-
-        GenericObjectPoolConfig genericObjectPoolConfig = new GenericObjectPoolConfig();
-        genericObjectPoolConfig.setJmxEnabled(true);
-        genericObjectPoolConfig.setJmxNameBase("HyperGatePool");
-        genericObjectPoolConfig.setJmxNamePrefix("HyperGatePoolPrefix");
-        genericObjectPoolConfig.setBlockWhenExhausted(false);
-        genericObjectPoolConfig.setMaxTotal(poolSize);
-        genericObjectPoolConfig.setMinIdle(0);
-        genericObjectPoolConfig.setTestOnBorrow(true);
-        genericObjectPoolConfig.setMaxWaitMillis(500);
-
-        this.setConfig(genericObjectPoolConfig);
-
+        super(clientPoolFactory, createConfig(poolSize));
         this.clientPoolFactory = clientPoolFactory;
-        START_POOL_SIZE = poolSize;
     }
 
     public ClientPoolFactory getClientPoolFactory() {
@@ -78,7 +83,7 @@ public class ClientPool extends GenericObjectPool2<IHyperGateClient> {
     public String printPoolMetrics() {
         StringBuffer stringBuffer = new StringBuffer();
         stringBuffer.append("\n");
-        stringBuffer.append(" getMaxActive:").append(this.getMaxTotal()).append("\n");
+        stringBuffer.append(" getMaxTotal:").append(this.getMaxTotal()).append("\n");
         stringBuffer.append(" getMaxIdle:").append(this.getMaxIdle()).append("\n");
         stringBuffer.append(" getMaxWait:").append(this.getMaxWaitMillis()).append("\n");
 
@@ -92,10 +97,18 @@ public class ClientPool extends GenericObjectPool2<IHyperGateClient> {
      * Force to close all Netty threads
      */
     public void forceClearClose(){
+        LOG.info("FORCE SHUT DOWN OBJECT POOL");
         Set<IHyperGateClient> clients = this.getAll().keySet();
         if (clients.size() > 0) {
+            LOG.info("FORCE TO CLOSE POOL for size:" + clients.size());
             for (IHyperGateClient client : clients) {
                 if (client != null) {
+                    LOG.info("SHUTTING DOWN CLIENT - " + client.getName());
+                    try{
+                        this.returnObject(client);
+                    }   catch (Exception ex){
+                        LOG.error("COULD NOT RETURN INTO POOL OBJECT ", ex);
+                    }
                     client.shutdown();
                 }
             }

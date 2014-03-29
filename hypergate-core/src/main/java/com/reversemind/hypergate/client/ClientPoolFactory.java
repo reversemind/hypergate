@@ -75,11 +75,11 @@ public class ClientPoolFactory extends BasePooledObjectFactory<IHyperGateClient>
     }
 
     public void destroyObject(IHyperGateClient client) throws Exception {
-        LOG.warn("Going to destroy client:" + client);
         if(client != null) {
+            LOG.warn("Going to destroy client:" + client.getName());
             int count = 5;
             while (client.isOccupied() == true && count-- > 0) {
-                Thread.sleep(70);
+                Thread.sleep(50);
                 LOG.warn("Waiting for HyperGate:" + client.getName() + " times:" + count + " from 10");
             }
             client.shutdown();

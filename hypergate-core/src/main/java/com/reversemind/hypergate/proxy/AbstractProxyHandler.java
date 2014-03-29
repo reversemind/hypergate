@@ -81,7 +81,7 @@ public abstract class AbstractProxyHandler implements InvocationHandler {
             LOG.debug(" Payload created on client:" + payload);
             LOG.debug(" hyperGateClient:" + _hyperGateClient);
             if (_hyperGateClient != null) {
-                LOG.warn(" HyeprGate is running hyperGateClient:" + this.getClient().isRunning());
+                LOG.warn(" HyeprGate is running hyperGateClient:" + _hyperGateClient.isRunning());
             }
 
             // TODO need to refactor this catcher
@@ -104,7 +104,12 @@ public abstract class AbstractProxyHandler implements InvocationHandler {
             long bT = System.currentTimeMillis();
             Payload fromServer = _hyperGateClient.getPayload();
             this.returnClient(_hyperGateClient);
-            if (fromServer.getThrowable() != null) {
+
+            if(fromServer == null){
+                throw new NullPointerException("Get NPE from remote server");
+            }
+
+            if (fromServer != null && fromServer.getThrowable() != null) {
                 // TODO What if impossible to load a specific Class
                 if (fromServer.getThrowable().getCause() == null) {
                     Constructor constructor = fromServer.getThrowable().getClass().getConstructor(new Class[]{String.class});

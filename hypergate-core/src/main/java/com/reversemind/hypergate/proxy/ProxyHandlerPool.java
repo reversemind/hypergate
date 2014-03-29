@@ -47,30 +47,33 @@ public class ProxyHandlerPool extends AbstractProxyHandler implements Invocation
                 LOG.error("Could not get a hyperGateClient from Pool #1 - try again", ex);
 
                 try {
-                    Thread.sleep(300);
+//                    Thread.sleep(50);
                     synchronized (this.clientPool) {
                         this.client = this.clientPool.borrowObject();
                     }
                 } catch (Exception ex2) {
                     LOG.error("Could not get a hyperGateClient from Pool #2 - Try to reload pool", ex2);
-
-                    try {
-                        synchronized (this.clientPool) {
-                            ClientPoolFactory clientPoolFactory = this.clientPool.getClientPoolFactory();
-                            this.clientPool.forceClearClose();
-                            this.clientPool.clear();
-                            this.clientPool.close();
-                            this.clientPool = null;
-                            this.clientPool = new ClientPool(clientPoolFactory);
-                            this.client = this.clientPool.borrowObject();
-                        }
-                    } catch (Exception ex3) {
-                        LOG.error("Could not get a client after reloaded pool #3", ex3);
-                    }
+//
+//                    try {
+//                        synchronized (this.clientPool) {
+//                            ClientPoolFactory clientPoolFactory = this.clientPool.getClientPoolFactory();
+//                            this.clientPool.forceClearClose();
+//                            this.clientPool.clear();
+//                            this.clientPool.close();
+//                            this.clientPool = null;
+//                            this.clientPool = new ClientPool(clientPoolFactory);
+//                            Thread.sleep(70);
+//                            this.client = this.clientPool.borrowObject();
+//                        }
+//                    } catch (Exception ex3) {
+//                        LOG.error("Could not get a client after reloaded pool #3", ex3);
+//                    }
                 }
             }
         }
-        LOG.warn("Pool METRICS:" + this.clientPool.printPoolMetrics());
+        if(this.clientPool != null){
+            LOG.warn("Pool METRICS:" + this.clientPool.printPoolMetrics());
+        }
         return this.client;
     }
 

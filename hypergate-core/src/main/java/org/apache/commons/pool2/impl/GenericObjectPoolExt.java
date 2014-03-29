@@ -26,6 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
+import com.reversemind.hypergate.client.IHyperGateClient;
 import org.apache.commons.pool2.ObjectPool;
 import org.apache.commons.pool2.PoolUtils;
 import org.apache.commons.pool2.PooledObject;
@@ -76,7 +77,7 @@ import org.apache.commons.pool2.UsageTracking;
  *
  * @since 2.0
  */
-public class GenericObjectPool2<T> extends BaseGenericObjectPool<T>
+public class GenericObjectPoolExt<T> extends BaseGenericObjectPool<T>
         implements ObjectPool<T>, GenericObjectPoolMXBean, UsageTracking<T> {
 
     /**
@@ -86,7 +87,7 @@ public class GenericObjectPool2<T> extends BaseGenericObjectPool<T>
      * @param factory The object factory to be used to create object instances
      *                used by this pool
      */
-    public GenericObjectPool2(PooledObjectFactory<T> factory) {
+    public GenericObjectPoolExt(PooledObjectFactory<T> factory) {
         this(factory, new GenericObjectPoolConfig());
     }
 
@@ -101,8 +102,8 @@ public class GenericObjectPool2<T> extends BaseGenericObjectPool<T>
      *                  the configuration object will not be reflected in the
      *                  pool.
      */
-    public GenericObjectPool2(PooledObjectFactory<T> factory,
-                             GenericObjectPoolConfig config) {
+    public GenericObjectPoolExt(PooledObjectFactory<T> factory,
+                                GenericObjectPoolConfig config) {
 
         super(config, ONAME_BASE, config.getJmxNamePrefix());
 
@@ -130,8 +131,8 @@ public class GenericObjectPool2<T> extends BaseGenericObjectPool<T>
      * @param abandonedConfig  Configuration for abandoned object identification
      *                         and removal.  The configuration is used by value.
      */
-    public GenericObjectPool2(PooledObjectFactory<T> factory,
-                             GenericObjectPoolConfig config, AbandonedConfig abandonedConfig) {
+    public GenericObjectPoolExt(PooledObjectFactory<T> factory,
+                                GenericObjectPoolConfig config, AbandonedConfig abandonedConfig) {
         this(factory, config);
         setAbandonedConfig(abandonedConfig);
     }
@@ -358,7 +359,15 @@ public class GenericObjectPool2<T> extends BaseGenericObjectPool<T>
      */
     @Override
     public T borrowObject() throws Exception {
-        return borrowObject(getMaxWaitMillis());
+        //return borrowObject(getMaxWaitMillis());
+        T obj = borrowObject(getMaxWaitMillis());
+
+        if(obj !=null){
+            IHyperGateClient hyperGateClient = (IHyperGateClient)obj;
+            System.out.println("\n\n == BORROW === NAME ==== " + hyperGateClient.getName() + "\n\n ");
+        }
+
+        return obj;
     }
 
     /**

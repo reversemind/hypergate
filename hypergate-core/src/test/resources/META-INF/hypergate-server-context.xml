@@ -28,8 +28,9 @@
     </bean>
 
     <!--Builder for simple HyperGateServer-->
-    <bean id="serverBuilderSimple" class="com.reversemind.hypergate.server.ServerFactory.Builder" >
+    <bean id="serverBuilderSimple" class="com.reversemind.hypergate.server.ServerFactory.Builder" scope="prototype">
         <property name="port" value="12534"/>
+        <property name="keepClientAlive" value="false" />
     </bean>
 
     <!--Builder for advertiser server-->
@@ -52,7 +53,7 @@
 
     <!--See in hypergate-server.properties - # SIMPLE STATIC SERVER PARAMETERS-->
     <!--Builder for Simple server-->
-    <bean id="serverBuilder" class="com.reversemind.hypergate.server.ServerFactory.Builder" >
+    <bean id="serverBuilder" class="com.reversemind.hypergate.server.ServerFactory.Builder" scope="prototype">
         <property name="payloadWorker" ref="serverPayloadProcessor" />
 
         <property name="name" value="${hypergate.server.simple.name}" />
