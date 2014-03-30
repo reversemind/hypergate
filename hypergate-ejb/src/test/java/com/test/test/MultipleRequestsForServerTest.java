@@ -1,6 +1,5 @@
 package com.test.test;
 
-import com.test.pool.TestClientFactory;
 import ejb.client.ClientSimple;
 import ejb.server.ServerSimple;
 import ejb.server.service.ServiceSimple;
@@ -94,7 +93,6 @@ public class MultipleRequestsForServerTest {
                 .addPackages(true, ServerSimple.class.getPackage())
                 .addPackages(true, RunZookeeper.class.getPackage())
                 .addPackages(true, ClientSimple.class.getPackage())
-                .addPackages(true, TestClientFactory.class.getPackage())
 
                 .addAsResource("META-INF/hypergate-interface-map.xml", "META-INF/hypergate-interface-map.xml")
                 .addAsResource("META-INF/hypergate-server-context.xml", "META-INF/hypergate-server-context.xml")

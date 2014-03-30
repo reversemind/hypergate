@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
+import static junit.framework.Assert.*;
+
 /**
  *
  * Copyright (c) 2013-2014 Eugene Kalinin
@@ -85,12 +87,12 @@ public class TestHyperGateServerAdvertiser extends StartEmbeddedZookeeper implem
             // /baloo/services/HYPERGATE.ADDRESS/INSTANCE.001
             Stat stat = client.checkExists().forPath(SERVICE_BASE_PATH + "/" + SERVICE_HYPER_GATE_NAME + "/" + SERVER_INSTANCE_NAME_1);
             LOG.info(" INSTANCE.001 -- " + stat);
-            Assert.assertNotNull(stat);
+            assertNotNull(stat);
 
             // /baloo/services/HYPERGATE.ADDRESS/INSTANCE.002
             stat = client.checkExists().forPath(SERVICE_BASE_PATH + "/" + SERVICE_HYPER_GATE_NAME + "/" + SERVER_INSTANCE_NAME_2);
             LOG.info(" INSTANCE.002 -- " + stat);
-            Assert.assertNotNull(stat);
+            assertNotNull(stat);
 
             client.close();
 
