@@ -395,6 +395,7 @@ public class HyperGateClient implements IHyperGateClient, Serializable {
 
         // Start the connection attempt.
         // ChannelFuture channelFuture = this.clientBootstrap.connect(new InetSocketAddress(host, setPort));
+        LOG.debug("CLIENT GOING TO CONNECT - host:" + host + " post:" + port);
         this.channelFuture = this.clientBootstrap.connect(new InetSocketAddress(host, port));
 
         // INFO

@@ -12,6 +12,7 @@
 
     <util:map id="pojoMap" map-class="java.util.HashMap" key-type="java.lang.Class" value-type="java.lang.Class">
         <entry key="com.reversemind.hypergate.example.pojo.shared.ISimplePojo" value="com.reversemind.hypergate.example.pojo.server.SimplePojoService"/>
+        <entry key="com.reversemind.hypergate.shared.ISimpleService" value="com.reversemind.hypergate.server.SimpleService"/>
     </util:map>
 
     <util:map id="ejbMap" map-class="java.util.HashMap" key-type="java.lang.Class" value-type="java.lang.String">

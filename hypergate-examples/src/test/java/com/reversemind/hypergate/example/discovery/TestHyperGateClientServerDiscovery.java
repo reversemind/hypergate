@@ -62,7 +62,7 @@ public class TestHyperGateClientServerDiscovery extends StartEmbeddedZookeeper i
 
     @Override
     @After
-    public void shutDown(){
+    public void shutDown() throws InterruptedException {
         if(hyperGateServer != null){
             hyperGateServer.shutdown();
         }

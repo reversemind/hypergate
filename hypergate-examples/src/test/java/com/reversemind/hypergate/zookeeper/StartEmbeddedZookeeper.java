@@ -61,7 +61,7 @@ public class StartEmbeddedZookeeper {
     }
 
     @After
-    public void shutDown() {
+    public void shutDown() throws InterruptedException {
         EmbeddedZookeeper.stop();
     }
 }

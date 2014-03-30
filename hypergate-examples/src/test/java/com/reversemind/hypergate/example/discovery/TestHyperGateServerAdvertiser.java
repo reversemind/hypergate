@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import static junit.framework.Assert.*;
@@ -148,6 +149,7 @@ public class TestHyperGateServerAdvertiser extends StartEmbeddedZookeeper implem
         List<ServerMetadata> metadataList = discoverer.discover(SERVICE_HYPER_GATE_NAME);
         LOG.info("metadataList == " + metadataList);
 
+        new ArrayList<String>();
 
         Thread.sleep(2000);
         discoverer.close();
