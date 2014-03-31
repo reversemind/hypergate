@@ -46,6 +46,12 @@ public abstract class AbstractProxyHandler implements InvocationHandler {
 
         IHyperGateClient _hyperGateClient = null;
 
+        if(this.getClient() == null){
+            LOG.debug(" this.getClient() is NULL - " + Thread.currentThread().getName());
+            this.returnClient();
+            throw new RuntimeException("Client is null");
+        }
+
         synchronized (this.getClient()) {
             _hyperGateClient = this.getClient();
         }

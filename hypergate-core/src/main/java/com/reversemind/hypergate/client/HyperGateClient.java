@@ -73,7 +73,7 @@ public class HyperGateClient implements IHyperGateClient, Serializable {
 //        this.kryoSerializer = new KryoSerializer(kryo);
         this.name = this.generateName();
 
-        LOG.info("\n\n HyperGateClient name: " + this.name + "\n created for server:" + host + ":" + port + "\n\n");
+        LOG.info("\n\n HyperGateClient name: " + this.name + "\n created for server:" + host + ": default port" + port + " - Empty parameter Constructor\n\n");
     }
 
     public HyperGateClient(String host, int port) {

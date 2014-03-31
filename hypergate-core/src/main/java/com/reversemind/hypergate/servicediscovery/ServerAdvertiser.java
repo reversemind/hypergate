@@ -39,6 +39,8 @@ public class ServerAdvertiser implements Serializable {
     private ServerMetadata serverMetadata;
     private String basePath;
 
+    private ServiceDiscovery<ServerMetadata> discovery = null;
+
     public ServerAdvertiser(CuratorFramework curatorFramework,
                             InstanceSerializerFactory instanceSerializerFactory,
                             ServerMetadata serverMetadata,
@@ -55,18 +57,21 @@ public class ServerAdvertiser implements Serializable {
 
     public void advertiseAvailability() {
         try {
-            ServiceDiscovery<ServerMetadata> discovery = this.getDiscovery();
-            discovery.start();
+
+            if(discovery == null){
+                discovery = this.getDiscovery();
+                discovery.start();
+            }
 
             ServiceInstance serviceInstance = this.getInstance();
-//            LOG.info("Service:" + serviceInstance + " is available");
+            LOG.info("Service:" + serviceInstance + " is available");
             discovery.registerService(serviceInstance);
 
-            // TODO ??????
-            //discovery.close();
+            // TODO remove it in destroyer
+            // discovery.close();
         } catch (Exception ex) {
             // look through it again
-            ex.printStackTrace();
+            LOG.error(" - advertiseAvailability - " ,ex);
             throw Throwables.propagate(ex);
         }
     }

@@ -9,6 +9,7 @@ import sun.util.LocaleServiceProviderPool;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  *
@@ -61,7 +62,7 @@ public class EmbeddedZookeeper extends ZooKeeperServerMain implements Runnable {
     public static void start() {
         System.setProperty("java.net.preferIPv4Stack" , "true");
         serverConfig = new ServerConfig();
-        serverConfig.parse(new String[]{EMBEDDED_ZOOKEEPER_PORT, EMBEDDED_ZOOKEEPER_DIRECTORY + File.separator + "" + new Date().getTime(),"2000", "100"});
+        serverConfig.parse(new String[]{EMBEDDED_ZOOKEEPER_PORT, EMBEDDED_ZOOKEEPER_DIRECTORY + File.separator + "" + new Date().getTime() + "--" + UUID.randomUUID().toString(),"2000", "100"});
         zookeeperServer = new EmbeddedZookeeper();
         (new Thread(zookeeperServer)).start();
     }

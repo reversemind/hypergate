@@ -50,6 +50,12 @@ public abstract class AbstractClientPOJO implements IClient, Serializable {
 
     public void destroy() {
         // if need to destroy pool
+        if(clientPool != null){
+            synchronized (clientPool){
+                clientPool.forceClearClose();
+                clientPool.close();
+            }
+        }
     }
 
     /**

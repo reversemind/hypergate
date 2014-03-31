@@ -1,16 +1,16 @@
 package com.reversemind.hypergate.server;
 
-import com.reversemind.hypergate.shared.ISimpleService;
+import com.reversemind.hypergate.shared.IExampleSimpleService;
 import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 
 /**
- * Fake SimpleService implementation on server side
+ * Fake ExampleSimpleService implementation on server side
  */
-public class SimpleService implements ISimpleService {
+public class ExampleSimpleService implements IExampleSimpleService {
 
-    private final static org.slf4j.Logger LOG = LoggerFactory.getLogger(SimpleService.class);
+    private final static org.slf4j.Logger LOG = LoggerFactory.getLogger(ExampleSimpleService.class);
 
     @Override
     public String getSimpleValue(String parameter) {

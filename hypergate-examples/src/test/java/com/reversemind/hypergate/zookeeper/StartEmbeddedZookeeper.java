@@ -27,7 +27,7 @@ public class StartEmbeddedZookeeper {
 
     private final static Logger LOG = LoggerFactory.getLogger(StartEmbeddedZookeeper.class);
 
-    public static final String ZOOKEEPER_HOST = "127.0.0.1";
+    public static final String ZOOKEEPER_HOST = "localhost";
     public static final String ZOOKEEPER_CONNECTION_STRING = ZOOKEEPER_HOST + ":" + EmbeddedZookeeper.EMBEDDED_ZOOKEEPER_PORT;
 
     public static final String SERVICE_BASE_PATH = "/baloo/services";
@@ -44,7 +44,7 @@ public class StartEmbeddedZookeeper {
     public void init() {
         System.setProperty("java.net.preferIPv4Stack", "true");
         // need Zookeeper to advertise service
-        EmbeddedZookeeper.start();
+//        EmbeddedZookeeper.start();
 
         // create default path - like /baloo/services
         try {
@@ -62,6 +62,6 @@ public class StartEmbeddedZookeeper {
 
     @After
     public void shutDown() throws InterruptedException {
-        EmbeddedZookeeper.stop();
+//        EmbeddedZookeeper.stop();
     }
 }

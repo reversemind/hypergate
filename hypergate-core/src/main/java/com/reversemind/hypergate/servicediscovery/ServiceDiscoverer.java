@@ -81,16 +81,18 @@ public class ServiceDiscoverer implements Serializable, Closeable {
             metadataList.add(serverMetadata);
         }
 
-        Collections.sort(metadataList, new Comparator<ServerMetadata>() {
-            @Override
-            public int compare(ServerMetadata o1, ServerMetadata o2) {
-                return (int) (o2.getMetrics().getStartDate().getTime() - o1.getMetrics().getStartDate().getTime());
-            }
-        });
+        if(metadataList != null && metadataList.size() >0){
+            Collections.sort(metadataList, new Comparator<ServerMetadata>() {
+                @Override
+                public int compare(ServerMetadata o1, ServerMetadata o2) {
+                    return (int) (o2.getMetrics().getStartDate().getTime() - o1.getMetrics().getStartDate().getTime());
+                }
+            });
 
-        LOG.warn("Sorted by startDate:");
-        for (ServerMetadata metadata : metadataList) {
-            LOG.warn("server:" + metadata);
+            LOG.warn("Sorted by startDate:");
+            for (ServerMetadata metadata : metadataList) {
+                LOG.warn("server:" + metadata);
+            }
         }
 
         return metadataList;
