@@ -29,6 +29,7 @@ public class TestClientPoolAutoDiscovery extends StartEmbeddedZookeeper {
     private final static org.slf4j.Logger LOG = LoggerFactory.getLogger(TestClientPoolAutoDiscovery.class);
 
     private ServerPojoAdvertiser serverPojoAdvertiser;
+    static final String SPLITTER = "-splitter-";
 
     @Override
     @Before
@@ -101,7 +102,6 @@ public class TestClientPoolAutoDiscovery extends StartEmbeddedZookeeper {
             LOG.info("Get value from remote server :" + i + " value:" + value);
             list.add(value);
             assertNotNull(value);
-
         }
 
         LOG.info("\n\n\n");
@@ -117,28 +117,91 @@ public class TestClientPoolAutoDiscovery extends StartEmbeddedZookeeper {
         clientPOJODiscovery.destroy();
     }
 
+    /**
+     * THREAD=5-split-0
+     * SPLITTER -split-
+     *
+     * @param splitterString
+     * @return
+     */
+    private long resultCount(String splitterString){
+        long _result = 0;
+
+        if(splitterString != null && splitterString.length()>0){
+
+            String[] strings = splitterString.split("\n");
+            if(strings.length >0){
+
+                for(String valueString: strings){
+                    String[] value = valueString.split(SPLITTER);
+                    if(value != null && value.length>=2){
+                        try{
+                            _result += Long.parseLong(value[1].trim());
+                        }catch (Exception ex){
+
+                        }
+                    }
+                }
+
+            }
+        }
+
+        return _result;
+    }
+
+    @Test
+    public void testCountResultSplitter(){
+
+        String result = "THREAD=1=" + SPLITTER + "1\n";
+        result += "THREAD=1=" + SPLITTER + "2\n";
+        result += "THREAD=1=" + SPLITTER + "3\n";
+        result += "THREAD=1=" + SPLITTER + "4\n";
+        result += "THREAD=1=" + SPLITTER + "5\n";
+
+        LOG.info("SUM result:" + this.resultCount(result));
+
+    }
+
+    private long summCounter(long maxIndex){
+        long _result = 0;
+        for(int i=1; i<maxIndex+1; i++){
+            _result += 1;
+        }
+        return _result;
+    }
+
     @Test
     public void testClientAutoDiscoverServerViaZookeeper() throws InterruptedException, ExecutionException {
 
         final long JUST_SLEEP = 5000;
+
+        // final int LOOP_SIZE = 1000;
+        // THREAD_SIZE 10 - 200 JVM  1 min
+        // THREAD_SIZE 20 - 360 JVM  1 min 30 sec
+        // THREAD_SIZE 30 - 520 JVM  2 min
+        final int THREAD_SIZE = 30;
+        final int LOOP_SIZE = 1000;
+        final int INNER_LOOP_SIZE = 1;
+
+        long threadSummResult = 0;
+        final long RIGHT_VALUE = summCounter(INNER_LOOP_SIZE) * THREAD_SIZE * LOOP_SIZE;
+        LOG.info("RIGHT_VALUE:" + RIGHT_VALUE);
 
         System.setProperty("java.net.preferIPv4Stack", "true");
 
         ClientPOJODiscovery clientPOJODiscovery = new ClientPOJODiscovery();
         clientPOJODiscovery.init();
 
-
-
-        for(int k=0; k<10000; k++){
+        for(int k=0; k<LOOP_SIZE; k++){
 
             LOG.info("\n\n\n\n*********[" + k + "]*******************************************\n\n\n\n");
 
-            final int THREAD_SIZE = 10;
+
             ExecutorService executor = Executors.newFixedThreadPool(THREAD_SIZE);
 
             List<FutureTask<String>> list = new ArrayList<FutureTask<String>>();
             for (int i = 0; i < THREAD_SIZE; i++) {
-                list.add(new FutureTask<String>(new ClientProcess<String>("THREAD=" + (i + 1) + "=", clientPOJODiscovery, IExampleSimpleService.class)));
+                list.add(new FutureTask<String>(new ClientProcess<String>("THREAD=" + (i + 1) + "=", clientPOJODiscovery, IExampleSimpleService.class, INNER_LOOP_SIZE)));
             }
 
 
@@ -168,12 +231,18 @@ public class TestClientPoolAutoDiscovery extends StartEmbeddedZookeeper {
             long eT = System.currentTimeMillis();
 
             for (FutureTask<String> futureTask : list) {
-                LOG.info("TASK RESULT:" + futureTask.get());
+                LOG.info("TASK RESULT:" + futureTask.get() + "| SUMM:" + this.resultCount(futureTask.get()));
+                threadSummResult += this.resultCount(futureTask.get());
             }
 
-            LOG.info("\n\n\n\n - Spend time:" + ((eT - bT) - JUST_SLEEP) + " per thread:" + ((eT - bT) - JUST_SLEEP) / THREAD_SIZE + " ms\n\n\n\n");
+            LOG.info("\n\n\n\n - Spend time:" + ((eT - bT) - JUST_SLEEP) + " per thread:" + ((eT - bT) - JUST_SLEEP) / (THREAD_SIZE * INNER_LOOP_SIZE) + " ms\n\n\n\n");
         }
+
         clientPOJODiscovery.destroy();
+
+        LOG.info("\n\nthreadSummResult = " + threadSummResult + " RIGHT_VALUE:" + RIGHT_VALUE + "\n\n");
+        LOG.info("DELTA:" + (RIGHT_VALUE - threadSummResult) + "  -- %" + ((double)(100.0-(1.0 * threadSummResult * 100.0 / (1.0 * RIGHT_VALUE)))) );
+        assertEquals(threadSummResult, RIGHT_VALUE);
     }
 
     /**
@@ -186,32 +255,34 @@ public class TestClientPoolAutoDiscovery extends StartEmbeddedZookeeper {
 
         ClientPOJODiscovery clientPOJODiscovery;
         Class interfaceClass;
+        int innerLoopSize = 1;
 
-        ClientProcess(String name, ClientPOJODiscovery clientPOJODiscovery, Class interfaceClass) {
+        ClientProcess(String name, ClientPOJODiscovery clientPOJODiscovery, Class interfaceClass, int innerLoopSize) {
             this.name = name;
             this.clientPOJODiscovery = clientPOJODiscovery;
             this.interfaceClass = interfaceClass;
+            this.innerLoopSize = innerLoopSize;
         }
 
         @Override
         public String call() throws Exception {
 
-            StringBuffer all = new StringBuffer();
+            StringBuffer result = new StringBuffer();
             try {
-                for (int i = 0; i < 1; i++) {
+                for (int i = 0; i < innerLoopSize; i++) {
                     IExampleSimpleService simpleService = (IExampleSimpleService) clientPOJODiscovery.getProxy(interfaceClass);
-                    String v = (String) simpleService.getSimpleValue(name + "1111--" + i);
-                    LOG.info("\n\n\n\nFROM SERVER --- " + v + "\n\n\n");
-                    all.append("\n").append(v);
+                    String v = (String) simpleService.getSimpleValue(name + SPLITTER + (1));
+//                    LOG.info("\n\n\n\nFROM SERVER --- " + v + "\n\n\n");
+                    result.append("\n").append(v);
                     Thread.sleep(1);
                 }
 
             } catch (Exception ex) {
-                all.append("\n").append("EXCEPTION in getting for IExampleSimpleService");
+                result.append("\n").append("EXCEPTION in getting for IExampleSimpleService");
                 LOG.error("CATCH IN CALL -- " + name, ex);
             }
 
-            return (String)("---- " + name + " -- " + all.toString());
+            return (String)result.toString();
         }
 
     }
