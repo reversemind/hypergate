@@ -44,7 +44,7 @@ public class StartEmbeddedZookeeper {
     public void init() {
         System.setProperty("java.net.preferIPv4Stack", "true");
         // need Zookeeper to advertise service
-//        EmbeddedZookeeper.start();
+        EmbeddedZookeeper.start();
 
         // create default path - like /baloo/services
         try {
@@ -62,6 +62,6 @@ public class StartEmbeddedZookeeper {
 
     @After
     public void shutDown() throws InterruptedException {
-//        EmbeddedZookeeper.stop();
+        EmbeddedZookeeper.stop();
     }
 }
