@@ -88,8 +88,8 @@ public class ClientServerTest {
 
                         .artifact("log4j:log4j:1.2.16")
 
-                        .artifact("com.reversemind:hypergate-core:0.5.0-SNAPSHOT")
-                        .artifact("com.reversemind:hypergate-ejb:0.5.0-SNAPSHOT")
+                        .artifact("com.reversemind:hypergate-core:0.6.0-SNAPSHOT")
+                        .artifact("com.reversemind:hypergate-ejb:0.6.0-SNAPSHOT")
 
                         .artifact("net.sf.dozer:dozer:5.4.0")
                         .artifact("com.google.code.gson:gson:2.2.4")

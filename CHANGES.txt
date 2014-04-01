@@ -1,6 +1,6 @@
 migrated to new name - HyperGate
 
-0.5.0-SNAPSHOT
+0.6.0-SNAPSHOT
 
 ------
 

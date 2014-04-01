@@ -23,11 +23,11 @@ Right now only in local TTK Nexus
 <dependency>
   <groupId>com.reversemind</groupId>
   <artifactId>hypergate-core</artifactId>
-  <version>0.5.0-SNAPSHOT</version>
+  <version>0.6.0-SNAPSHOT</version>
 </dependency>
 ```
 
-Stable is  0.5.0-SNAPSHOT - version
+Stable is  0.6.0-SNAPSHOT - version
 
 #### Getting started
 
