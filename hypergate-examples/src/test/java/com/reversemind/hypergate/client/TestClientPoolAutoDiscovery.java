@@ -36,7 +36,7 @@ public class TestClientPoolAutoDiscovery extends StartEmbeddedZookeeper {
     public void init(){
         System.setProperty("java.net.preferIPv4Stack", "true");
         // start ZookeeperServer
-        super.init();
+//        super.init();
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
@@ -59,7 +59,7 @@ public class TestClientPoolAutoDiscovery extends StartEmbeddedZookeeper {
             Thread.sleep(1000);
             serverPojoAdvertiser.destroy();
         }
-        super.shutDown();
+//        super.shutDown();
     }
 
     @Test

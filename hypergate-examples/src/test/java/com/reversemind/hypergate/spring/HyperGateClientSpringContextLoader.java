@@ -1,5 +1,6 @@
-package com.reversemind.glia.other.spring;
+package com.reversemind.hypergate.spring;
 
+import com.reversemind.hypergate.client.AbstractContainerHyperGateClient;
 import com.reversemind.hypergate.client.HyperGateClientServerDiscovery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,14 +25,14 @@ import java.io.Serializable;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class GliaClientSpringContextLoader implements Serializable {
+public class HyperGateClientSpringContextLoader implements Serializable {
 
-    private static final Logger LOG = LoggerFactory.getLogger(GliaClientSpringContextLoader.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HyperGateClientSpringContextLoader.class);
 
     public static void main(String... args) throws Exception {
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext("META-INF/hypergate-client-context.xml");
 
-        HyperGateClientServerDiscovery client = applicationContext.getBean("clientServerDiscovery", HyperGateClientServerDiscovery.class);
+        HyperGateClientServerDiscovery client = (HyperGateClientServerDiscovery) applicationContext.getBean(AbstractContainerHyperGateClient.CLIENT_DISCOVERY_BUILDER_NAME, AbstractContainerHyperGateClient.CLASS_HYPERGATE_CLIENT_SERVER_DISCOVERY);
 
         client.start();
 

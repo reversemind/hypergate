@@ -1,5 +1,6 @@
 package com.reversemind.hypergate.integration.ejb.client;
 
+import com.reversemind.hypergate.client.AbstractContainerHyperGateClient;
 import com.reversemind.hypergate.client.HyperGateClient;
 
 import javax.ejb.Stateless;
@@ -55,11 +56,11 @@ public class ClientEJB extends AbstractClientEJB implements IClientEJB, Serializ
      * @return
      */
     public String getClientBeanName() {
-        return "hyperGateClient";
+        return AbstractContainerHyperGateClient.CLIENT_SIMPLE_BUILDER_NAME;
     }
 
     public Class getClientBeanClass() {
-        return HyperGateClient.class;
+        return AbstractContainerHyperGateClient.CLASS_HYPERGATE_CLIENT;
     }
 
 }

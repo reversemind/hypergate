@@ -15,13 +15,14 @@ public abstract class AbstractContainerHyperGateClient {
 
     private final static Logger LOG = LoggerFactory.getLogger(AbstractContainerHyperGateClient.class);
 
-    protected static final String CLIENT_SIMPLE_BUILDER_NAME = "hyperGateClient";
-    protected static final String CLIENT_DISCOVERY_BUILDER_NAME = "hyperGateClientServerDiscovery";
+    //TODO need to turn back in protected
+    public static final String CLIENT_SIMPLE_BUILDER_NAME = "hyperGateClient";
+    public static final String CLIENT_DISCOVERY_BUILDER_NAME = "hyperGateClientServerDiscovery";
 
-    protected static final Class CLASS_HYPERGATE_CLIENT = HyperGateClient.class;
-    protected static final Class CLASS_HYPERGATE_CLIENT_SERVER_DISCOVERY = HyperGateClientServerDiscovery.class;
+    public static final Class CLASS_HYPERGATE_CLIENT = HyperGateClient.class;
+    public static final Class CLASS_HYPERGATE_CLIENT_SERVER_DISCOVERY = HyperGateClientServerDiscovery.class;
 
-    protected static final String CLIENT_DEFAULT_CONTEXT_NAME = "META-INF/hypergate-client-context.xml";
+    public static final String CLIENT_DEFAULT_CONTEXT_NAME = "META-INF/hypergate-client-context.xml";
 
     private IHyperGateClient hyperGateClient;
 

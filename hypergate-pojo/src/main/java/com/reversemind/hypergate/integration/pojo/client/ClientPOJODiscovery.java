@@ -1,5 +1,6 @@
 package com.reversemind.hypergate.integration.pojo.client;
 
+import com.reversemind.hypergate.client.AbstractContainerHyperGateClient;
 import com.reversemind.hypergate.client.HyperGateClientServerDiscovery;
 
 import java.io.Serializable;
@@ -22,10 +23,10 @@ import java.io.Serializable;
 public class ClientPOJODiscovery extends AbstractClientPOJO implements IClient, Serializable {
 
     public String getClientBeanName() {
-        return "hyperGateClientServerDiscovery";
+        return AbstractContainerHyperGateClient.CLIENT_DISCOVERY_BUILDER_NAME;
     }
 
     public Class getClientBeanClass() {
-        return HyperGateClientServerDiscovery.class;
+        return AbstractContainerHyperGateClient.CLASS_HYPERGATE_CLIENT_SERVER_DISCOVERY;
     }
 }

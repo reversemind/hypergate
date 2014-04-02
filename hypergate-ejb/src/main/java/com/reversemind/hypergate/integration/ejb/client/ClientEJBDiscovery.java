@@ -1,5 +1,6 @@
 package com.reversemind.hypergate.integration.ejb.client;
 
+import com.reversemind.hypergate.client.AbstractContainerHyperGateClient;
 import com.reversemind.hypergate.client.HyperGateClientServerDiscovery;
 
 import javax.ejb.Stateless;
@@ -34,10 +35,10 @@ import java.io.Serializable;
 public class ClientEJBDiscovery extends AbstractClientEJB implements IClientEJB, Serializable {
 
     public String getClientBeanName() {
-        return "clientServerDiscovery";
+        return AbstractContainerHyperGateClient.CLIENT_DISCOVERY_BUILDER_NAME;
     }
 
     public Class getClientBeanClass() {
-        return HyperGateClientServerDiscovery.class;
+        return AbstractContainerHyperGateClient.CLASS_HYPERGATE_CLIENT_SERVER_DISCOVERY;
     }
 }
