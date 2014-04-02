@@ -74,7 +74,7 @@ public class ProxyHandlerPool extends AbstractProxyHandler implements Invocation
                 try {
                     this.clientPool.returnObject(this.client);
                 } catch (Exception ex) {
-                    LOG.error("Could not return HyperGateClient into Pool", ex);
+                    LOG.error("Could not return HyperGateClient " + (this.client != null ? this.client.getName() : "NULL") + " into Pool #1");
                 }
                 this.client = null;
             }
@@ -88,7 +88,7 @@ public class ProxyHandlerPool extends AbstractProxyHandler implements Invocation
                 try {
                     this.clientPool.returnObject(hyperGateClient);
                 } catch (Exception ex) {
-                    LOG.error("Could not return HyperGateClient into Pool #2", ex);
+                    LOG.error("Could not return HyperGateClient " + (hyperGateClient != null ? hyperGateClient.getName() : "NULL") + " into Pool #2");
                 }
                 hyperGateClient = null;
             }
