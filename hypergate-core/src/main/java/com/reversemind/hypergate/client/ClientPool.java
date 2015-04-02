@@ -15,7 +15,6 @@
  *
  */
 
-
 package com.reversemind.hypergate.client;
 
 import org.apache.commons.pool2.impl.GenericObjectPoolExt;
@@ -25,6 +24,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Set;
 
+/**
+ * @author Eugene Kalinin
+ */
 public class ClientPool extends GenericObjectPoolExt<IHyperGateClient> {
 
     private final static Logger LOG = LoggerFactory.getLogger(ClientPool.class);
@@ -93,7 +95,7 @@ public class ClientPool extends GenericObjectPoolExt<IHyperGateClient> {
                     try{
                         this.returnObject(client);
                     }   catch (Exception ex){
-                        LOG.error("COULD NOT RETURN INTO POOL OBJECT ", ex);
+                        LOG.error("COULD NOT RETURN INTO POOL OBJECT:", ex);
                     }
                     client.shutdown();
                 }

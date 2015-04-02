@@ -1,9 +1,5 @@
-package com.reversemind.hypergate.server;
-
-import java.io.Serializable;
-
 /**
- * Copyright (c) 2013-2014 Eugene Kalinin
+ * Copyright (c) 2013-2015 Eugene Kalinin
  * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,10 +13,18 @@ import java.io.Serializable;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+package com.reversemind.hypergate.server;
+
+import java.io.Serializable;
+
+/**
+ * @author Eugene Kalinin
+ */
 public class HyperGateServerSimple extends HyperGateServer implements IHyperGateServer, Serializable {
 
     /**
-     * @param builder
+     * @param builder ServerFactory.Builder
      */
     public HyperGateServerSimple(ServerFactory.Builder builder) {
         super(builder);

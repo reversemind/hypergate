@@ -1,8 +1,22 @@
+/**
+ * Copyright (c) 2013-2015 Eugene Kalinin
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.reversemind.hypergate.server;
 
-import com.esotericsoftware.kryo.Kryo;
 import com.reversemind.hypergate.Payload;
-import com.reversemind.hypergate.serialization.*;
 import org.apache.commons.lang3.StringUtils;
 import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.ChannelPipeline;
@@ -26,19 +40,8 @@ import java.util.UUID;
 import java.util.concurrent.Executors;
 
 /**
- * Copyright (c) 2013-2014 Eugene Kalinin
- * <p/>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p/>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p/>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *
+ * @author Eugene Kalinin
  */
 public abstract class HyperGateServer implements IHyperGateServer, Serializable {
 
@@ -59,9 +62,6 @@ public abstract class HyperGateServer implements IHyperGateServer, Serializable 
 
     private Payload payload;
     private IPayloadProcessor payloadProcessor;
-
-//    private final Kryo kryo = new KryoSettings().getKryo();
-//    private KryoDeserializer kryoDeserializer;
 
     /**
      * @param builder
@@ -96,14 +96,12 @@ public abstract class HyperGateServer implements IHyperGateServer, Serializable 
         this.setHost(this.getIpAddress());
 
         this.metrics = new Metrics();
-
-        // TODO #6 KryoSerializer
-//        this.kryoDeserializer = new KryoDeserializer(this.kryo);
     }
 
     private String getIpAddress() {
         Set<String> ipSet = new TreeSet<String>();
         Enumeration<NetworkInterface> n = null;
+
         try {
             n = NetworkInterface.getNetworkInterfaces();
 
@@ -127,8 +125,7 @@ public abstract class HyperGateServer implements IHyperGateServer, Serializable 
             }
 
         } catch (SocketException se) {
-            // TODO need correct logging
-            se.printStackTrace();
+            LOG.error("Socket exception", se);
         }
 
         return "localhost";

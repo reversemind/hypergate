@@ -1,13 +1,5 @@
-package com.reversemind.hypergate.server;
-//
-//import org.hyperic.sigar.Sigar;
-//import org.hyperic.sigar.SigarException;
-
-import java.io.Serializable;
-import java.util.Date;
-
 /**
- * Copyright (c) 2013-2014 Eugene Kalinin
+ * Copyright (c) 2013-2015 Eugene Kalinin
  * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,8 +12,15 @@ import java.util.Date;
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- * <p/>
- * Measurable parameters for HyperGateServer - include native Sigar libs into your java
+ */
+
+package com.reversemind.hypergate.server;
+
+import java.io.Serializable;
+import java.util.Date;
+
+/**
+ * @author Eugene Kalinin
  */
 public class Metrics implements Serializable {
 
@@ -30,8 +29,6 @@ public class Metrics implements Serializable {
     private double timePerRequest = 0.0d;
     private double processingTime = 0.0d;
     private double cpuIdle;
-
-    //private Sigar sigar = null;             // include native libs in your java
 
     public Metrics() {
         this.startDate = new Date();

@@ -1,11 +1,5 @@
-package com.reversemind.hypergate.server;
-
-import org.slf4j.LoggerFactory;
-
-import java.io.Serializable;
-
 /**
- * Copyright (c) 2013-2014 Eugene Kalinin
+ * Copyright (c) 2013-2015 Eugene Kalinin
  * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +13,16 @@ import java.io.Serializable;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+package com.reversemind.hypergate.server;
+
+import org.slf4j.LoggerFactory;
+
+import java.io.Serializable;
+
+/**
+ * @author Eugene Kalinin
+ */
 public class ServerFactory implements Serializable {
 
     private final static org.slf4j.Logger LOG = LoggerFactory.getLogger(ServerFactory.class);
@@ -31,7 +35,6 @@ public class ServerFactory implements Serializable {
      *
      * @return new Builder();
      */
-    //public static Builder builder(Builder.Type setType){
     public static Builder builder() {
         return new Builder();
     }
@@ -60,7 +63,7 @@ public class ServerFactory implements Serializable {
         private long periodPublishMetrics = 1000; // ms
 
         /**
-         * Actually this Counstructor should be a private but for Spring Context it's opened
+         * Actually this is Constructor should be a private but for Spring Context it's opened
          */
         public Builder() {
         }

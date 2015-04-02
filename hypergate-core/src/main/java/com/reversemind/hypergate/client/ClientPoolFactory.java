@@ -1,16 +1,5 @@
-package com.reversemind.hypergate.client;
-
-import org.apache.commons.pool2.BasePooledObjectFactory;
-import org.apache.commons.pool2.PooledObject;
-import org.apache.commons.pool2.impl.DefaultPooledObject;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
- * Copyright (c) 2013-2014 Eugene Kalinin
+ * Copyright (c) 2013-2015 Eugene Kalinin
  * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +12,24 @@ import org.slf4j.LoggerFactory;
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ */
+
+package com.reversemind.hypergate.client;
+
+import org.apache.commons.pool2.BasePooledObjectFactory;
+import org.apache.commons.pool2.PooledObject;
+import org.apache.commons.pool2.impl.DefaultPooledObject;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * Client Pool Factory - for IHyperGateClient
+ *
+ * @author Eugene Kalinin
  */
 public class ClientPoolFactory extends BasePooledObjectFactory<IHyperGateClient> {
 
@@ -56,17 +63,6 @@ public class ClientPoolFactory extends BasePooledObjectFactory<IHyperGateClient>
         return defaultPooledObject;
     }
 
-//    @Override
-//    public IHyperGateClient makeObject() throws Exception {
-//        ApplicationContext applicationContext = new ClassPathXmlApplicationContext(this.contextXML);
-//        IHyperGateClient client = applicationContext.getBean(this.beanName, this.clientClazz);
-//        if (client == null) {
-//            throw new RuntimeException("Could not create client for beanName:" + beanName + " and Class:" + this.clientClazz + " and contextName:" + this.contextXML);
-//        }
-//        client.start();
-//        return client;
-//    }
-
     @Override
     public void destroyObject(PooledObject<IHyperGateClient> pooledObject) throws Exception {
         if(pooledObject != null){
@@ -78,21 +74,13 @@ public class ClientPoolFactory extends BasePooledObjectFactory<IHyperGateClient>
         if(client != null) {
             LOG.warn("Going to destroy client:" + client.getName());
             int count = 5;
-            while (client.isOccupied() == true && count-- > 0) {
+            while (client.isOccupied() && count-- > 0) {
                 Thread.sleep(50);
-                LOG.warn("Waiting for HyperGate:" + client.getName() + " times:" + count + " from 10");
+                LOG.warn("Waiting for HyperGate:" + client.getName() + " times:" + count + " from " + count);
             }
             client.shutdown();
             client = null;
         }
     }
-
-//    public void activateObject(IHyperGateClient client) throws Exception {
-//
-//    }
-//
-//    public void passivateObject(IHyperGateClient client) throws Exception {
-//
-//    }
 
 }

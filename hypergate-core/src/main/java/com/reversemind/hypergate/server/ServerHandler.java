@@ -1,14 +1,5 @@
-package com.reversemind.hypergate.server;
-
-import com.reversemind.hypergate.serialization.KryoDeserializer;
-import org.jboss.netty.channel.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-
 /**
- * Copyright (c) 2013-2014 Eugene Kalinin
+ * Copyright (c) 2013-2015 Eugene Kalinin
  * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +13,16 @@ import java.io.IOException;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+package com.reversemind.hypergate.server;
+
+import org.jboss.netty.channel.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * @author Eugene Kalinin
+ */
 public class ServerHandler extends SimpleChannelUpstreamHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(ServerHandler.class.getName());
@@ -29,22 +30,11 @@ public class ServerHandler extends SimpleChannelUpstreamHandler {
     private IPayloadProcessor payloadProcessor;
     private boolean dropClientConnection = false;
     private Metrics metrics;
-    // TODO #6 KryoSerializer
-//    private KryoDeserializer kryoDeserializer;
-
     public ServerHandler(IPayloadProcessor payloadProcessor, Metrics metrics, boolean dropClientConnection) {
         this.payloadProcessor = payloadProcessor;
         this.dropClientConnection = dropClientConnection;
         this.metrics = metrics;
     }
-
-    // TODO #6 KryoSerializer
-//    public ServerHandler(IPayloadProcessor payloadProcessor, Metrics metrics, boolean dropClientConnection, KryoDeserializer kryoDeserializer) {
-//        this.payloadProcessor = payloadProcessor;
-//        this.dropClientConnection = dropClientConnection;
-//        this.metrics = metrics;
-//        this.kryoDeserializer = kryoDeserializer;
-//    }
 
     @Override
     public void handleUpstream(ChannelHandlerContext ctx, ChannelEvent e) throws Exception {
@@ -59,14 +49,6 @@ public class ServerHandler extends SimpleChannelUpstreamHandler {
 
         // TODO what about delay + very long messages???
         long beginTime = System.currentTimeMillis();
-
-        // TODO #6 KryoSerializer
-//        Object object = null;
-//        try {
-//            object = this.payloadProcessor.process(this.kryoDeserializer.deserialize((byte[]) messageEvent.getMessage()));
-//        } catch (IOException e) {
-//            LOG.error("KryoDeserializer needs for array", e);
-//        }
 
         Object object = this.payloadProcessor.process(messageEvent.getMessage());
 

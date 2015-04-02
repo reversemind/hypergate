@@ -65,19 +65,22 @@ public class ClientPoolTest {
     }
 
     /**
-     *
+     * Using pool of clients
      */
     @Test
     public void testClientPool() {
 
+        int numberOfThreads = 2;
+
         ClientPoolFactory clientPoolFactory = new ClientPoolFactory(CLIENT_DEFAULT_CONTEXT_NAME, CLIENT_SIMPLE_BUILDER_NAME, CLASS_HYPERGATE_CLIENT);
-        ClientPool clientPool = new ClientPool(clientPoolFactory, 2);
+        ClientPool clientPool = new ClientPool(clientPoolFactory, numberOfThreads);
 
         for (int i = 0; i < 100; i++) {
-
             ISimpleService simpleService = (ISimpleService) ProxyFactoryPool.getInstance().newProxyInstance(clientPool, ISimpleService.class);
-            LOG.info("\n\n\n\nFROM SERVER --- " + simpleService.getSimpleValue("1111--" + i) + "\n\n\n");
 
+            final String receivedFromServer = simpleService.getSimpleValue("number-" + i);
+            assertEquals(ISimpleService.RETURN_VALUE + "number-" + i, receivedFromServer);
+            LOG.info("\n\n\n\nFROM SERVER --- " + simpleService.getSimpleValue("number-" + i) + "\n\n\n");
         }
 
         clientPool.forceClearClose();
@@ -86,14 +89,21 @@ public class ClientPoolTest {
 
     }
 
-
+    /**
+     * Using Client Pool under multi thread - 100 threads for 2 client pool
+     *
+     * @throws InterruptedException
+     * @throws ExecutionException
+     */
     @Test
     public void testClientPoolMultiThread() throws InterruptedException, ExecutionException {
 
-        ClientPoolFactory clientPoolFactory = new ClientPoolFactory(CLIENT_DEFAULT_CONTEXT_NAME, CLIENT_SIMPLE_BUILDER_NAME, CLASS_HYPERGATE_CLIENT);
-        ClientPool clientPool = new ClientPool(clientPoolFactory, 1000);
+        final int numberOfThreads = 2;
 
-        final int THREAD_SIZE = 100;
+        ClientPoolFactory clientPoolFactory = new ClientPoolFactory(CLIENT_DEFAULT_CONTEXT_NAME, CLIENT_SIMPLE_BUILDER_NAME, CLASS_HYPERGATE_CLIENT);
+        ClientPool clientPool = new ClientPool(clientPoolFactory, numberOfThreads);
+
+        final int THREAD_SIZE = 1;
         ExecutorService executor = Executors.newFixedThreadPool(THREAD_SIZE);
 
         List<FutureTask<String>> list = new ArrayList<FutureTask<String>>();
@@ -118,27 +128,28 @@ public class ClientPoolTest {
 
             Thread.sleep(5);
         }
-        System.out.println("\n\n\n\n BEFORE SLEEP  \n\n\n\n");
+        LOG.info("\n\n\n\n BEFORE SLEEP  \n\n\n\n");
 
 
         Thread.sleep(6000);
-        System.out.println("\n\n\n\n AFTER SLEEP  \n\n\n\n");
+        LOG.info("\n\n\n\n AFTER SLEEP  \n\n\n\n");
         executor.shutdown();
+
+
+
+        long eT = System.currentTimeMillis();
+
+        for (FutureTask<String> futureTask : list) {
+            LOG.info("" + futureTask.get());
+        }
+
+        LOG.info("\n\n\n\n - Spend time:" + ((eT - bT) - 6000) + " per thread:" + ((eT - bT) - 6000) / THREAD_SIZE + " ms\n\n\n\n");
 
         clientPool.forceClearClose();
         clientPool.close();
         clientPool = null;
 
-        long eT = System.currentTimeMillis();
-
-        for (FutureTask<String> futureTask : list) {
-            System.out.println("" + futureTask.get());
-        }
-
-        System.out.println("\n\n\n\n - Spend time:" + ((eT - bT) - 6000) + " per thread:" + ((eT - bT) - 6000) / THREAD_SIZE + " ms\n\n\n\n");
-
     }
-
 
     public class ClientProcess<String> implements Callable<String> {
 
@@ -162,14 +173,14 @@ public class ClientPoolTest {
             try {
                 for (int i = 0; i < 10; i++) {
                     ISimpleService simpleService = (ISimpleService) proxyFactoryPool.newProxyInstance(clientPool, interfaceClass);
-                    String v = (String) simpleService.getSimpleValue(name + "1111--" + i);
+                    String v = (String) simpleService.getSimpleValue(name + "call()--" + i);
                     LOG.info("\n\n\n\nFROM SERVER --- " + v + "\n\n\n");
                     all.append("\n").append(v);
                     Thread.sleep(1);
                 }
 
             } catch (Exception ex) {
-                System.out.println("CATCH IN CALL -- " + name);
+                LOG.error("CATCH IN CALL -- " + name);
             }
 
             return (String) ("---- " + name + " -- " + all.toString());

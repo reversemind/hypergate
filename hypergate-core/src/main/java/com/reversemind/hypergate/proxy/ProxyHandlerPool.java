@@ -1,7 +1,6 @@
 package com.reversemind.hypergate.proxy;
 
 import com.reversemind.hypergate.client.ClientPool;
-import com.reversemind.hypergate.client.ClientPoolFactory;
 import com.reversemind.hypergate.client.IHyperGateClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +39,7 @@ public class ProxyHandlerPool extends AbstractProxyHandler implements Invocation
     public IHyperGateClient getClient() throws Exception {
         if (this.client == null) {
             try {
-                synchronized (this.clientPool) {
+                synchronized (clientPool) {
                     this.client = this.clientPool.borrowObject();
                 }
             } catch (Exception ex) {
@@ -48,7 +47,7 @@ public class ProxyHandlerPool extends AbstractProxyHandler implements Invocation
 
                 try {
 //                    Thread.sleep(50);
-                    synchronized (this.clientPool) {
+                    synchronized (clientPool) {
                         this.client = this.clientPool.borrowObject();
                     }
                 } catch (Exception ex2) {
