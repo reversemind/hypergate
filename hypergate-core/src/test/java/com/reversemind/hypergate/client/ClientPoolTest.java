@@ -1,3 +1,20 @@
+/**
+ * Copyright (c) 2013-2015 Eugene Kalinin
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
 package com.reversemind.hypergate.client;
 
 import com.reversemind.hypergate.proxy.ProxyFactory;
@@ -103,7 +120,7 @@ public class ClientPoolTest {
         ClientPoolFactory clientPoolFactory = new ClientPoolFactory(CLIENT_DEFAULT_CONTEXT_NAME, CLIENT_SIMPLE_BUILDER_NAME, CLASS_HYPERGATE_CLIENT);
         ClientPool clientPool = new ClientPool(clientPoolFactory, numberOfThreads);
 
-        final int THREAD_SIZE = 1;
+        final int THREAD_SIZE = 100;
         ExecutorService executor = Executors.newFixedThreadPool(THREAD_SIZE);
 
         List<FutureTask<String>> list = new ArrayList<FutureTask<String>>();
@@ -188,21 +205,25 @@ public class ClientPoolTest {
 
     }
 
+    /**
+     * Test sequence for create ClientPool and Destroy of ClientPool
+     * @throws Exception
+     */
     @Test
     public void testLoop() throws Exception {
         ClientPoolFactory clientPoolFactory = new ClientPoolFactory(CLIENT_DEFAULT_CONTEXT_NAME, CLIENT_SIMPLE_BUILDER_NAME, CLASS_HYPERGATE_CLIENT);
 
+        int count = 10;
 
-        for (int j = 0; j < 10; j++) {
-            ClientPool clientPool = new ClientPool(clientPoolFactory, 2);
+        for (int j = 0; j < 2; j++) {
+            ClientPool clientPool = new ClientPool(clientPoolFactory, count);
 
-            int count = 10;
             for (int i = 0; i < count; i++) {
                 IHyperGateClient hyperGateClient = clientPool.borrowObject();
                 LOG.info("Borrowed client" + hyperGateClient.getName());
                 LOG.info("Pool metrics:" + clientPool.printPoolMetrics());
 
-                Thread.sleep(500);
+//                clientPool.returnObject(hyperGateClient);
             }
 
             clientPool.forceClearClose();
@@ -211,13 +232,17 @@ public class ClientPoolTest {
             clientPool.close();
 
             clientPool = null;
-            Thread.sleep(1000);
+            Thread.sleep(500);
         }
 
-        Thread.sleep(5000);
+        Thread.sleep(3000);
 
     }
 
+    /**
+     *
+     * @throws Exception
+     */
     @Test
     public void testOne() throws Exception {
 
@@ -235,11 +260,9 @@ public class ClientPoolTest {
             hyperGateClient_ = hyperGateClient;
         }
 
-
         clientPool.returnObject(hyperGateClient_);
 
         clientPool.forceClearClose();
-
         clientPool.clear();
         clientPool.close();
 
@@ -251,10 +274,8 @@ public class ClientPoolTest {
 
         clientPool = null;
 
-
         Thread.sleep(2000);
         clientPool = new ClientPool(clientPoolFactory);
-
 
         hyperGateClient_ = null;
         count = 3;
@@ -265,18 +286,13 @@ public class ClientPoolTest {
             hyperGateClient_ = hyperGateClient;
         }
 
-
         clientPool.returnObject(hyperGateClient_);
-
         clientPool.forceClearClose();
-
         clientPool.clear();
         clientPool.close();
 
-
         Thread.sleep(2000);
-
-        System.out.println("DONE");
+        LOG.info("DONE");
     }
 
 }

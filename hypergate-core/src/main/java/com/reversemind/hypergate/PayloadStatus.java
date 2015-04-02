@@ -1,7 +1,5 @@
-package com.reversemind.hypergate;
-
 /**
- * Copyright (c) 2013-2014 Eugene Kalinin
+ * Copyright (c) 2013-2015 Eugene Kalinin
  * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +12,21 @@ package com.reversemind.hypergate;
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ */
+
+package com.reversemind.hypergate;
+
+/**
+ *
  */
 public enum PayloadStatus {
 
     ERROR_UNKNOWN("ERROR_UNKNOWN", -1),                                                 //
-    ERROR_CLIENT_PAYLOAD("ERROR_CLIENT_PAYLOAD", -100),                                 // Unknown client payload
-    ERROR_PAYLOAD_UNKNOWN_METHOD("ERROR_PAYLOAD_UNKNOWN_METHOD", -111),                 // Unknown client payload
-    ERROR_COULD_NOT_INIT_JNDI_CONTEXT("ERROR_COULD_NOT_INIT_JNDI_CONTEXT", -222),       // Unknown client payload
-    ERROR_SERVER_TIMEOUT("ERROR_SERVER_TIMEOUT", -333),                                 // Unknown client payload
+    ERROR_CLIENT_PAYLOAD("ERROR_CLIENT_PAYLOAD", -100),                                 //
+    ERROR_PAYLOAD_UNKNOWN_METHOD("ERROR_PAYLOAD_UNKNOWN_METHOD", -111),                 //
+    ERROR_COULD_NOT_INIT_JNDI_CONTEXT("ERROR_COULD_NOT_INIT_JNDI_CONTEXT", -222),       //
+    ERROR_SERVER_TIMEOUT("ERROR_SERVER_TIMEOUT", -333),                                 // 
     OK("OK", 0);
 
     private String message;

@@ -1,16 +1,5 @@
-package com.reversemind.hypergate.server;
-
-import com.reversemind.hypergate.Payload;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.slf4j.LoggerFactory;
-
-import java.util.Map;
-
-import static org.junit.Assert.*;
-
 /**
- * Copyright (c) 2013-2014 Eugene Kalinin
+ * Copyright (c) 2013-2015 Eugene Kalinin
  * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +12,20 @@ import static org.junit.Assert.*;
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ */
+
+package com.reversemind.hypergate.server;
+
+import com.reversemind.hypergate.Payload;
+import org.junit.Test;
+import org.slf4j.LoggerFactory;
+
+import java.util.Map;
+
+import static org.junit.Assert.*;
+
+/**
+ *
  */
 public class ServerFactoryTest {
 
@@ -80,12 +83,10 @@ public class ServerFactoryTest {
         // 'cause .setAutoSelectPort(true)
         assertNotEquals(8000, server.getPort());
 
-
         if (server != null) {
             server.shutdown();
         }
         assertNotNull(server);
-
 
         server = ServerFactory.builder()
                 .setAutoSelectPort(true)
@@ -123,6 +124,9 @@ public class ServerFactoryTest {
         assertNotNull(server);
     }
 
+    /**
+     *
+     */
     @Test
     public void testAssignPortNumber() {
 
@@ -157,9 +161,7 @@ public class ServerFactoryTest {
         LOG.info("port number:" + server.getPort());
         assertEquals(8000, server.getPort());
 
-        if (server != null) {
-            server.shutdown();
-        }
+        server.shutdown();
         assertNotNull(server);
     }
 
