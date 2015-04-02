@@ -1,14 +1,5 @@
-package com.reversemind.hypergate.client;
-
-import org.apache.commons.pool2.impl.GenericObjectPoolExt;
-import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.Set;
-
 /**
- * Copyright (c) 2013-2014 Eugene Kalinin
+ * Copyright (c) 2013-2015 Eugene Kalinin
  * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +12,19 @@ import java.util.Set;
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
  */
+
+
+package com.reversemind.hypergate.client;
+
+import org.apache.commons.pool2.impl.GenericObjectPoolExt;
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Set;
+
 public class ClientPool extends GenericObjectPoolExt<IHyperGateClient> {
 
     private final static Logger LOG = LoggerFactory.getLogger(ClientPool.class);
@@ -50,16 +53,11 @@ public class ClientPool extends GenericObjectPoolExt<IHyperGateClient> {
      * @param clientPoolFactory
      */
     public ClientPool(ClientPoolFactory clientPoolFactory) {
-        // int maxActive, byte WHEN_EXHAUSTED_GROW, long maxWait
-        // super(clientPoolFactory, START_POOL_SIZE, GenericObjectPoolExt.WHEN_EXHAUSTED_GROW, 30 * 1000);
         super(clientPoolFactory,createConfig(START_POOL_SIZE));
         this.clientPoolFactory = clientPoolFactory;
     }
 
     public ClientPool(ClientPoolFactory clientPoolFactory, int poolSize) {
-        // int maxActive, byte WHEN_EXHAUSTED_GROW, long maxWait
-//        super(clientPoolFactory, poolSize, GenericObjectPoolExt.WHEN_EXHAUSTED_GROW, 30 * 1000);
-//        GenericObjectPoolConfig objectPoolConfig = new GenericObjectPoolConfig().setMaxTotal(poolSize);
         super(clientPoolFactory, createConfig(poolSize));
         this.clientPoolFactory = clientPoolFactory;
     }

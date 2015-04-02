@@ -1,3 +1,19 @@
+/**
+ * Copyright (c) 2013-2015 Eugene Kalinin
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
 package com.reversemind.hypergate.server;
 
 import org.slf4j.Logger;
@@ -12,6 +28,7 @@ import java.io.Serializable;
 /**
  * AbstractContainerHyperGateServer - an abstract HyperGateServer for building inside container EJB or Spring
  *
+ * @author Eugene Kalinin
  */
 public abstract class AbstractContainerHyperGateServer implements Serializable {
 
@@ -19,7 +36,6 @@ public abstract class AbstractContainerHyperGateServer implements Serializable {
 
     protected static final String SERVER_SIMPLE_BUILDER_NAME = "serverBuilder";
     protected static final String SERVER_ADVERTISER_BUILDER_NAME = "serverBuilderAdvertiser";
-
     protected static final String SERVER_DEFAULT_CONTEXT_NAME = "META-INF/hypergate-server-context.xml";
 
     private IHyperGateServer server;
@@ -48,12 +64,10 @@ public abstract class AbstractContainerHyperGateServer implements Serializable {
     @PostConstruct
     public void init() {
 
-        //https://issues.apache.org/jira/browse/ZOOKEEPER-1554
-        // System.setProperty("java.security.auth.login.config","/opt/zookeeper/conf/jaas.conf");
-        // System.setProperty("java.security.auth.login.config","/opt/zookeeper/conf");
+        // TODO https://issues.apache.org/jira/browse/ZOOKEEPER-1554
         System.setProperty("curator-log-events", "true");
 
-        // TODO wrap it in Exception handler
+        // TODO wrap it with Exception handler
         LOG.debug("this.getContextXML():" + this.getContextXML());
         ApplicationContext applicationContext = new ClassPathXmlApplicationContext(this.getContextXML());
 
@@ -89,20 +103,15 @@ public abstract class AbstractContainerHyperGateServer implements Serializable {
 
         this.server.start();
 
-        LOG.warn("Server started");
+        LOG.info("Server started");
     }
 
     @PreDestroy
     public void destroy() {
         if (this.server != null) {
-            //server SHUTDOWN
             this.server.shutdown();
             LOG.warn("SERVER SHUTDOWN");
         }
     }
-
-//    public String getContextXML() {
-//        return "META-INF/hypergate-server-context.xml";
-//    }
 
 }
