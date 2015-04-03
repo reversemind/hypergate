@@ -1,17 +1,5 @@
-package com.reversemind.hypergate.client;
-
-import com.reversemind.hypergate.servicediscovery.IServerSelectorStrategy;
-import com.reversemind.hypergate.servicediscovery.ServiceDiscoverer;
-import com.reversemind.hypergate.servicediscovery.serializer.ServerMetadata;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.io.Serializable;
-
 /**
- * Copyright (c) 2013-2014 Eugene Kalinin
+ * Copyright (c) 2013-2015 Eugene Kalinin
  * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +12,21 @@ import java.io.Serializable;
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
  */
+
+package com.reversemind.hypergate.client;
+
+import com.reversemind.hypergate.servicediscovery.IServerSelectorStrategy;
+import com.reversemind.hypergate.servicediscovery.ServiceDiscoverer;
+import com.reversemind.hypergate.servicediscovery.serializer.ServerMetadata;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.io.Serializable;
+
 public class HyperGateClientServerDiscovery extends HyperGateClient implements IHyperGateClient, Serializable {
 
     private final static Logger LOG = LoggerFactory.getLogger(HyperGateClientServerDiscovery.class);

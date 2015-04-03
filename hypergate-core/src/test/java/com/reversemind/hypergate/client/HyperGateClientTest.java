@@ -2,6 +2,7 @@ package com.reversemind.hypergate.client;
 
 import com.reversemind.hypergate.Payload;
 import com.reversemind.hypergate.PayloadStatus;
+import com.reversemind.hypergate.server.SimpleServer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,11 +21,14 @@ public class HyperGateClientTest {
 
     private final static org.slf4j.Logger LOG = LoggerFactory.getLogger(ClientPoolTest.class);
 
+    private SimpleServer simpleServer;
     private HyperGateClient hyperGateClient;
+
+    private static final int SERVER_PORT = 7000; // look carefully value in META-INF/hypergate-server.properties
 
     @Before
     public void init() throws Exception {
-        hyperGateClient = new HyperGateClient();
+        hyperGateClient = new HyperGateClient("localhost", SERVER_PORT, 1);
         hyperGateClient.start();
     }
 
@@ -33,6 +37,11 @@ public class HyperGateClientTest {
         if(hyperGateClient != null){
             hyperGateClient.shutdown();
             hyperGateClient = null;
+        }
+
+        if(simpleServer != null){
+            simpleServer.destroy();
+            simpleServer = null;
         }
     }
 
@@ -48,7 +57,7 @@ public class HyperGateClientTest {
 
     @Test
     public void testGetPort() throws Exception {
-        assertEquals(7000, hyperGateClient.getPort());
+        assertEquals(SERVER_PORT, hyperGateClient.getPort());
     }
 
     @Test
@@ -58,7 +67,7 @@ public class HyperGateClientTest {
 
     @Test
     public void testGetPayload() throws Exception {
-        hyperGateClient = new HyperGateClient("localhost", 7000, 10);
+        hyperGateClient = new HyperGateClient("localhost", SERVER_PORT, 10);
         Payload payload = hyperGateClient.getPayload();
         LOG.info("Payload: " + payload);
 
@@ -68,7 +77,6 @@ public class HyperGateClientTest {
         assertEquals(payload.getServerTimestamp(), payload.getClientTimestamp());
         assertEquals(PayloadStatus.ERROR_SERVER_TIMEOUT, payload.getStatus());
         assertEquals(null, payload.getThrowable());
-
 
         HyperGateClient _hyperGateClient = mock(HyperGateClient.class);
         when(_hyperGateClient.getPayload()).thenReturn(
@@ -87,6 +95,7 @@ public class HyperGateClientTest {
         assertFalse(hyperGateClient.isOccupied());
     }
 
+    @Test
     public void testSend() {
         boolean result = false;
         try{
@@ -97,6 +106,7 @@ public class HyperGateClientTest {
         assertTrue(result);
     }
 
+    @Test
     public void testShutdown() throws Exception {
         assertTrue(hyperGateClient.isRunning());
 
@@ -106,19 +116,33 @@ public class HyperGateClientTest {
         assertFalse(hyperGateClient.isOccupied());
     }
 
+    @Test
     public void testRestart() throws Exception {
-
+        assertTrue(hyperGateClient.isRunning());
+        hyperGateClient.restart();
+        assertTrue(hyperGateClient.isRunning());
     }
 
+    @Test
     public void testRestart1() throws Exception {
-
+        assertTrue(hyperGateClient.isRunning());
+        hyperGateClient.restart("localhost", SERVER_PORT, 1);
+        assertTrue(hyperGateClient.isRunning());
     }
 
+    @Test
     public void testGetName() throws Exception {
-
+        LOG.info("hyperGateClient name:" + hyperGateClient.getName());
+        assertEquals("client-4a68687c-7a85-4943-bb18-e2eda86905dd".length(), hyperGateClient.getName().length());
+        assertTrue(hyperGateClient.getName().indexOf("client-") == 0);
     }
 
+    @Test
     public void testStart() throws Exception {
+        hyperGateClient.shutdown();
+        assertFalse(hyperGateClient.isRunning());
 
+        hyperGateClient.start();
+        assertTrue(hyperGateClient.isRunning());
     }
 }

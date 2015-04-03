@@ -408,67 +408,7 @@ public class HyperGateClient implements IHyperGateClient, Serializable {
         //    workerExecutor.shutdown();
         //    thriftServer.releaseExternalResources();
 
-
-        /*
-            BEFORE version 1.8.0-SNAPSHOT
-
-         */
-        // !!! see also - http://massapi.com/class/cl/ClientBootstrap.html
-//        LOG.info("1");
-        // just wait for server connection for 3sec.
-//        channelFuture.await(SERVER_CONNECTION_TIMEOUT);
-//        if (!channelFuture.isSuccess()) {
-//            channelFuture.getCause().printStackTrace();
-//            channelFactory.releaseExternalResources();
-//            this.running = false;
-//        }else{
-//            this.running = true;
-//        }
-
-
-        // if need to disconnect right after server response
-        //  channelFuture.getChannel().getCloseFuture().awaitUninterruptibly();
-        //  channelFactory.releaseExternalResources();
-
-
-//        channelFuture.addListener(new ChannelFutureListener() {
-//            public void operationComplete(ChannelFuture future) throws Exception {
-//                if (future.isSuccess()) {
-//                    // Connection attempt succeeded:
-//                    // Begin to accept incoming traffic.
-//                    //inboundChannel.setReadable(true);
-//                    LOG.info("Client connected");
-//                    running = true;
-//                } else {
-//                    LOG.info("Failed connect to server");
-//                    // Close the connection if the connection attempt has failed.
-//                    //inboundChannel.close();
-//                    //shutDownChannelFuture();
-//                    LOG.info("Shutdown all");
-//                    shutDownChannelFuture(future);
-//                }
-//            }
-//        });
-
-//       if(channelFuture != null && !channelFuture.isSuccess()){
-//           shutDownChannelFuture();
-//       }
-
-        /*
-
-
-            AFTER VERSION 1.8.0-SNAPSHOT
-
-
-         */
-        // SOURCE !!! http://massapi.com/class/cl/ClientBootstrap.html
-
-
-        // Start the connection attempt.
-//        channelFuture.awaitUninterruptibly();
-
-
-        // Need to repair it
+        // TODO Need to repair it
 
         boolean goAway = false;
         long countGoAway = 0;
@@ -496,25 +436,6 @@ public class HyperGateClient implements IHyperGateClient, Serializable {
             channelFactory.releaseExternalResources();
             channelFuture = null;
         }
-
-
-//        CountDownLatch latch;
-//
-//        LOG.warn("Warming up 1.8.0-SNAPSHOT ...");
-//        for (long i = 0; i < 10000; i++) {
-//            latch = new CountDownLatch(1);
-//            try {
-//                latch.await();
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//            if(i % 1000 == 0){
-//                LOG.info("i:" + i);
-//            }
-//        }
-//
-//        Thread.sleep(100);
-//        LOG.warn("Warmed up 1.8.0-SNAPSHOT ");
 
     }
 

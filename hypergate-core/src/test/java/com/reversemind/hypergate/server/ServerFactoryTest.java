@@ -39,8 +39,9 @@ public class ServerFactoryTest {
         IHyperGateServer server = null;
         try {
             server = ServerFactory.builder().build();
+            assertNotNull(server);
         } catch (RuntimeException ex) {
-            ex.printStackTrace();
+            LOG.error("Runtime error:", ex);
         }
         assertNull(server);
     }
