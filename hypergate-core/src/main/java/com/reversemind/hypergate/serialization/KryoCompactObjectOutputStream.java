@@ -1,12 +1,5 @@
-package com.reversemind.hypergate.serialization;
-
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.ObjectStreamClass;
-import java.io.OutputStream;
-
 /**
- * Copyright (c) 2013-2014 Eugene Kalinin
+ * Copyright (c) 2013-2015 Eugene Kalinin
  * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +12,18 @@ import java.io.OutputStream;
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ */
+
+package com.reversemind.hypergate.serialization;
+
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.ObjectStreamClass;
+import java.io.OutputStream;
+
+/**
+ * @author Eugene Kalinin
  */
 public class KryoCompactObjectOutputStream extends ObjectOutputStream {
 

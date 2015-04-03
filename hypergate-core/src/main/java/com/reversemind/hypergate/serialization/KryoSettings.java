@@ -1,13 +1,5 @@
-package com.reversemind.hypergate.serialization;
-
-import com.esotericsoftware.kryo.Kryo;
-import com.reversemind.hypergate.Payload;
-import com.reversemind.hypergate.PayloadStatus;
-
-import java.util.*;
-
 /**
- * Copyright (c) 2013-2014 Eugene Kalinin
+ * Copyright (c) 2013-2015 Eugene Kalinin
  * <p/>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,13 +12,26 @@ import java.util.*;
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
+ */
+
+package com.reversemind.hypergate.serialization;
+
+import com.esotericsoftware.kryo.Kryo;
+import com.reversemind.hypergate.Payload;
+import com.reversemind.hypergate.PayloadStatus;
+
+import java.util.*;
+
+/**
+ * @author Eugene Kalinin
  */
 public class KryoSettings {
 
     public static final int DEFAULT_MAX_SIZE = 1048576;
     public static final int EXPERIMENT_MAX_SIZE = DEFAULT_MAX_SIZE * 10;
 
-    public Kryo getKryo(){
+    public Kryo getKryo() {
         Kryo kryo = new Kryo();
         kryo.register(Integer.class);
         kryo.register(Long.class);

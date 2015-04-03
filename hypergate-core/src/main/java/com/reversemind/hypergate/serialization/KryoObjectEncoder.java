@@ -1,3 +1,20 @@
+/**
+ * Copyright (c) 2013-2015 Eugene Kalinin
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
 package com.reversemind.hypergate.serialization;
 
 import org.jboss.netty.buffer.ChannelBuffer;
@@ -14,19 +31,7 @@ import java.io.ObjectOutputStream;
 import static org.jboss.netty.buffer.ChannelBuffers.dynamicBuffer;
 
 /**
- * Copyright (c) 2013-2014 Eugene Kalinin
- * <p/>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p/>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p/>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * @author Eugene Kalinin
  */
 @ChannelHandler.Sharable
 public class KryoObjectEncoder extends OneToOneEncoder {
@@ -47,13 +52,12 @@ public class KryoObjectEncoder extends OneToOneEncoder {
     /**
      * Creates a new encoder.
      *
-     * @param estimatedLength
-     *        the estimated byte length of the serialized form of an object.
-     *        If the length of the serialized form exceeds this value, the
-     *        internal buffer will be expanded automatically at the cost of
-     *        memory bandwidth.  If this value is too big, it will also waste
-     *        memory bandwidth.  To avoid unnecessary memory copy or allocation
-     *        cost, please specify the properly estimated value.
+     * @param estimatedLength the estimated byte length of the serialized form of an object.
+     *                        If the length of the serialized form exceeds this value, the
+     *                        internal buffer will be expanded automatically at the cost of
+     *                        memory bandwidth.  If this value is too big, it will also waste
+     *                        memory bandwidth.  To avoid unnecessary memory copy or allocation
+     *                        cost, please specify the properly estimated value.
      */
     public KryoObjectEncoder(int estimatedLength) {
         if (estimatedLength < 0) {
