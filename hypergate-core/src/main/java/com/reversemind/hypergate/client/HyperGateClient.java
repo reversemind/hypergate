@@ -1,13 +1,25 @@
+/**
+ * Copyright (c) 2013-2015 Eugene Kalinin
+ * <p/>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p/>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p/>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
 package com.reversemind.hypergate.client;
 
-import com.esotericsoftware.kryo.Kryo;
 import com.reversemind.hypergate.Payload;
 import com.reversemind.hypergate.PayloadBuilder;
 import com.reversemind.hypergate.PayloadStatus;
-import com.reversemind.hypergate.serialization.KryoObjectDecoder;
-import com.reversemind.hypergate.serialization.KryoObjectEncoder;
-import com.reversemind.hypergate.serialization.KryoSerializer;
-import com.reversemind.hypergate.serialization.KryoSettings;
 import org.jboss.netty.bootstrap.ClientBootstrap;
 import org.jboss.netty.channel.*;
 import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
@@ -24,19 +36,8 @@ import java.util.UUID;
 import java.util.concurrent.*;
 
 /**
- * Copyright (c) 2013-2014 Eugene Kalinin
- * <p/>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p/>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p/>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * HyperGateClient
+ *
  */
 public class HyperGateClient implements IHyperGateClient, Serializable {
 
@@ -64,15 +65,10 @@ public class HyperGateClient implements IHyperGateClient, Serializable {
 
     private String name = "client-" + UUID.randomUUID().toString();
 
-//    private final Kryo kryo = new KryoSettings().getKryo();
-//    private KryoSerializer kryoSerializer;
-
     protected HyperGateClient() {
         this.port = 7000;
         this.host = "localhost";
-//        this.kryoSerializer = new KryoSerializer(kryo);
         this.name = this.generateName();
-
         LOG.info("\n\n HyperGateClient name: " + this.name + "\n created for server:" + host + ": default port" + port + " - Empty parameter Constructor\n\n");
     }
 
@@ -84,8 +80,6 @@ public class HyperGateClient implements IHyperGateClient, Serializable {
 
         this.name = this.generateName();
         LOG.info("\n\n HyperGateClient name: " + this.name + "\n created for server:" + host + ":" + port + "\n\n");
-//        this.kryoSerializer = new KryoSerializer(kryo);
-
     }
 
     public HyperGateClient(String host, int port, long timeout) {
@@ -103,7 +97,6 @@ public class HyperGateClient implements IHyperGateClient, Serializable {
 
         this.name = this.generateName();
         LOG.info("\n\n HyperGateClient name: " + this.name + "\n created for server:" + host + ":" + port + "\n\n");
-//        this.kryoSerializer = new KryoSerializer(kryo);
     }
 
     /**
@@ -223,9 +216,6 @@ public class HyperGateClient implements IHyperGateClient, Serializable {
 
                 // client is occupied
                 this.occupied = true;
-//                if(this.kryoSerializer != null){
-//                    this.channel.write(this.kryoSerializer.serialize(payloadSend));
-//                }
                 // TODO make it #6
                 this.channel.write(payloadSend);
 
@@ -347,6 +337,7 @@ public class HyperGateClient implements IHyperGateClient, Serializable {
         ChannelPipelineFactory channelPipelineFactory = new ChannelPipelineFactory() {
             public ChannelPipeline getPipeline() throws Exception {
                 return Channels.pipeline(
+                        // TODO make Encoder & Decoder - like a Strategy Pattern, and changeable via external settings
 //                        new KryoObjectEncoder(),
 //                        new KryoObjectDecoder(ClassResolvers.cacheDisabled(getClass().getClassLoader()))
                         // TODO #6
@@ -419,8 +410,6 @@ public class HyperGateClient implements IHyperGateClient, Serializable {
 
 
         /*
-
-
             BEFORE version 1.8.0-SNAPSHOT
 
          */

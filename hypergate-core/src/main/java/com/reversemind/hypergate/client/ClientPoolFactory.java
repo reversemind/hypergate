@@ -28,6 +28,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Client Pool Factory - for IHyperGateClient
+ * <p/>
+ * Bases on using of org.apache.commons.pool2
  *
  * @author Eugene Kalinin
  */
