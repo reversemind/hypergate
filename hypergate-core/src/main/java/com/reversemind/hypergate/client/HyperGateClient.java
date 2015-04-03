@@ -159,17 +159,17 @@ public class HyperGateClient implements IHyperGateClient, Serializable {
             try {
                 this.setPayload(this.futureTask.get(this.futureTaskTimeOut, TimeUnit.MILLISECONDS));
             } catch (TimeoutException e) {
-                LOG.warn("TimeoutException futureTask == HERE client:" + this.getName(), e);
-                _throwable = new TimeoutException("TimeoutException futureTask == HERE client:" + this.getName());
+                LOG.debug("TimeoutException futureTask :" + this.getName(), e);
+                _throwable = new TimeoutException("TimeoutException futureTask :" + this.getName());
                 this.futureTask.cancel(true);
             } catch (InterruptedException e) {
-                LOG.warn("InterruptedException futureTask == HERE", e);
+                LOG.debug("InterruptedException futureTask ", e);
             } catch (ExecutionException e) {
-                LOG.warn("ExecutionException futureTask == HERE", e);
+                LOG.debug("ExecutionException futureTask ", e);
             } catch (CancellationException ce) {
-                LOG.warn("Future task was Canceled - YES !!!");
+                LOG.debug("Future task was Canceled ");
             } catch (Exception e) {
-                LOG.warn("GENERAL Exception futureTask == HERE", e);
+                LOG.debug("GENERAL Exception futureTask ", e);
             }
         }
 
