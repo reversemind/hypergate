@@ -8,6 +8,7 @@ HyperGate - is a nervous system of your cluster
 * HyperGate could be run as a standalone console application or inside any container (Servlet, EJB, Spring & etc.)
 * HyperGate could be utilized by any JVM based language (Groovy, Scala, Clojure, JRuby, Jython & etc.)
 
+The working title of a project was Glia.
 
 Wiki definition of the word glia
 Glia (Greek γλία, γλοία "glue"; pronounced in English as either /ˈɡliːə/ or /ˈɡlaɪə/), are non-neuronal cells that maintain homeostasis, form myelin, and provide support and protection for neurons in the brain, and for neurons in other parts of the nervous system such as in the autonomic nervous system
